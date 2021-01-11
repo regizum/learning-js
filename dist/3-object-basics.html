@@ -1,0 +1,395 @@
+<!doctype html >
+<html lang="ru">
+<head>
+    <title>CP all</title>
+    <meta charset="UTF-8">
+    <script src="https://code.jquery.com/jquery-3.4.1.min.js"
+            integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>
+    <script src="../js/main.js"></script>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+          integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js" integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
+	<style>
+		xmp {
+			font-family: inherit;
+		}
+	</style>
+</head>
+<body class="pt-5">
+<nav class="navbar navbar-expand-lg navbar-light bg-light fixed-top">
+	<div class="container">
+		<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
+			<span class="navbar-toggler-icon"></span>
+		</button>
+		<div class="collapse navbar-collapse" id="navbarNavDropdown">
+			<ul class="navbar-nav">
+				<li class="nav-item dropdown">
+					<a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink1"
+					   role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+						JavaScript</a>
+					<div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink1">
+						<a class="dropdown-item" href="1-intro.html">1. Введение</a>
+						<a class="dropdown-item" href="2-first-steps.html">2. Основы JavaScript</a>
+						<a class="dropdown-item" href="3-code-quality.html">3. Качество кода</a>
+					</div>
+				</li>
+<li class="nav-item dropdown">
+  <a
+    class="nav-link dropdown-toggle"
+    href="#"
+    id="navbarDropdownMenuLink"
+    role="button"
+    data-toggle="dropdown"
+    aria-haspopup="true"
+    aria-expanded="false"
+  >
+    Качество кода
+  </a>
+  <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+    <a class="dropdown-item" href="#debugging-chrome">3.1 Отладка в браузере Chrome</a>
+    <a class="dropdown-item" href="#coding-style">3.2 Советы по стилю кода</a>
+    <a class="dropdown-item" href="#comments">3.3 Комментарии</a>
+    <a class="dropdown-item" href="#ninja-code">3.4 Ниндзя-код</a>
+    <a class="dropdown-item" href="#testing-mocha">3.5 Автоматическое тестирование c использованием фреймворка Mocha</a>
+    <a class="dropdown-item" href="#polyfills">3.6 Полифилы</a>
+  </div>
+</li>
+
+</ul>
+</div>
+</div>
+</nav>
+<!-- content -->
+<div class="container mt-5">
+    <h1>Качество кода</h1>
+    <div class="card mb-3" id="debugging-chrome">
+        <div class="card-header d-flex align-items-center">
+            <h2 class="h5 mb-0">3.1 Отладка в браузере Chrome</h2>
+            <div class="ml-auto">
+                <a href="https://learn.javascript.ru/debugging-chrome" target="_blank"
+                >Link</a
+                >
+            </div>
+        </div>
+        <div class="card-body">
+            <p>Приостановить выполнение скрипта можно тремя способами:</p>
+            <ol>
+                <li>Точками останова.</li>
+                <li>Использованием в коде команды <code>debugger</code>.</li>
+                <li>При ошибке (если инструменты разработчика открыты и опция <span class="devtools"
+                                                                                    style="background-position:-264px -4px"></span>
+                    включена).
+                </li>
+            </ol>
+
+            <p>При остановке мы можем отлаживать – проанализировать переменные и пошагово пройти по процессу, что
+                поможет отыскать проблему.</p>
+            <p class="mb-0">Нами описаны далеко не все инструменты разработчика. С полным руководством можно
+                ознакомиться здесь: <a
+                        href="https://developers.google.com/web/tools/chrome-devtools">https://developers.google.com/web/tools/chrome-devtools</a>.
+            </p>
+        </div>
+    </div>
+    <div class="card mb-3" id="coding-style">
+        <div class="card-header d-flex align-items-center">
+            <h2 class="h5 mb-0">3.2 Советы по стилю кода</h2>
+            <div class="ml-auto">
+                <a href="https://learn.javascript.ru/coding-style" target="_blank"
+                >Link</a
+                >
+            </div>
+        </div>
+        <div class="card-body">
+            <img class="img-fluid" src="assets/code-quality-3-2.png" alt="Синтаксис">
+            <h3 class="h4">Автоматизированные средства проверки (линтеры)</h3>
+            <ul class="mb-0">
+                <li><a href="http://www.jslint.com/">JSLint</a> – проверяет код на соответствие <a
+                        href="http://jslint.com/index.html">стилю JSLint</a>, в онлайн-интерфейсе вверху можно ввести
+                    код, а внизу – различные настройки проверки, чтобы попробовать её в действии.
+                </li>
+                <li><a href="http://www.jshint.com/">JSHint</a> – больше проверок, чем в JSLint.</li>
+                <li><a href="http://eslint.org/">ESLint</a> – пожалуй, самый современный линтер.</li>
+            </ul>
+        </div>
+    </div>
+    <div class="card mb-3" id="comments">
+        <div class="card-header d-flex align-items-center">
+            <h2 class="h5 mb-0">3.3 Комментарии</h2>
+            <div class="ml-auto">
+                <a href="https://learn.javascript.ru/debugging-chrome" target="_blank"
+                >Link</a
+                >
+            </div>
+        </div>
+        <div class="card-body">
+            <p>Комментарии – важный признак хорошего разработчика, причём как их наличие, так и отсутствие.</p>
+            <p>Хорошие комментарии позволяют нам поддерживать код, дают возможность вернуться к нему после перерыва и
+                эффективнее его использовать.</p>
+            <p><strong>Комментируйте:</strong></p>
+            <ul>
+                <li>Общую архитектуру, вид «с высоты птичьего полёта».</li>
+                <li>Использование функций.</li>
+                <li>Неочевидные решения, важные детали.</li>
+            </ul>
+            <p><strong>Избегайте комментариев:</strong></p>
+            <ul>
+                <li>Которые объясняют, как работает код, и что он делает.</li>
+                <li>Используйте их только в тех случаях, когда невозможно сделать настолько простой и
+                    самодокументированный код, что он не потребует комментариев.
+                </li>
+            </ul>
+            <p class="mb-0">Средства для генерации документации по коду, такие как JSDoc3, также используют комментарии:
+                они их читают и генерируют HTML-документацию (или документацию в другом формате).</p>
+        </div>
+    </div>
+    <div class="card mb-3" id="ninja-code">
+        <div class="card-header d-flex align-items-center">
+            <h2 class="h5 mb-0">3.4 Ниндзя-код</h2>
+            <div class="ml-auto">
+                <a href="https://learn.javascript.ru/ninja-code" target="_blank"
+                >Link</a
+                >
+            </div>
+        </div>
+        <div class="card-body">
+            <p>Плохие советы:</p>
+            <ul class="mb-0">
+                <li>Краткость – сестра таланта! Пишите «как короче», а не как понятнее.</li>
+                <li>Однобуквенные переменные</li>
+                <li>Используйте сокращения</li>
+                <li>Будьте абстрактны при выборе имени.</li>
+                <li>Используйте похожие имена переменных, например, date и data.</li>
+                <li>Русские слова и сокращения</li>
+                <li>Хитрые синонимы (Например, если метод показывает что-то на экране – начните его название с display..
+                    (скажем, displayElement), а в другом месте объявите аналогичный метод как show.. (showFrame).)
+                </li>
+                <li>Повторно используйте имена</li>
+                <li>Добавляйте подчёркивания</li>
+                <li>Перекрывайте внешние переменные</li>
+                <li>Мощные функции!</li>
+            </ul>
+        </div>
+    </div>
+    <div class="card mb-3" id="testing-mocha">
+        <div class="card-header d-flex align-items-center">
+            <h2 class="h5 mb-0">3.5 Автоматическое тестирование c использованием фреймворка Mocha</h2>
+            <div class="ml-auto">
+                <a href="https://learn.javascript.ru/testing-mocha" target="_blank"
+                >Link</a
+                >
+            </div>
+        </div>
+        <div class="card-body">
+            <p>Автоматическое тестирование означает, что тесты пишутся отдельно, в дополнение к коду. Они по-разному
+                запускают наши функции и сравнивают результат с ожидаемым.</p>
+            <h3 class="h5">Behavior Driven Development (BDD)</h3>
+            <p>BDD – это три в одном: и тесты, и документация, и примеры использования.</p>
+            <h4 class="h5">Разработка функции возведения в степень — «pow»: спецификация</h4>
+            <p>Перед тем, как начать писать код функции pow, мы можем представить себе, что она должна делать, и описать
+                её. Такое описание называется спецификацией (specification).</p>
+            <pre><code>describe("pow", function() {
+
+  it("возводит в степень n", function() {
+    assert.equal(pow(2, 3), 8);
+  });
+
+});</code></pre>
+            <p>Спецификация состоит из трёх основных блоков:</p>
+            <dl>
+                <dt><code>describe("заголовок", function() { ... })</code></dt>
+                <dd>
+                    <p>Какую функциональность мы описываем. В нашем случае мы описываем функцию <code>pow</code>.
+                        Используется для группировки рабочих лошадок – блоков <code>it</code>.</p>
+                </dd>
+                <dt><code>it("описание", function() { ... })</code></dt>
+                <dd>
+                    <p>В первом аргументе блока <code>it</code> мы <em>человеческим языком</em> описываем конкретный
+                        способ использования функции, а во втором – пишем функцию, которая тестирует данный случай.</p>
+                </dd>
+                <dt><code>assert.equal(value1, value2)</code></dt>
+                <dd>
+                    <p class="mb-0">Код внутри блока <code>it</code>, если функция работает верно, должен выполняться
+                        без ошибок.</p>
+                    <p>Функции вида <code>assert.*</code> используются для проверки того, что функция <code>pow</code>
+                        работает так, как мы ожидаем. В этом примере мы используем одну из них –
+                        <code>assert.equal</code>, которая сравнивает переданные значения и выбрасывает ошибку, если они
+                        не равны друг другу. Существуют и другие типы сравнений и проверок, которые мы добавим позже.
+                    </p>
+                </dd>
+            </dl>
+            <h3 class="h5">Спецификация в действии</h3>
+            <ul>
+                <li><a href="http://mochajs.org/">Mocha</a> – основной фреймворк. Он предоставляет общие функции
+                    тестирования, такие как <code>describe</code> и <code>it</code>, а также функцию запуска тестов.
+                </li>
+                <li><a href="http://chaijs.com">Chai</a> – библиотека, предоставляющая множество функций проверки
+                    утверждений. Пока мы будем использовать только <code>assert.equal</code>.
+                </li>
+                <li><a href="http://sinonjs.org/">Sinon</a> – библиотека, позволяющая наблюдать за функциями,
+                    эмулировать встроенные функции и многое другое. Нам она пригодится позднее.
+                </li>
+            </ul>
+            <p>Полная HTML-страница с этими библиотеками и спецификацией функции pow:</p>
+            <pre><code><xmp><!DOCTYPE html>
+<html>
+<head>
+  <!-- добавим стили mocha для отображения результатов -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/mocha/3.2.0/mocha.css">
+    <!-- добавляем сам фреймворк mocha -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/mocha/3.2.0/mocha.js"></script>
+  <script>
+    // включаем режим тестирования в стиле BDD
+    mocha.setup('bdd');
+  </script>
+    <!-- добавим chai -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/chai/3.5.0/chai.js"></script>
+  <script>
+    // chai предоставляет большое количество функций. Объявим assert глобально
+    let assert = chai.assert;
+  </script>
+</head>
+
+<body>
+
+  <script>
+    function pow(x, n) {
+        /* Здесь будет реализация функции, пока пусто */
+    }
+  </script>
+
+  <!-- скрипт со спецификацией (describe, it...) -->
+  <script src="test.js"></script>
+
+  <!-- элемент с id="mocha" будет содержать результаты тестов -->
+  <div id="mocha"></div>
+
+  <!-- запускаем тесты! -->
+  <script>
+    mocha.run();
+  </script>
+</body>
+
+</html></xmp></code></pre>
+            <ul class="mb-0">
+                <li><strong>Один тест проверяет одну вещь.</strong></li>
+                <li><p><strong>Группировка тестов производится вложенными блоками describe</strong></p>
+                    <pre><code>describe("pow", function() {
+
+  describe("возводит x в степень 3", function() {
+
+    function makeTest(x) {
+      let expected = x * x * x;
+      it(`${x} в степени 3 будет ${expected}`, function() {
+        assert.equal(pow(x, 3), expected);
+      });
+    }
+
+    for (let x = 1; x <= 5; x++) {
+      makeTest(x);
+    }
+
+  });
+
+  // ... другие тесты. Можно писать и describe, и it блоки.
+});
+                </code></pre>
+                </li>
+                <li><p><strong>before/after и beforeEach/afterEach</strong></p>
+                    <p>Мы можем задать before/after функции, которые будут выполняться до/после тестов, а также функции
+                        beforeEach/afterEach, выполняемые до/после каждого it.</p>
+                    <pre><code>describe("тест", function() {
+
+  before(() => alert("Тестирование началось – перед тестами"));
+  after(() => alert("Тестирование закончилось – после всех тестов"));
+
+  beforeEach(() => alert("Перед тестом – начинаем выполнять тест"));
+  afterEach(() => alert("После теста – заканчиваем выполнение теста"));
+
+  it('тест 1', () => alert(1));
+  it('тест 2', () => alert(2));
+
+});</code></pre>
+                </li>
+                <li><p><strong>Другие функции сравнения</strong></p>
+                    <p>Библиотека <a href="http://chaijs.com">Chai</a> содержит множество других подобных функций,
+                        например:</p>
+                    <ul class="mb-0">
+                        <li><code>assert.equal(value1, value2)</code> – проверяет равенство <code>value1 ==
+                            value2</code>.
+                        </li>
+                        <li><code>assert.strictEqual(value1, value2)</code> – проверяет строгое равенство <code>value1
+                            === value2</code>.
+                        </li>
+                        <li><code>assert.notEqual</code>, <code>assert.notStrictEqual</code> – проверяет неравенство и
+                            строгое неравенство соответственно.
+                        </li>
+                        <li><code>assert.isTrue(value)</code> – проверяет, что <code>value === true</code></li>
+                        <li><code>assert.isFalse(value)</code> – проверяет, что <code>value === false</code></li>
+                        <li>…с полным списком можно ознакомиться в <a
+                                href="http://chaijs.com/api/assert/">документации</a></li>
+                    </ul>
+                </li>
+            </ul>
+        </div>
+    </div>
+    <div class="card mb-3" id="polyfills">
+        <div class="card-header d-flex align-items-center">
+            <h2 class="h5 mb-0">3.6 Полифилы</h2>
+            <div class="ml-auto">
+                <a href="https://learn.javascript.ru/polyfills" target="_blank"
+                >Link</a
+                >
+            </div>
+        </div>
+        <div class="card-body">
+            <p>JavaScript – динамично развивающийся язык программирования. Регулярно появляются предложения о добавлении
+                в JS новых возможностей, они анализируются, и, если предложения одобряются, то описания новых
+                возможностей языка переносятся в черновик <a href="https://tc39.github.io/ecma262/">https://tc39.github.io/ecma262/</a>,
+                а затем публикуются в <a href="http://www.ecma-international.org/publications/standards/Ecma-262.htm">спецификации</a>.
+            </p>
+            <p>Разработчики JavaScript-движков сами решают, какие предложения реализовывать в первую очередь. Они могут
+                заранее добавить в браузеры поддержку функций, которые всё ещё находятся в черновике, и отложить
+                разработку функций, которые уже перенесены в спецификацию, потому что они менее интересны разработчикам
+                или более сложные в реализации.</p>
+            <h3 class="h5">Babel</h3>
+            <p><a href="https://babeljs.io">Babel</a> – это <a
+                    href="https://ru.wikipedia.org/wiki/%D0%A2%D1%80%D0%B0%D0%BD%D1%81%D0%BF%D0%B0%D0%B9%D0%BB%D0%B5%D1%80">транспилер</a>.
+                Он переписывает современный JavaScript-код в предыдущий стандарт.</p>
+            <p>На самом деле, есть две части Babel:</p>
+            <ol class="mb-0">
+                <li>
+                    <p>Во-первых, транспилер, который переписывает код. Разработчик запускает Babel на своём компьютере.
+                        Он переписывает код в старый стандарт. И после этого код отправляется на сайт. Современные
+                        сборщики проектов, такие как <a href="http://webpack.github.io/">webpack</a> или <a
+                                href="http://brunch.io/">brunch</a>, предоставляют возможность запускать транспилер
+                        автоматически после каждого изменения кода, что позволяет экономить время.</p>
+                </li>
+                <li>
+                    <p>Во-вторых, полифил.</p>
+                    <p>Новые возможности языка могут включать встроенные функции и синтаксические конструкции.
+                        Транспилер переписывает код, преобразовывая новые синтаксические конструкции в старые. Но что
+                        касается новых встроенных функций, нам нужно их как-то реализовать. JavaScript является
+                        высокодинамичным языком, скрипты могут добавлять/изменять любые функции, чтобы они вели себя в
+                        соответствии с современным стандартом.</p>
+                    <p>Термин «полифил» означает, что скрипт «заполняет» пробелы и добавляет современные функции.</p>
+                    <p>Два интересных хранилища полифилов:</p>
+                    <ul>
+                        <li><a href="https://github.com/zloirock/core-js">core js</a> поддерживает много функций, можно
+                            подключать только нужные.
+                        </li>
+                        <li><a href="http://polyfill.io">polyfill.io</a> – сервис, который автоматически создаёт скрипт
+                            с полифилом в зависимости от необходимых функций и браузера пользователя.
+                        </li>
+                    </ul>
+                </li>
+            </ol>
+        </div>
+    </div>
+</div>
+
+<!-- content -->
+<!-- footer -->
+</body>
+</html>

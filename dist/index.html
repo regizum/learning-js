@@ -11,6 +11,11 @@
     <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js" integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
+	<style>
+		xmp {
+			font-family: inherit;
+		}
+	</style>
 </head>
 <body class="pt-5">
 <nav class="navbar navbar-expand-lg navbar-light bg-light fixed-top">
@@ -25,8 +30,10 @@
 					   role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
 						JavaScript</a>
 					<div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink1">
-						<a class="dropdown-item" href="1-intro.html">1 Введение</a>
-						<a class="dropdown-item" href="2-first-steps.html">2 Основы JavaScript</a>
+						<a class="dropdown-item" href="1-intro.html">1. Введение</a>
+						<a class="dropdown-item" href="2-first-steps.html">2. Основы JavaScript</a>
+						<a class="dropdown-item" href="3-code-quality.html">3. Качество кода</a>
+						<a class="dropdown-item" href="4-object-basics.html">4. Объекты: основы</a>
 					</div>
 				</li>
 <li class="nav-item dropdown">
@@ -46,43 +53,288 @@
 </nav>
 <!-- content -->
 <div class="container mt-5">
-    <h1>Введение</h1>
-    <div class="card mb-3" id="intro">
-        <div class="card-header d-flex align-items-center">
-            <h2 class="h4 mb-0">1.1 Введение в JavaScript</h2>
-            <div class="ml-auto"><a href="https://learn.javascript.ru/intro" target="_blank">Link</a></div>
-        </div>
-        <div class="card-body">
-            <ul class="mb-0">
-                <li>JavaScript изначально создавался только для браузера, но сейчас используется на многих других платформах.</li>
-                <li>Сегодня JavaScript занимает уникальную позицию в качестве самого распространённого языка для
-                    браузера, обладающего полной интеграцией с HTML/CSS.</li>
-                <li>Многие языки могут быть «транспилированы» в JavaScript для предоставления дополнительных функций.
-                    Рекомендуется хотя бы кратко рассмотреть их после освоения JavaScript.</li>
-            </ul>
-        </div>
+  <h1>Введение</h1>
+  <div class="card mb-3" id="intro">
+    <div class="card-header d-flex align-items-center">
+      <h2 class="h4 mb-0">1.1 Введение в JavaScript</h2>
+      <div class="ml-auto">
+        <a href="https://learn.javascript.ru/intro" target="_blank">Link</a>
+      </div>
     </div>
-    <div class="card mb-3" id="manuals-specifications">
-        <div class="card-header d-flex align-items-center">
-            <h2 class="h4 mb-0">1.2 Справочники и спецификации</h2>
-            <div class="ml-auto"><a href="https://learn.javascript.ru/manuals-specifications" target="_blank">Link</a></div>
-        </div>
-        <div class="card-body">
-            <p class="mb-0"><a href="https://www.ecma-international.org/publications/standards/Ecma-262.htm">Спецификация ECMA-262</a>
-                содержит самую глубокую, детальную и формализованную информацию о JavaScript. Она определяет сам язык.</p>
-        </div>
+    <div class="card-body">
+      <h5>Что такое JavaScript?</h5>
+      <p>
+        JavaScript изначально создавался только для браузера, но сейчас
+        используется на многих других платформах. Сегодня JavaScript может
+        выполняться не только в браузере, но и на сервере или на любом другом
+        устройстве, которое имеет специальную программу, называющуюся «движком»
+        JavaScript.
+      </p>
+      <p>
+        У браузера есть собственный движок, который иногда называют «виртуальная
+        машина JavaScript». Разные движки имеют разные «кодовые имена».
+      </p>
+      <ul class="mb-3">
+        <li><strong>V8</strong> – в Chrome и Opera</li>
+        <li><strong>SpiderMonkey</strong> – в Firefox</li>
+        <li>
+          <strong>«Trident»</strong> и <strong>«Chakra»</strong> для разных
+          версий IE
+        </li>
+        <li><strong>«ChakraCore»</strong> для Microsoft Edge</li>
+        <li>
+          <strong>«Nitro»</strong> и <strong>«SquirrelFish»</strong> для Safari
+        </li>
+      </ul>
+
+      <h5>Что может JavaScript в браузере?</h5>
+      <ul class="mb-3">
+        <li>Модифицировать HTML/CSS.</li>
+        <li>Реагировать на действия пользователя.</li>
+        <li>
+          Отправлять сетевые запросы на удалённые сервера, скачивать и загружать
+          файлы (технологии AJAX и COMET).
+        </li>
+        <li>
+          Получать и устанавливать куки, задавать вопросы посетителю, показывать
+          сообщения.
+        </li>
+        <li>Запоминать данные на стороне клиента («local storage»).</li>
+      </ul>
+
+      <h5>Чего НЕ может JavaScript в браузере?</h5>
+      <ul class="mb-3">
+        <li>
+          JavaScript на веб-странице не может читать/записывать произвольные
+          файлы на жёстком диске, копировать их или запускать программы.
+          Современные браузеры позволяют ему работать с файлами, но с
+          ограниченным доступом, и предоставляют его, только если пользователь
+          выполняет определённые действия. Существуют способы взаимодействия с
+          камерой/микрофоном и другими устройствами, но они требуют явного
+          разрешения пользователя.
+        </li>
+        <li>
+          Различные окна/вкладки не знают друг о друге. Иногда одно окно,
+          используя JavaScript, открывает другое окно. Но даже в этом случае
+          JavaScript с одной страницы не имеет доступа к другой, если они пришли
+          с разных сайтов (с другого домена, протокола или порта).
+        </li>
+        <li>
+          JavaScript может легко взаимодействовать с сервером, с которого пришла
+          текущая страница. Но его способность получать данные с других
+          сайтов/доменов ограничена.
+        </li>
+      </ul>
+      <p>
+        Подобные ограничения не действуют, если JavaScript используется вне
+        браузера, например — на сервере.
+      </p>
+
+      <h5>Что делает JavaScript особенным?</h5>
+      <ul>
+        <li>Полная интеграция с HTML/CSS.</li>
+        <li>Простые вещи делаются просто.</li>
+        <li>
+          Поддерживается всеми основными браузерами и включён по умолчанию.
+        </li>
+      </ul>
+
+      <h5>Языки «над» JavaScript</h5>
+      <p>
+        Многие языки могут быть «транспилированы» в JavaScript для
+        предоставления дополнительных функций. Рекомендуется хотя бы кратко
+        рассмотреть их после освоения JavaScript.
+      </p>
+      <ul class="mb-0">
+        <li>
+          <strong>CoffeeScript</strong> добавляет «синтаксический сахар» для
+          JavaScript. Он вводит более короткий синтаксис, который позволяет
+          писать чистый и лаконичный код.
+        </li>
+        <li>
+          <strong>TypeScript</strong> концентрируется на добавлении «строгой
+          типизации» для упрощения разработки и поддержки больших и сложных
+          систем. Разработан Microsoft.
+        </li>
+        <li>
+          <strong>Flow</strong> тоже добавляет типизацию, но иначе. Разработан
+          Facebook.
+        </li>
+        <li>
+          <strong>Dart</strong> стоит особняком, потому что имеет собственный
+          движок, работающий вне браузера (например, в мобильных приложениях).
+        </li>
+        <li>
+          <strong>Brython</strong> транспилирует Python в JavaScript, что
+          позволяет писать приложения на чистом Python без JavaScript.
+        </li>
+      </ul>
     </div>
-    <div class="card mb-3" id="code-editors">
-        <div class="card-header d-flex align-items-center">
-            <h2 class="h4 mb-0">1.3 Редакторы кода</h2>
-            <div class="ml-auto"><a href="https://learn.javascript.ru/code-editors" target="_blank">Link</a></div>
-        </div>
-        <div class="card-body">
-            <p class="mb-0">Большую часть своего рабочего времени программисты проводят в редакторах кода. Есть два
-                основных типа редакторов: IDE и «лёгкие» редакторы. Многие используют по одному инструменту каждого типа.</p>
-        </div>
+  </div>
+  <div class="card mb-3" id="manuals-specifications">
+    <div class="card-header d-flex align-items-center">
+      <h2 class="h4 mb-0">1.2 Справочники и спецификации</h2>
+      <div class="ml-auto">
+        <a
+          href="https://learn.javascript.ru/manuals-specifications"
+          target="_blank"
+          >Link</a
+        >
+      </div>
     </div>
+    <div class="card-body">
+      <h5>Спецификация</h5>
+      <p class="mb-0">
+        <a
+          href="https://www.ecma-international.org/publications/standards/Ecma-262.htm"
+          >Спецификация ECMA-262</a
+        >
+        содержит самую глубокую, детальную и формализованную информацию о
+        JavaScript. Она определяет сам язык.
+      </p>
+      <p>
+        Новая версия спецификации появляется каждый год. А пока она не вышла
+        официально, все желающие могут ознакомиться с текущим черновиком на
+        <a href="https://tc39.es/ecma262/">https://tc39.es/ecma262/</a>.
+      </p>
+      <p>
+        Чтобы почитать о самых последних возможностях, включая те, которые
+        «почти в стандарте» (так называемые «stage 3 proposals»), посетите
+        <a href="https://github.com/tc39/proposals"
+          >https://github.com/tc39/proposals</a
+        >.
+      </p>
+
+      <h5>Справочники</h5>
+      <ul>
+        <li>
+          <p>
+            <strong>MDN (Mozilla) JavaScript Reference</strong> – это справочник
+            с примерами и другой информацией. Хороший источник для получения
+            подробных сведений о функциях языка, методах встроенных объектов и
+            так далее. Располагается по адресу
+            <a
+              href="https://developer.mozilla.org/ru/docs/Web/JavaScript/Reference"
+              >https://developer.mozilla.org/ru/docs/Web/JavaScript/Reference</a
+            >.
+          </p>
+        </li>
+        <li>
+          <p>
+            <strong>MSDN</strong> – справочник от Microsoft, содержащий много
+            информации, в том числе по JavaScript (который там часто
+            обозначается как JScript). Если вам нужно найти что-то специфическое
+            по браузеру Internet Explorer, лучше искать там:
+            <a href="http://msdn.microsoft.com/">http://msdn.microsoft.com/</a>.
+          </p>
+        </li>
+      </ul>
+
+      <h5>Таблицы совместимости</h5>
+      <ul class="mb-0">
+        <li>
+          <a href="http://caniuse.com">http://caniuse.com</a> – таблицы с
+          информацией о поддержке по каждой возможности языка. Например, чтобы
+          узнать, какие движки поддерживают современные криптографические
+          функции, посетите:
+          <a href="http://caniuse.com/#feat=cryptography"
+            >http://caniuse.com/#feat=cryptography</a
+          >.
+        </li>
+        <li>
+          <a href="https://kangax.github.io/compat-table"
+            >https://kangax.github.io/compat-table</a
+          >
+          – таблица с возможностями языка и движками, которые их поддерживают и
+          не поддерживают.
+        </li>
+      </ul>
+    </div>
+  </div>
+  <div class="card mb-3" id="code-editors">
+    <div class="card-header d-flex align-items-center">
+      <h2 class="h4 mb-0">1.3 Редакторы кода</h2>
+      <div class="ml-auto">
+        <a href="https://learn.javascript.ru/code-editors" target="_blank"
+          >Link</a
+        >
+      </div>
+    </div>
+    <div class="card-body">
+      <p>
+        Большую часть своего рабочего времени программисты проводят в редакторах
+        кода. Есть два основных типа редакторов: IDE и «лёгкие» редакторы.
+        Многие используют по одному инструменту каждого типа.
+      </p>
+
+      <h5>IDE (Integrated Development Environment)</h5>
+      <p>
+        IDE загружает проект (который может состоять из множества файлов),
+        позволяет переключаться между файлами, предлагает автодополнение по коду
+        всего проекта (а не только открытого файла), также она интегрирована с
+        системой контроля версий (например, такой как git), средой для
+        тестирования и другими инструментами на уровне всего проекта.
+      </p>
+      <ul>
+        <li>
+          <a href="https://code.visualstudio.com/">Visual Studio Code</a>
+          (бесплатно).
+        </li>
+        <li>
+          <a href="http://www.jetbrains.com/webstorm/">WebStorm</a> (платно).
+        </li>
+      </ul>
+
+      <h5>«Лёгкие» редакторы</h5>
+      <p>
+        Главное отличие между «лёгким» редактором и IDE состоит в том, что IDE
+        работает на уровне целого проекта, поэтому она загружает больше данных
+        при запуске, анализирует структуру проекта, если это необходимо, и так
+        далее. Если вы работаете только с одним файлом, то гораздо быстрее
+        открыть его в «лёгком» редакторе.
+      </p>
+      <p>
+        На практике «лёгкие» редакторы могут иметь множество плагинов, включая
+        автодополнение и анализаторы синтаксиса на уровне директории, поэтому
+        границы между IDE и «лёгкими» редакторами размыты.
+      </p>
+      <ul class="mb-0">
+        <li>
+          <a href="https://atom.io/">Atom</a> (кроссплатформенный, бесплатный).
+        </li>
+        <li>
+          <a href="http://www.sublimetext.com">Sublime Text</a>
+          (кроссплатформенный, условно-бесплатный).
+        </li>
+        <li>
+          <a href="https://notepad-plus-plus.org/">Notepad++</a> (Windows,
+          бесплатный).
+        </li>
+        <li>
+          <a href="http://www.vim.org/">Vim</a> и
+          <a href="https://www.gnu.org/software/emacs/">Emacs</a> тоже хороши,
+          если знать, как ими пользоваться.
+        </li>
+      </ul>
+    </div>
+  </div>
+  <div class="card mb-3" id="devtools">
+    <div class="card-header d-flex align-items-center">
+      <h2 class="h4 mb-0">1.4 Консоль разработчика</h2>
+      <div class="ml-auto">
+        <a href="https://learn.javascript.ru/devtools" target="_blank">Link</a>
+      </div>
+    </div>
+    <div class="card-body">
+      <p class="mb-0">
+        Чтобы открыть инструменты разработчика в Chrome для Mac используйте
+        комбинацию Cmd+Opt+J, Safari: Cmd+Opt+C (необходимо предварительное
+        включение «Меню разработчика»).
+      </p>
+    </div>
+  </div>
 </div>
+
 <!-- content -->
 <!-- footer -->
 </body>

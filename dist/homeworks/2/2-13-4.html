@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html>
+  <body>
+    <script>
+      let firstNumber = prompt("Number 1");
+      let secondNumber = prompt("Number 2");
+      nextPrime: for (let i = firstNumber; i <= secondNumber; i++) {
+        for (let j = 2; j < i; j++) {
+          if (i % j == 0) continue nextPrime;
+        }
+
+        console.log(i);
+      }
+    </script>
+  </body>
+</html>

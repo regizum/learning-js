@@ -10,9 +10,12 @@
   },
   "devDependencies": {
     "del": "^5.1.0",
-    "gulp": "^3.9.1",
+    "gulp": "4.0.0",
     "gulp-connect": "^5.7.0",
     "gulp-html-tag-include": "^1.0.1",
     "run-sequence": "^2.2.1"
+  },
+  "dependencies": {
+    "prettier": "^2.1.2"
   }
 }

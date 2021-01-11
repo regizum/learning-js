@@ -1,0 +1,97 @@
+<div class="container mt-5">
+    <h1>Объекты: основы</h1>
+    <div class="card mb-3" id="object">
+        <div class="card-header d-flex align-items-center">
+            <h2 class="h5 mb-0">4.1 Объекты</h2>
+            <div class="dropdown ml-auto">
+                <button
+                        class="btn btn-primary dropdown-toggle"
+                        type="button"
+                        id="dropdownMenuButton1"
+                        data-toggle="dropdown"
+                        aria-haspopup="true"
+                        aria-expanded="false">
+                    Homeworks
+                </button>
+                <div class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
+                    <a
+                            class="dropdown-item"
+                            target="_blank"
+                            href="./homeworks/4/4-1-1.html"
+                    >1</a
+                    ><a
+                        class="dropdown-item"
+                        target="_blank"
+                        href="./homeworks/4/4-1-2.html"
+                >2</a><a
+                        class="dropdown-item"
+                        target="_blank"
+                        href="./homeworks/4/4-1-3.html"
+                >3</a><a
+                        class="dropdown-item"
+                        target="_blank"
+                        href="./homeworks/4/4-1-4.html"
+                >4</a>
+                </div>
+            </div>
+            <div class="ml-4">
+                <a href="https://learn.javascript.ru/object" target="_blank"
+                >Link</a
+                >
+            </div>
+        </div>
+        <div class="card-body">
+            <p>Объекты – это ассоциативные массивы с рядом дополнительных возможностей.</p>
+            <p>Они хранят свойства (пары ключ-значение), где:</p>
+            <ul>
+                <li>Ключи свойств должны быть строками или символами (обычно строками).</li>
+                <li>Значения могут быть любого типа.</li>
+                <li>Имя переменной не может совпадать с зарезервированными словами, такими как «for», «let»,
+                    «return» и
+                    т.д. Но для свойств объекта такого ограничения нет
+                </li>
+            </ul>
+            <p>Чтобы получить доступ к свойству, мы можем использовать:</p>
+            <ul>
+                <li>Запись через точку: <code>obj.property</code>.</li>
+                <li>Квадратные скобки <code>obj["property"]</code>. Квадратные скобки позволяют взять ключ из
+                    переменной, например, <code>obj[varWithKey]</code>.
+                </li>
+            </ul>
+            <h5>Вычисляемые свойства</h5>
+            <pre><code>let fruit = 'apple';
+let bag = {
+  [fruit + 'Computers']: 5 // bag.appleComputers = 5
+};
+            </code></pre>
+            <h5>Свойство из переменной</h5>
+            <pre><code>function makeUser(name, age) {
+  return {
+    name, // то же самое, что и name: name
+    age   // то же самое, что и age: age
+    // ...
+  };
+}</code></pre>
+            <h5>Дополнительные операторы:</h5>
+            <ul>
+                <li>Удаление свойства: <code>delete obj.prop</code>.</li>
+                <li>Проверка существования свойства: <code>"key" in obj</code>.</li>
+                <li>Перебор свойств объекта: цикл for <code>for (let key in obj)</code>.</li>
+            </ul>
+            <p>То, что мы изучали в этой главе, называется «простым объектом» («plain object») или просто
+                <code>Object</code>.</p>
+            <h5>В JavaScript есть много других типов объектов:</h5>
+            <ul>
+                <li><code>Array</code> для хранения упорядоченных коллекций данных,</li>
+                <li><code>Date</code> для хранения информации о дате и времени,</li>
+                <li><code>Error</code> для хранения информации об ошибке.</li>
+                <li>… и так далее.</li>
+            </ul>
+            <p class="mb-0">Иногда люди говорят что-то вроде «тип
+                данных Array»
+                или «тип данных Date», но формально они не являются отдельными типами, а относятся к типу данных
+                <code>Object</code>.
+                Они лишь расширяют его различными способами.</p>
+        </div>
+    </div>
+</div>

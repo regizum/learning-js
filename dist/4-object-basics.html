@@ -1,0 +1,162 @@
+<!doctype html >
+<html lang="ru">
+<head>
+    <title>CP all</title>
+    <meta charset="UTF-8">
+    <script src="https://code.jquery.com/jquery-3.4.1.min.js"
+            integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>
+    <script src="../js/main.js"></script>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+          integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js" integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
+	<style>
+		xmp {
+			font-family: inherit;
+		}
+	</style>
+</head>
+<body class="pt-5">
+<nav class="navbar navbar-expand-lg navbar-light bg-light fixed-top">
+	<div class="container">
+		<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
+			<span class="navbar-toggler-icon"></span>
+		</button>
+		<div class="collapse navbar-collapse" id="navbarNavDropdown">
+			<ul class="navbar-nav">
+				<li class="nav-item dropdown">
+					<a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink1"
+					   role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+						JavaScript</a>
+					<div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink1">
+						<a class="dropdown-item" href="1-intro.html">1. Введение</a>
+						<a class="dropdown-item" href="2-first-steps.html">2. Основы JavaScript</a>
+						<a class="dropdown-item" href="3-code-quality.html">3. Качество кода</a>
+						<a class="dropdown-item" href="4-object-basics.html">4. Объекты: основы</a>
+					</div>
+				</li>
+<li class="nav-item dropdown">
+  <a
+    class="nav-link dropdown-toggle"
+    href="#"
+    id="navbarDropdownMenuLink"
+    role="button"
+    data-toggle="dropdown"
+    aria-haspopup="true"
+    aria-expanded="false"
+  >
+    Объекты: основы
+  </a>
+  <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+    <a class="dropdown-item" href="#object">4.1 Объекты</a>
+  </div>
+</li>
+
+</ul>
+</div>
+</div>
+</nav>
+<!-- content -->
+<div class="container mt-5">
+    <h1>Объекты: основы</h1>
+    <div class="card mb-3" id="object">
+        <div class="card-header d-flex align-items-center">
+            <h2 class="h5 mb-0">4.1 Объекты</h2>
+            <div class="dropdown ml-auto">
+                <button
+                        class="btn btn-primary dropdown-toggle"
+                        type="button"
+                        id="dropdownMenuButton1"
+                        data-toggle="dropdown"
+                        aria-haspopup="true"
+                        aria-expanded="false">
+                    Homeworks
+                </button>
+                <div class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
+                    <a
+                            class="dropdown-item"
+                            target="_blank"
+                            href="./homeworks/4/4-1-1.html"
+                    >1</a
+                    ><a
+                        class="dropdown-item"
+                        target="_blank"
+                        href="./homeworks/4/4-1-2.html"
+                >2</a><a
+                        class="dropdown-item"
+                        target="_blank"
+                        href="./homeworks/4/4-1-3.html"
+                >3</a><a
+                        class="dropdown-item"
+                        target="_blank"
+                        href="./homeworks/4/4-1-4.html"
+                >4</a>
+                </div>
+            </div>
+            <div class="ml-4">
+                <a href="https://learn.javascript.ru/object" target="_blank"
+                >Link</a
+                >
+            </div>
+        </div>
+        <div class="card-body">
+            <p>Объекты – это ассоциативные массивы с рядом дополнительных возможностей.</p>
+            <p>Они хранят свойства (пары ключ-значение), где:</p>
+            <ul>
+                <li>Ключи свойств должны быть строками или символами (обычно строками).</li>
+                <li>Значения могут быть любого типа.</li>
+                <li>Имя переменной не может совпадать с зарезервированными словами, такими как «for», «let»,
+                    «return» и
+                    т.д. Но для свойств объекта такого ограничения нет
+                </li>
+            </ul>
+            <p>Чтобы получить доступ к свойству, мы можем использовать:</p>
+            <ul>
+                <li>Запись через точку: <code>obj.property</code>.</li>
+                <li>Квадратные скобки <code>obj["property"]</code>. Квадратные скобки позволяют взять ключ из
+                    переменной, например, <code>obj[varWithKey]</code>.
+                </li>
+            </ul>
+            <h5>Вычисляемые свойства</h5>
+            <pre><code>let fruit = 'apple';
+let bag = {
+  [fruit + 'Computers']: 5 // bag.appleComputers = 5
+};
+            </code></pre>
+            <h5>Свойство из переменной</h5>
+            <pre><code>function makeUser(name, age) {
+  return {
+    name, // то же самое, что и name: name
+    age   // то же самое, что и age: age
+    // ...
+  };
+}</code></pre>
+            <h5>Дополнительные операторы:</h5>
+            <ul>
+                <li>Удаление свойства: <code>delete obj.prop</code>.</li>
+                <li>Проверка существования свойства: <code>"key" in obj</code>.</li>
+                <li>Перебор свойств объекта: цикл for <code>for (let key in obj)</code>.</li>
+            </ul>
+            <p>То, что мы изучали в этой главе, называется «простым объектом» («plain object») или просто
+                <code>Object</code>.</p>
+            <h5>В JavaScript есть много других типов объектов:</h5>
+            <ul>
+                <li><code>Array</code> для хранения упорядоченных коллекций данных,</li>
+                <li><code>Date</code> для хранения информации о дате и времени,</li>
+                <li><code>Error</code> для хранения информации об ошибке.</li>
+                <li>… и так далее.</li>
+            </ul>
+            <p class="mb-0">Иногда люди говорят что-то вроде «тип
+                данных Array»
+                или «тип данных Date», но формально они не являются отдельными типами, а относятся к типу данных
+                <code>Object</code>.
+                Они лишь расширяют его различными способами.</p>
+        </div>
+    </div>
+</div>
+
+<!-- content -->
+<!-- footer -->
+</body>
+</html>

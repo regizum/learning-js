@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html>
+  <body>
+    <script>
+      let loginName = prompt("Кто там?");
+
+      if (!loginName) {
+        alert("Отменено");
+      } else if (loginName !== "Админ") {
+        alert("Я вас не знаю");
+      } else {
+        let password = prompt("Пароль?");
+
+        if (!password) {
+          alert("Отменено");
+        } else if (password !== "Я Главный") {
+          alert("Неверный пароль");
+        } else {
+          alert("Здравствуйте!");
+        }
+      }
+    </script>
+  </body>
+</html>
