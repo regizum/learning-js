@@ -9,7 +9,7 @@ var gulp = require("gulp"),
 gulp.task("connect", function (done) {
   connect.server({
     port: 8080,
-    root: "dist/",
+    root: "./",
     livereload: true,
   });
   done();
@@ -29,6 +29,13 @@ gulp.task("html", function () {
     .src("src/html/compile/*.html")
     .pipe(include())
     .pipe(gulp.dest("dist/"))
+    .pipe(connect.reload());
+});
+gulp.task("html-index", function () {
+  return gulp
+    .src("src/html/index.html")
+    .pipe(include())
+    .pipe(gulp.dest("./"))
     .pipe(connect.reload());
 });
 
@@ -61,7 +68,7 @@ gulp.task("js", function () {
     .pipe(connect.reload());
 });
 
-gulp.task("build", gulp.series("homeworks", "assets", "html", "js"), function () {});
+gulp.task("build", gulp.series("homeworks", "assets", "html", "html-index", "js"), function () {});
 
 //# Watch
 
