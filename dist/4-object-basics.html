@@ -15,6 +15,11 @@
 		xmp {
 			font-family: inherit;
 		}
+		pre {
+			background: #f5f2f0;
+			padding: 16px;
+			border-radius: 8px;
+		}
 	</style>
 </head>
 <body class="pt-5">
@@ -52,6 +57,8 @@
     <a class="dropdown-item" href="#object">4.1 Объекты</a>
     <a class="dropdown-item" href="#object-copy">4.2 Копирование объектов и ссылки</a>
     <a class="dropdown-item" href="#garbage-collection">4.3 Сборка мусора</a>
+    <a class="dropdown-item" href="#object-methods">4.4 Методы объекта, "this"</a>
+    <a class="dropdown-item" href="#constructor-new">4.5 Конструкторы, создание объектов через "new"</a>
   </div>
 </li>
 
@@ -229,6 +236,274 @@ let bag = {
                     на производительность, сборщик мусора старается работать только во время простоя процессора.
                 </li>
             </ul>
+        </div>
+    </div>
+
+    <div class="card mb-3" id="object-methods">
+        <div class="card-header d-flex align-items-center">
+            <h2 class="h5 mb-0">4.4 Методы объекта, "this"</h2>
+            <div class="dropdown ml-auto">
+                <button
+                        class="btn btn-primary dropdown-toggle"
+                        type="button"
+                        id="dropdownMenuButton4"
+                        data-toggle="dropdown"
+                        aria-haspopup="true"
+                        aria-expanded="false">
+                    Homeworks
+                </button>
+                <div class="dropdown-menu" aria-labelledby="dropdownMenuButton4">
+                    <a
+                            class="dropdown-item"
+                            target="_blank"
+                            href="./homeworks/4/4-4-1.html"
+                    >1</a
+                    ><a
+                        class="dropdown-item"
+                        target="_blank"
+                        href="./homeworks/4/4-4-2.html"
+                >2</a>
+                </div>
+            </div>
+            <div class="ml-4">
+                <a href="https://learn.javascript.ru/object-methods" target="_blank"
+                >Link</a
+                >
+            </div>
+        </div>
+        <div class="card-body">
+            <h3 class="h5">Методы объекта</h3>
+            <ul>
+                <li>Функции, которые находятся в объекте в качестве его свойств, называются «методами».</li>
+                <li>Методы позволяют объектам «действовать»: <code>object.doSomething()</code>.</li>
+                <li><p>Запись методов:</p>
+                    <pre><code>let user = {
+  name: "Джон",
+  age: 30
+};
+
+user.sayHi = function() {
+  alert("Привет!");
+};
+
+user.sayHi(); // Привет!</code></pre>
+                    <pre><code>let user = {
+  // ...
+};
+
+// сначала объявляем
+function sayHi() {
+  alert("Привет!");
+};
+
+// затем добавляем в качестве метода
+user.sayHi = sayHi;
+
+user.sayHi(); // Привет!</code></pre>
+                </li>
+                <li><p>Сокращённая запись метода</p>
+                    <pre><code>user = {
+  sayHi() { // то же самое, что и "sayHi: function()"
+    alert("Привет");
+  }
+};</code></pre>
+                </li>
+            </ul>
+            <h3 class="h5">"this"</h3>
+            <ul>
+                <li><p>«this» не является фиксированным. Значение this вычисляется во время выполнения кода и зависит
+                    от контекста.</p>
+                    <p><strong>Правило простое: при вызове obj.f() значение this внутри f равно obj. Так что, в
+                        приведённом примере это user или admin.</strong></p>
+                    <pre><code>let user = { name: "Джон" };
+let admin = { name: "Админ" };
+
+function sayHi() {
+  alert( this.name );
+}
+
+// используем одну и ту же функцию в двух объектах
+user.f = sayHi;
+admin.f = sayHi;
+
+// вызовы функции, приведённые ниже, имеют разное значение this
+// "this" внутри функции является ссылкой на объект, который указан "перед точкой"
+user.f(); // Джон  (this == user)
+admin.f(); // Админ  (this == admin)
+
+admin['f'](); // Админ (неважен способ доступа к методу - через точку или квадратные скобки)</code></pre>
+                </li>
+                <li>При объявлении любой функции в ней можно использовать <code>this</code>, но этот <code>this</code>
+                    не имеет значения до тех пор, пока функция не будет вызвана.
+                </li>
+                <li>Эта функция может быть скопирована между объектами (из одного объекта в другой).</li>
+                <li>Когда функция вызывается синтаксисом «метода» – <code>object.method()</code>, значением
+                    <code>this</code> во время вызова является объект перед точкой.
+                </li>
+            </ul>
+            <h3 class="h5">Внутренняя реализация: Ссылочный тип</h3>
+            <pre><code>let user = {
+  name: "Джон",
+  hi() { alert(this.name); },
+  bye() { alert("Пока"); }
+};
+
+user.hi(); // Джон (простой вызов метода работает хорошо)
+
+// теперь давайте попробуем вызывать user.hi или user.bye
+// в зависимости от имени пользователя user.name
+(user.name == "Джон" ? user.hi : user.bye)(); // Ошибка!</code></pre>
+            <p>Почему? Если мы хотим понять, почему так происходит, давайте разберёмся (заглянем под капот), как
+                работает вызов методов (<code>obj.method()</code>).</p>
+            <p>Присмотревшись поближе, в выражении <code>obj.method()</code> можно заметить две операции:</p>
+            <ol>
+                <li>Сначала оператор точка <code>'.'</code> возвращает свойство объекта – его метод
+                    (<code>obj.method</code>).
+                </li>
+                <li>Затем скобки <code>()</code> вызывают этот метод (исполняется код метода).</li>
+            </ol>
+            <p><strong>Для работы вызовов типа <code>user.hi()</code>, JavaScript использует трюк – точка
+                <code>'.'</code> возвращает не саму функцию, а специальное значение «ссылочного типа», называемого <a
+                        href="https://tc39.github.io/ecma262/#sec-reference-specification-type">Reference
+                    Type</a>.</strong></p>
+            <p>Значение ссылочного типа – это «триплет»: комбинация из трёх значений <code>(base, name, strict)</code>,
+                где:</p>
+            <ul>
+                <li><code>base</code> – это объект.</li>
+                <li><code>name</code> – это имя свойства объекта.</li>
+                <li><code>strict</code> – это режим исполнения. Является true, если действует строгий режим (<code>use
+                    strict</code>).
+                </li>
+            </ul>
+            <pre><code>// значение ссылочного типа (Reference Type)
+(user, "hi", true)</code></pre>
+            <p>Когда скобки <code>()</code> применяются к значению ссылочного типа (происходит вызов), то они получают
+                полную информацию об объекте и его методе, и могут поставить правильный <code>this</code>
+                (<code>=user</code> в данном случае, по <code>base</code>).</p>
+            <p>При любой другой операции между '.' и '()' (кроме скобок '()'), например, присваивании <code>hi =
+                user.hi</code>, ссылочный
+                тип заменяется на собственно значение <code>user.hi</code> (функцию), и дальше работа уже идёт только с
+                ней. Поэтому дальнейший вызов происходит уже без <code>this</code>.</p>
+            <p>Таким образом, значение <code>this</code> передаётся правильно, только если функция вызывается напрямую с
+                использованием синтаксиса точки <code>obj.method()</code> или квадратных скобок
+                <code>obj['method']()</code> (они делают то же самое). Позднее в этом учебнике мы изучим различные
+                варианты решения проблемы потери значения <code>this</code>. Например, такие как <a
+                        href="/bind#solution-2-bind">func.bind()</a>.</p>
+            <h3 class="h5">У стрелочных функций нет «this»</h3>
+            <p>Стрелочные функции особенные: у них нет своего «собственного» this. Если мы используем this внутри
+                стрелочной функции, то его значение берётся из внешней «нормальной» функции.</p>
+            <pre class="mb-0"><code>let user = {
+  firstName: "Илья",
+  sayHi() {
+    let arrow = () => alert(this.firstName);
+    arrow();
+  }
+};
+
+user.sayHi(); // Илья</code></pre>
+        </div>
+    </div>
+
+    <div class="card mb-3" id="constructor-new">
+        <div class="card-header d-flex align-items-center">
+            <h2 class="h5 mb-0">4.5 Конструкторы, создание объектов через "new"</h2>
+            <div class="dropdown ml-auto">
+                <button
+                        class="btn btn-primary dropdown-toggle"
+                        type="button"
+                        id="dropdownMenuButton4"
+                        data-toggle="dropdown"
+                        aria-haspopup="true"
+                        aria-expanded="false">
+                    Homeworks
+                </button>
+                <div class="dropdown-menu" aria-labelledby="dropdownMenuButton4">
+                    <a
+                            class="dropdown-item"
+                            target="_blank"
+                            href="./homeworks/4/4-5-1.html"
+                    >1</a
+                    ><a
+                        class="dropdown-item"
+                        target="_blank"
+                        href="./homeworks/4/4-5-2.html"
+                >2</a>
+                </div>
+            </div>
+            <div class="ml-4">
+                <a href="https://learn.javascript.ru/object-methods" target="_blank"
+                >Link</a
+                >
+            </div>
+        </div>
+        <div class="card-body">
+            <h3 class="h5">Функция-конструктор</h3>
+            <p>Функции-конструкторы являются обычными функциями. Но есть два соглашения:</p>
+            <ol>
+                <li>Имя функции-конструктора должно начинаться с большой буквы.</li>
+                <li>Функция-конструктор должна вызываться при помощи оператора <code>"new"</code>.</li>
+            </ol>
+            <p>Вызов <code>new User(...)</code> делает примерно вот что:</p>
+            <pre><code>function User(name) {
+  // this = {};  (неявно)
+
+  // добавляет свойства к this
+  this.name = name;
+  this.isAdmin = false;
+
+  // return this;  (неявно)
+}</code></pre>
+            <h3 class="h5">new function() { … }</h3>
+            <pre><code>let user = new function() {
+  this.name = "Вася";
+  this.isAdmin = false;
+
+  // ...другой код для создания пользователя
+  // возможна любая сложная логика и выражения
+  // локальные переменные и т. д.
+};</code></pre>
+            <p>Такой конструктор не может быть вызван дважды, так как он нигде не сохраняется, просто создаётся и тут же
+                вызывается. Таким образом, такой метод создания позволяет инкапсулировать код, который создаёт отдельный
+                объект, но без возможности его повторного использования.</p>
+            <h3 class="h5">Проверка на вызов в режиме конструктора: new.target</h3>
+            <p>В случае, если функция вызвана при помощи new, то в new.target будет сама функция, в противном случае
+                undefined.</p>
+            <pre><code>function User() {
+  alert(new.target);
+}
+
+// без "new":
+User(); // undefined
+
+// с "new":
+new User(); // function User { ... }</code></pre>
+            <h3 class="h5">Возврат значения из конструктора return</h3>
+            <p>Обычно конструкторы ничего не возвращают явно. Их задача – записать все необходимое в <code>this</code>,
+                который в итоге станет результатом.</p>
+            <p>Но если <code>return</code> всё же есть, то применяется простое правило:</p>
+            <ul>
+                <li>При вызове <code>return</code> с объектом, будет возвращён объект, а не <code>this</code>.</li>
+                <li>При вызове <code>return</code> с примитивным значением или пустым, примитивное значение будет отброшено.</li>
+            </ul>
+            <h3 class="h5">Создание методов в конструкторе</h3>
+            <pre class="mb-0"><code>function User(name) {
+  this.name = name;
+
+  this.sayHi = function() {
+    alert( "Меня зовут: " + this.name );
+  };
+}
+
+let vasya = new User("Вася");
+
+vasya.sayHi(); // Меня зовут: Вася
+
+/*
+vasya = {
+   name: "Вася",
+   sayHi: function() { ... }
+}
+*/</code></pre>
         </div>
     </div>
 </div>

@@ -15,6 +15,11 @@
 		xmp {
 			font-family: inherit;
 		}
+		pre {
+			background: #f5f2f0;
+			padding: 16px;
+			border-radius: 8px;
+		}
 	</style>
 </head>
 <body class="pt-5">
@@ -290,12 +295,10 @@
         </p>
         <pre><code>// заметка: "use strict" в этом примере не используется
 num = 5; // если переменная "num" раньше не существовала, она создаётся
-alert(num); // 5
-</code></pre>
+alert(num); // 5</code></pre>
         <p>Это плохая практика, которая приводит к ошибке в строгом режиме:</p>
         <pre class="mb-0"><code>"use strict";
-num = 5; // error: num is not defined
-</code></pre>
+num = 5; // error: num is not defined</code></pre>
       </div>
     </div>
   </div>
@@ -661,8 +664,7 @@ alert( '1' + 2 ); // '12' (строка слева)</code></pre>
       <h3 class="h5">Сокращённая арифметика с присваиванием</h3>
       <pre><code>let n = 2;
 n += 5; // теперь n = 7 (работает как n = n + 5)
-n *= 2; // теперь n = 14 (работает как n = n * 2)
-</code></pre>
+n *= 2; // теперь n = 14 (работает как n = n * 2)</code></pre>
       <p>
         Краткие формы записи существуют для всех арифметических и побитовых
         операторов.
@@ -920,8 +922,7 @@ alert( 0 && "no matter what" ); // 0</pre
           <p>Используется для присвоения переменным значений по умолчанию:</p>
 
           <pre><code>// будет height=100, если переменная height равна null или undefined
-height = height ?? 100;
-</code></pre>
+height = height ?? 100;</code></pre>
         </li>
         <li>
           <p>
