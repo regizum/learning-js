@@ -1,0 +1,337 @@
+<div class="container mt-5">
+  <h1>
+    Свойства объекта, их конфигурация
+  </h1>
+  <div class="card mb-3" id="property-descriptors">
+    <div class="card-header d-flex align-items-center">
+      <h2 class="h5 mb-0">7.1 Флаги и дескрипторы свойств</h2>
+
+      <div class="ml-auto">
+        <a href="https://learn.javascript.ru/recursion" target="_blank">Link</a>
+      </div>
+    </div>
+    <div class="card-body">
+      <h3 class="h5">Флаги свойств</h3>
+      <p>
+        Помимо значения <strong><code>value</code></strong
+        >, свойства объекта имеют три специальных атрибута (так называемые
+        «флаги»).
+      </p>
+      <ul>
+        <li>
+          <strong><code>writable</code></strong> – если <code>true</code>,
+          свойство можно изменить, иначе оно только для чтения.
+        </li>
+        <li>
+          <strong><code>enumerable</code></strong> – если <code>true</code>,
+          свойство перечисляется в циклах, в противном случае циклы его
+          игнорируют.
+        </li>
+        <li>
+          <strong><code>configurable</code></strong> – если <code>true</code>,
+          свойство можно удалить, а эти атрибуты можно изменять, иначе этого
+          делать нельзя.
+        </li>
+      </ul>
+      <p>
+        Метод
+        <a
+          href="https://developer.mozilla.org/ru/docs/Web/JavaScript/Reference/Global_Objects/Object/getOwnPropertyDescriptor"
+          >Object.getOwnPropertyDescriptor</a
+        >
+        позволяет получить <em>полную</em> информацию о свойстве.
+      </p>
+      <pre><code>let descriptor = Object.getOwnPropertyDescriptor(obj, propertyName);</code></pre>
+      <dl>
+        <dt><code>obj</code></dt>
+        <dd>Объект, из которого мы получаем информацию.</dd>
+        <dt><code>propertyName</code></dt>
+        <dd>Имя свойства.</dd>
+      </dl>
+      <pre><code>let user = {
+  name: "John"
+};
+
+let descriptor = Object.getOwnPropertyDescriptor(user, 'name');
+
+alert( JSON.stringify(descriptor, null, 2 ) );
+/* дескриптор свойства:
+{
+  "value": "John",
+  "writable": true,
+  "enumerable": true,
+  "configurable": true
+}
+*/</code></pre>
+      <p>
+        Чтобы изменить флаги, мы можем использовать метод
+        <a
+          href="https://developer.mozilla.org/ru/docs/Web/JavaScript/Reference/Global_Objects/Object/defineProperty"
+          >Object.defineProperty</a
+        >.
+      </p>
+      <pre><code>Object.defineProperty(obj, propertyName, descriptor)</code></pre>
+      <dl>
+        <dt><code>obj</code>, <code>propertyName</code></dt>
+        <dd>Объект и его свойство, для которого нужно применить дескриптор.</dd>
+        <dt><code>descriptor</code></dt>
+        <dd>Применяемый дескриптор.</dd>
+      </dl>
+      <h3 class="h5">Только для чтения</h3>
+      <pre><code>let user = {
+  name: "John"
+};
+
+Object.defineProperty(user, "name", {
+  writable: false
+});
+
+user.name = "Pete"; // Ошибка: Невозможно изменить доступное только для чтения свойство 'name'</code></pre>
+      <h3 class="h5">Неперечислимое свойство</h3>
+      <pre><code>let user = {
+  name: "John",
+  toString() {
+    return this.name;
+  }
+};
+
+Object.defineProperty(user, "toString", {
+  enumerable: false
+});
+
+// Теперь наше свойство toString пропало из цикла:
+for (let key in user) alert(key); // name</code></pre>
+      <h3 class="h5">Неконфигурируемое свойство</h3>
+      <p>
+        Определение свойства как неконфигурируемого – это дорога в один конец.
+        Мы не сможем отменить это действие, потому что
+        <code>defineProperty</code> не работает с неконфигурируемыми свойствами.
+      </p>
+      <pre><code>let user = { };
+
+Object.defineProperty(user, "name", {
+  value: "John",
+  writable: false,
+  configurable: false
+});
+
+// теперь невозможно изменить user.name или его флаги
+// всё это не будет работать:
+//   user.name = "Pete"
+//   delete user.name
+//   defineProperty(user, "name", ...)
+Object.defineProperty(user, "name", {writable: true}); // Ошибка</code></pre>
+      <h3 class="h5">Метод Object.defineProperties</h3>
+      <pre><code>Object.defineProperties(user, {
+  name: { value: "John", writable: false },
+  surname: { value: "Smith", writable: false },
+  // ...
+});</code></pre>
+      <h3 class="h5">Object.getOwnPropertyDescriptors</h3>
+      <p>
+        Другое отличие в том, что for..in игнорирует символьные свойства, а
+        Object.getOwnPropertyDescriptors возвращает дескрипторы всех свойств,
+        включая свойства-символы.
+      </p>
+      <pre><code>let clone = Object.defineProperties({}, Object.getOwnPropertyDescriptors(obj));</code></pre>
+      <h3 class="h5">Глобальное запечатывание объекта</h3>
+      <p>
+        Дескрипторы свойств работают на уровне конкретных свойств. Но ещё есть
+        методы, которые ограничивают доступ ко <em>всему</em> объекту:
+      </p>
+      <dl>
+        <dt>
+          <a
+            href="https://developer.mozilla.org/ru/docs/Web/JavaScript/Reference/Global_Objects/Object/preventExtensions"
+            >Object.preventExtensions(obj)</a
+          >
+        </dt>
+        <dd>Запрещает добавлять новые свойства в объект.</dd>
+        <dt>
+          <a
+            href="https://developer.mozilla.org/ru/docs/Web/JavaScript/Reference/Global_Objects/Object/seal"
+            >Object.seal(obj)</a
+          >
+        </dt>
+        <dd>
+          Запрещает добавлять/удалять свойства. Устанавливает
+          <code>configurable: false</code> для всех существующих свойств.
+        </dd>
+        <dt>
+          <a
+            href="https://developer.mozilla.org/ru/docs/Web/JavaScript/Reference/Global_Objects/Object/freeze"
+            >Object.freeze(obj)</a
+          >
+        </dt>
+        <dd>
+          Запрещает добавлять/удалять/изменять свойства. Устанавливает
+          <code>configurable: false, writable: false</code> для всех
+          существующих свойств.
+        </dd>
+      </dl>
+      <p>А также есть методы для их проверки:</p>
+      <dl>
+        <dt>
+          <a
+            href="https://developer.mozilla.org/ru/docs/Web/JavaScript/Reference/Global_Objects/Object/isExtensible"
+            >Object.isExtensible(obj)</a
+          >
+        </dt>
+        <dd>
+          Возвращает <code>false</code>, если добавление свойств запрещено,
+          иначе <code>true</code>.
+        </dd>
+        <dt>
+          <a
+            href="https://developer.mozilla.org/ru/docs/Web/JavaScript/Reference/Global_Objects/Object/isSealed"
+            >Object.isSealed(obj)</a
+          >
+        </dt>
+        <dd>
+          Возвращает <code>true</code>, если добавление/удаление свойств
+          запрещено и для всех существующих свойств установлено
+          <code>configurable: false</code>.
+        </dd>
+        <dt>
+          <a
+            href="https://developer.mozilla.org/ru/docs/Web/JavaScript/Reference/Global_Objects/Object/isFrozen"
+            >Object.isFrozen(obj)</a
+          >
+        </dt>
+        <dd>
+          Возвращает <code>true</code>, если добавление/удаление/изменение
+          свойств запрещено, и для всех текущих свойств установлено
+          <code>configurable: false, writable: false</code>.
+        </dd>
+      </dl>
+    </div>
+  </div>
+  <div class="card mb-3" id="property-accessors">
+    <div class="card-header d-flex align-items-center">
+      <h2 class="h5 mb-0">7.2 Флаги и дескрипторы свойств</h2>
+
+      <div class="ml-auto">
+        <a href="https://learn.javascript.ru/recursion" target="_blank">Link</a>
+      </div>
+    </div>
+    <div class="card-body">
+      <p>Есть два типа свойств объекта.</p>
+      <p>
+        Первый тип это <em>свойства-данные (data properties)</em>. Мы уже знаем,
+        как работать с ними. Все свойства, которые мы использовали до текущего
+        момента, были свойствами-данными.
+      </p>
+      <p>
+        Второй тип свойств мы ещё не рассматривали. Это
+        <em>свойства-аксессоры (accessor properties)</em>. По своей сути это
+        функции, которые используются для присвоения и получения значения, но во
+        внешнем коде они выглядят как обычные свойства объекта.
+      </p>
+      <h3 class="h5">Геттеры и сеттеры</h3>
+      <pre><code>let obj = {
+  get propName() {
+    // геттер, срабатывает при чтении obj.propName
+  },
+
+  set propName(value) {
+    // сеттер, срабатывает при записи obj.propName = value
+  }
+};</code></pre>
+      <h3 class="h5">Дескрипторы свойств доступа</h3>
+      <p>То есть, дескриптор аксессора может иметь:</p>
+      <ul>
+        <li>
+          <strong><code>get</code></strong> – функция без аргументов, которая
+          сработает при чтении свойства,
+        </li>
+        <li>
+          <strong><code>set</code></strong> – функция, принимающая один
+          аргумент, вызываемая при присвоении свойства,
+        </li>
+        <li>
+          <strong><code>enumerable</code></strong> – то же самое, что и для
+          свойств-данных,
+        </li>
+        <li>
+          <strong><code>configurable</code></strong> – то же самое, что и для
+          свойств-данных.
+        </li>
+      </ul>
+      <pre><code>let user = {
+  name: "John",
+  surname: "Smith"
+};
+
+Object.defineProperty(user, 'fullName', {
+  get() {
+    return `${this.name} ${this.surname}`;
+  },
+
+  set(value) {
+    [this.name, this.surname] = value.split(" ");
+  }
+});
+
+alert(user.fullName); // John Smith
+
+for(let key in user) alert(key); // name, surname</code></pre>
+      <p>
+        При попытке указать и get, и value в одном дескрипторе будет ошибка:
+      </p>
+      <pre><code>// Error: Invalid property descriptor.
+Object.defineProperty({}, 'prop', {
+  get() {
+    return 1
+  },
+
+  value: 2
+});</code></pre>
+      <h3 class="h5">Умные геттеры/сеттеры</h3>
+      <pre><code>let user = {
+  get name() {
+    return this._name;
+  },
+
+  set name(value) {
+    if (value.length < 4) {
+      alert("Имя слишком короткое, должно быть более 4 символов");
+      return;
+    }
+    this._name = value;
+  }
+};
+
+user.name = "Pete";
+alert(user.name); // Pete
+
+user.name = ""; // Имя слишком короткое...</code></pre>
+      <p>
+        Таким образом, само имя хранится в <code>_name</code>, доступ к которому
+        производится через геттер и сеттер.
+      </p>
+      <h3 class="h5">Использование для совместимости</h3>
+      <p>
+        У аксессоров есть интересная область применения – они позволяют в любой
+        момент взять «обычное» свойство и изменить его поведение, поменяв на
+        геттер и сеттер.
+      </p>
+      <pre><code>function User(name, birthday) {
+  this.name = name;
+  this.birthday = birthday;
+
+  // возраст рассчитывается из текущей даты и дня рождения
+  Object.defineProperty(this, "age", {
+    get() {
+      let todayYear = new Date().getFullYear();
+      return todayYear - this.birthday.getFullYear();
+    }
+  });
+}
+
+let john = new User("John", new Date(1992, 6, 1));
+
+alert( john.birthday ); // доступен как день рождения
+alert( john.age );      // ...так и возраст</code></pre>
+    </div>
+  </div>
+</div>

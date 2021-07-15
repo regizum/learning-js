@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html>
+  <body>
+    <script>
+      let messagesMap = new WeakMap();
+
+      function readMessages(messages) {
+        for (let message of messages) {
+          let date = new Date();
+          messagesMap.set(message, date);
+        }
+      }
+
+      function checkMessageRead(message) {
+        return messagesMap.get(message);
+      }
+
+      let messages = [
+        { text: "Hello", from: "John" },
+        { text: "How goes?", from: "John" },
+        { text: "See you soon", from: "Alice" }
+      ];
+
+      readMessages(messages);
+
+      alert(checkMessageRead(messages[2]));
+      alert(checkMessageRead({ text: "Hello", from: "John" }));
+    </script>
+  </body>
+</html>

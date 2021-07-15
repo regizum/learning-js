@@ -1,0 +1,14 @@
+<!DOCTYPE html>
+<html>
+  <body>
+    <script>
+      function filterRange(arr, a, b) {
+        return arr.filter(item => {
+          return a <= item && item <= b;
+        });
+      }
+
+      alert(filterRange([5, 3, 8, 1], 1, 4));
+    </script>
+  </body>
+</html>

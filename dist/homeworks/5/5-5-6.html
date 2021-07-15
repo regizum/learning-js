@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html>
+  <body>
+    <script>
+      function Calculator() {
+        this.operators = {
+          "+": (a, b) => a + b,
+          "-": (a, b) => a - b
+        };
+
+        this.addMethod = function(operatorString, operatorFunc) {
+          this.operators[operatorString] = operatorFunc;
+        };
+
+        this.calculate = function(str) {
+          let arrTemp = str.split(" ");
+
+          let number1 = +arrTemp[0];
+          let operator = arrTemp[1];
+          let number2 = +arrTemp[2];
+
+          if (!(isFinite(number1) && isFinite(number2))) {
+            return false;
+          }
+
+          return this.operators[operator]?.(number1, number2);
+        };
+      }
+
+      let powerCalc = new Calculator();
+      powerCalc.addMethod("*", (a, b) => a * b);
+      powerCalc.addMethod("/", (a, b) => a / b);
+      powerCalc.addMethod("**", (a, b) => a ** b);
+
+      let result = powerCalc.calculate("2 ** 3");
+      alert(result); // 8
+    </script>
+  </body>
+</html>

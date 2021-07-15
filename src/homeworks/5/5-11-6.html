@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html>
+  <body>
+    <script>
+      function getSecondsToday() {
+        let date = Date.now();
+        let date2 = new Date();
+        date2.setSeconds(0);
+        date2.setMinutes(0);
+        date2.setHours(0);
+
+        return (date - date2) / 1000;
+      }
+
+      alert(getSecondsToday());
+    </script>
+  </body>
+</html>

@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html>
+  <body>
+    <script>
+      let user = {
+        name: "Василий Иванович",
+        age: 35
+      };
+
+      let userString = JSON.stringify(user, function(key, value) {
+        console.log(key);
+        if (key === "name") {
+          return value + "22";
+        } else {
+          return value;
+        }
+      });
+      console.log(userString);
+
+      let newUser = JSON.parse(userString);
+      console.log(newUser);
+    </script>
+  </body>
+</html>

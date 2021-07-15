@@ -1,0 +1,1035 @@
+<div class="container mt-5">
+  <h1>Сетевые запросы</h1>
+  <div class="card mb-3" id="#fetch">
+    <div class="card-header d-flex align-items-center">
+      <h2 class="h5 mb-0">6.1 Fetch</h2>
+
+      <div class="ml-auto">
+        <a href="https://learn.javascript.ru/fetch" target="_blank">Link</a>
+      </div>
+    </div>
+    <div class="card-body">
+      <p>
+        Типичный запрос с помощью <code>fetch</code> состоит из двух операторов
+        <code>await</code>:
+      </p>
+      <pre><code>let response = await fetch(url, options); // завершается с заголовками ответа
+let result = await response.json(); // читать тело ответа в формате JSON</code></pre>
+      <p>Или, без <code>await</code>:</p>
+      <pre><code>fetch(url, options)
+  .then(response => response.json())
+  .then(result => /* обрабатываем результат */)</code></pre>
+      <p>Параметры ответа:</p>
+      <ul>
+        <li><code>response.status</code> – HTTP-код ответа,</li>
+        <li>
+          <code>response.ok</code> – <code>true</code>, если статус ответа в
+          диапазоне 200-299.
+        </li>
+        <li>
+          <code>response.headers</code> – похожий на <code>Map</code> объект с
+          HTTP-заголовками.
+        </li>
+      </ul>
+      <p>Методы для получения тела ответа:</p>
+      <ul>
+        <li>
+          <strong><code>response.text()</code></strong> – возвращает ответ как
+          обычный текст,
+        </li>
+        <li>
+          <strong><code>response.json()</code></strong> – преобразовывает ответ
+          в JSON-объект,
+        </li>
+        <li>
+          <strong><code>response.formData()</code></strong> – возвращает ответ
+          как объект FormData (кодировка form/multipart, см. следующую главу),
+        </li>
+        <li>
+          <strong><code>response.blob()</code></strong> – возвращает объект как
+          <a href="/blob">Blob</a> (бинарные данные с типом),
+        </li>
+        <li>
+          <strong><code>response.arrayBuffer()</code></strong> – возвращает
+          ответ как
+          <a href="/arraybuffer-binary-arrays">ArrayBuffer</a> (низкоуровневые
+          бинарные данные),
+        </li>
+      </ul>
+      <p>Опции <code>fetch</code>, которые мы изучили на данный момент:</p>
+      <ul>
+        <li><code>method</code> – HTTP-метод,</li>
+        <li>
+          <code>headers</code> – объект с запрашиваемыми заголовками (не все
+          заголовки разрешены),
+        </li>
+        <li>
+          <code>body</code> – данные для отправки (тело запроса) в виде текста,
+          <code>FormData</code>, <code>BufferSource</code>,
+          <code>Blob</code> или <code>UrlSearchParams</code>.
+        </li>
+      </ul>
+    </div>
+  </div>
+  <div class="card mb-3" id="#formdata">
+    <div class="card-header d-flex align-items-center">
+      <h2 class="h5 mb-0">6.2 FormData</h2>
+
+      <div class="ml-auto">
+        <a href="https://learn.javascript.ru/formdata" target="_blank">Link</a>
+      </div>
+    </div>
+    <div class="card-body">
+      <p>
+        Объекты
+        <a href="https://xhr.spec.whatwg.org/#interface-formdata">FormData</a>
+        используются, чтобы взять данные из HTML-формы и отправить их с помощью
+        <code>fetch</code> или другого метода для работы с сетью.
+      </p>
+      <p>
+        Мы можем создать такой объект уже с данными, передав в конструктор
+        HTML-форму – <code>new FormData(form)</code>, или же можно создать
+        объект вообще без формы и затем добавить к нему поля с помощью методов:
+      </p>
+      <ul>
+        <li><code>formData.append(name, value)</code></li>
+        <li><code>formData.append(name, blob, fileName)</code></li>
+        <li><code>formData.set(name, value)</code></li>
+        <li><code>formData.set(name, blob, fileName)</code></li>
+      </ul>
+      <p>Отметим две особенности:</p>
+      <ol>
+        <li>
+          Метод <code>set</code> удаляет предыдущие поля с таким же именем, а
+          <code>append</code> – нет. В этом их единственное отличие.
+        </li>
+        <li>
+          Чтобы послать файл, нужно использовать синтаксис с тремя аргументами,
+          в качестве третьего как раз указывается имя файла, которое обычно, при
+          <code>&lt;input type="file"&gt;</code>, берётся из файловой системы.
+        </li>
+      </ol>
+      <p>Другие методы:</p>
+      <ul>
+        <li><code>formData.delete(name)</code></li>
+        <li><code>formData.get(name)</code></li>
+        <li><code>formData.has(name)</code></li>
+      </ul>
+    </div>
+  </div>
+  <div class="card mb-3" id="#fetch-progress">
+    <div class="card-header d-flex align-items-center">
+      <h2 class="h5 mb-0">6.3 Fetch: ход загрузки</h2>
+
+      <div class="ml-auto">
+        <a href="https://learn.javascript.ru/fetch-progress" target="_blank"
+          >Link</a
+        >
+      </div>
+    </div>
+    <div class="card-body">
+      <pre><code>// Шаг 1: начинаем загрузку fetch, получаем поток для чтения
+let response = await fetch('https://api.github.com/repos/javascript-tutorial/en.javascript.info/commits?per_page=100');
+
+const reader = response.body.getReader();
+
+// Шаг 2: получаем длину содержимого ответа
+const contentLength = +response.headers.get('Content-Length');
+
+// Шаг 3: считываем данные:
+let receivedLength = 0; // количество байт, полученных на данный момент
+let chunks = []; // массив полученных двоичных фрагментов (составляющих тело ответа)
+while(true) {
+  const {done, value} = await reader.read();
+
+  if (done) {
+    break;
+  }
+
+  chunks.push(value);
+  receivedLength += value.length;
+
+  console.log(`Получено ${receivedLength} из ${contentLength}`)
+}
+
+// Шаг 4: соединим фрагменты в общий типизированный массив Uint8Array
+let chunksAll = new Uint8Array(receivedLength); // (4.1)
+let position = 0;
+for(let chunk of chunks) {
+  chunksAll.set(chunk, position); // (4.2)
+  position += chunk.length;
+}
+
+// Шаг 5: декодируем Uint8Array обратно в строку
+let result = new TextDecoder("utf-8").decode(chunksAll);
+
+// Готово!
+let commits = JSON.parse(result);
+alert(commits[0].author.login);</code></pre>
+      <p>
+        Обратите внимание, что мы не можем использовать одновременно оба эти
+        метода для чтения одного и того же ответа: либо обычный метод
+        response.json(), либо чтение потока response.body.
+      </p>
+    </div>
+  </div>
+  <div class="card mb-3" id="#fetch-abort">
+    <div class="card-header d-flex align-items-center">
+      <h2 class="h5 mb-0">6.4 Fetch: прерывание запроса</h2>
+
+      <div class="ml-auto">
+        <a href="https://learn.javascript.ru/fetch-abort" target="_blank"
+          >Link</a
+        >
+      </div>
+    </div>
+    <div class="card-body">
+      <pre><code>// прервать через 1 секунду
+let controller = new AbortController();
+setTimeout(() => controller.abort(), 1000);
+
+try {
+  let response = await fetch('/article/fetch-abort/demo/hang', {
+    signal: controller.signal
+  });
+} catch(err) {
+  if (err.name == 'AbortError') { // обработать ошибку от вызова abort()
+    alert("Прервано!");
+  } else {
+    throw err;
+  }
+}</code></pre>
+      <p>
+        <strong
+          ><code>AbortController</code> – масштабируемый, он позволяет отменить
+          несколько вызовов <code>fetch</code> одновременно.</strong
+        >
+      </p>
+      <pre><code>let urls = [...];
+let controller = new AbortController();
+
+let ourJob = new Promise((resolve, reject) => { // наша задача
+  ...
+  controller.signal.addEventListener('abort', reject);
+});
+
+let fetchJobs = urls.map(url => fetch(url, { // запросы fetch
+  signal: controller.signal
+}));
+
+// ожидать выполнения нашей задачи и всех запросов
+let results = await Promise.all([...fetchJobs, ourJob]);
+
+// вызов откуда-нибудь ещё:
+// controller.abort() прервёт все вызовы fetch и наши задачи</code></pre>
+    </div>
+  </div>
+  <div class="card mb-3" id="#fetch-crossorigin">
+    <div class="card-header d-flex align-items-center">
+      <h2 class="h5 mb-0">6.5 Fetch: запросы на другие сайты</h2>
+
+      <div class="ml-auto">
+        <a href="https://learn.javascript.ru/fetch-crossorigin" target="_blank"
+          >Link</a
+        >
+      </div>
+    </div>
+    <div class="card-body">
+      <p>
+        С точки зрения браузера запросы к другому источнику бывают двух видов:
+        «простые» и все остальные.
+      </p>
+      <p>
+        <a href="http://www.w3.org/TR/cors/#terminology">Простые запросы</a>
+        должны удовлетворять следующим условиям:
+      </p>
+      <ul>
+        <li>Метод: GET, POST или HEAD.</li>
+        <li>
+          Заголовки – мы можем установить только:
+          <ul>
+            <li><code>Accept</code></li>
+            <li><code>Accept-Language</code></li>
+            <li><code>Content-Language</code></li>
+            <li>
+              <code>Content-Type</code> со значением
+              <code>application/x-www-form-urlencoded</code>,
+              <code>multipart/form-data</code> или <code>text/plain</code>.
+            </li>
+          </ul>
+        </li>
+      </ul>
+      <p>
+        Основное их отличие заключается в том, что простые запросы с давних
+        времён выполнялись с использованием тегов <code>&lt;form&gt;</code> или
+        <code>&lt;script&gt;</code>, в то время как непростые долгое время были
+        невозможны для браузеров.
+      </p>
+      <p>
+        Практическая разница состоит в том, что простые запросы отправляются
+        сразу с заголовком <code>Origin</code>, а для других браузер делает
+        предварительный запрос, спрашивая разрешения.
+      </p>
+      <p><strong>Для простых запросов:</strong></p>
+      <ul>
+        <li>→ Браузер посылает заголовок <code>Origin</code> с источником.</li>
+        <li>
+          ← Для запросов без авторизационных данных (не отправляются умолчанию)
+          сервер должен установить:
+          <ul>
+            <li>
+              <code>Access-Control-Allow-Origin</code> в <code>*</code> или то
+              же значение, что и <code>Origin</code>
+            </li>
+          </ul>
+        </li>
+        <li>
+          ← Для запросов с авторизационными данными сервер должен установить:
+          <ul>
+            <li>
+              <code>Access-Control-Allow-Origin</code> в то же значение, что и
+              <code>Origin</code>
+            </li>
+            <li>
+              <code>Access-Control-Allow-Credentials</code> в <code>true</code>
+            </li>
+          </ul>
+        </li>
+      </ul>
+      <p>
+        Дополнительно, чтобы разрешить JavaScript доступ к любым заголовкам
+        ответа, кроме <code>Cache-Control</code>, <code>Content-Language</code>,
+        <code>Content-Type</code>, <code>Expires</code>,
+        <code>Last-Modified</code> или <code>Pragma</code>, сервер должен
+        перечислить разрешённые в заголовке
+        <code>Access-Control-Expose-Headers</code>.
+      </p>
+      <p>
+        <strong
+          >Для непростых запросов перед основным запросом отправляется
+          предзапрос:</strong
+        >
+      </p>
+      <ul>
+        <li>
+          → Браузер посылает запрос <code>OPTIONS</code> на тот же адрес с
+          заголовками:
+          <ul>
+            <li>
+              <code>Access-Control-Request-Method</code> – содержит
+              запрашиваемый метод,
+            </li>
+            <li>
+              <code>Access-Control-Request-Headers</code> – перечисляет
+              непростые запрашиваемые заголовки.
+            </li>
+          </ul>
+        </li>
+        <li>
+          ← Сервер должен ответить со статусом 200 и заголовками:
+          <ul>
+            <li>
+              <code>Access-Control-Allow-Methods</code> со списком разрешённых
+              методов,
+            </li>
+            <li>
+              <code>Access-Control-Allow-Headers</code> со списком разрешённых
+              заголовков,
+            </li>
+            <li>
+              <code>Access-Control-Max-Age</code> с количеством секунд для
+              кеширования разрешений
+            </li>
+          </ul>
+        </li>
+        <li>
+          → Затем отправляется основной запрос, применяется предыдущая «простая»
+          схема.
+        </li>
+      </ul>
+    </div>
+  </div>
+  <div class="card mb-3" id="#fetch-api">
+    <div class="card-header d-flex align-items-center">
+      <h2 class="h5 mb-0">6.6 Fetch API</h2>
+
+      <div class="ml-auto">
+        <a href="https://learn.javascript.ru/" target="_blank">Link</a>
+      </div>
+    </div>
+    <div class="card-body">
+      <p>
+        Нижеследующий список – это все возможные опции для <code>fetch</code> с
+        соответствующими значениями по умолчанию (в комментариях указаны
+        альтернативные значения):
+      </p>
+      <pre><code>let promise = fetch(url, {
+  method: "GET", // POST, PUT, DELETE, etc.
+  headers: {
+    // значение этого заголовка обычно ставится автоматически,
+    // в зависимости от тела запроса
+    "Content-Type": "text/plain;charset=UTF-8"
+  },
+  body: undefined // string, FormData, Blob, BufferSource или URLSearchParams
+  referrer: "about:client", // или "" для того, чтобы не послать заголовок Referer,
+  // или URL с текущего источника
+  referrerPolicy: "no-referrer-when-downgrade", // no-referrer, origin, same-origin...
+  mode: "cors", // same-origin, no-cors
+  credentials: "same-origin", // omit, include
+  cache: "default", // no-store, reload, no-cache, force-cache или only-if-cached
+  redirect: "follow", // manual, error
+  integrity: "", // контрольная сумма, например "sha256-abcdef1234567890"
+  keepalive: false, // true
+  signal: undefined, // AbortController, чтобы прервать запрос
+  window: window // null
+});</code></pre>
+    </div>
+  </div>
+  <div class="card mb-3" id="#url">
+    <div class="card-header d-flex align-items-center">
+      <h2 class="h5 mb-0">6.7 Объекты URL</h2>
+
+      <div class="ml-auto">
+        <a href="https://learn.javascript.ru/url" target="_blank">Link</a>
+      </div>
+    </div>
+    <div class="card-body">
+      <pre><code>new URL(url, [base])</code></pre>
+      <ul>
+        <li>
+          <strong><code>url</code></strong> – полный URL-адрес или только путь,
+          если указан второй параметр,
+        </li>
+        <li>
+          <strong><code>base</code></strong> – необязательный «базовый» URL:
+          если указан и аргумент <code>url</code> содержит только путь, то адрес
+          будет создан относительно него (пример ниже).
+        </li>
+      </ul>
+      <ul>
+        <li>
+          <code>href</code> это полный URL-адрес, то же самое, что
+          <code>url.toString()</code>
+        </li>
+        <li>
+          <code>protocol</code> – протокол, заканчивается символом двоеточия
+          <code>:</code>
+        </li>
+        <li>
+          <code>search</code> строка параметров, начинается с вопросительного
+          знака <code>?</code>
+        </li>
+        <li><code>hash</code> начинается с символа <code>#</code></li>
+        <li>
+          также есть свойства <code>user</code> и <code>password</code>, если
+          используется HTTP-аутентификация:
+          <code>http://login:password@site.com</code> (не нарисованы сверху, так
+          как редко используются).
+        </li>
+      </ul>
+      <pre><code>new URL('https://google.com/search?query=JavaScript')</code></pre>
+      <p>
+        Так что для этого есть свойство <code>url.searchParams</code> – объект
+        типа
+        <a href="https://url.spec.whatwg.org/#urlsearchparams"
+          >URLSearchParams</a
+        >.
+      </p>
+      <ul>
+        <li>
+          <strong><code>append(name, value)</code></strong> – добавить параметр
+          по имени,
+        </li>
+        <li>
+          <strong><code>delete(name)</code></strong> – удалить параметр по
+          имени,
+        </li>
+        <li>
+          <strong><code>get(name)</code></strong> – получить параметр по имени,
+        </li>
+        <li>
+          <strong><code>getAll(name)</code></strong> – получить все параметры с
+          одинаковым именем <code>name</code> (такое возможно, например:
+          <code>?user=John&amp;user=Pete</code>),
+        </li>
+        <li>
+          <strong><code>has(name)</code></strong> – проверить наличие параметра
+          по имени,
+        </li>
+        <li>
+          <strong><code>set(name, value)</code></strong> – задать/заменить
+          параметр,
+        </li>
+        <li>
+          <strong><code>sort()</code></strong> – отсортировать параметры по
+          имени, используется редко,
+        </li>
+        <li>…и является перебираемым, аналогично <code>Map</code>.</li>
+      </ul>
+      <h3 class="h5">Кодирование</h3>
+      <p>
+        Существует стандарт
+        <a href="https://tools.ietf.org/html/rfc3986">RFC3986</a>, который
+        определяет список разрешённых и запрещённых символов в URL.
+      </p>
+      <p>
+        Запрещённые символы, например, нелатинские буквы и пробелы, должны быть
+        закодированы – заменены соответствующими кодами UTF-8 с префиксом %,
+        например: %20 (исторически сложилось так, что пробел в URL-адресе можно
+        также кодировать символом +, но это исключение). К счастью, объекты URL
+        делают всё это автоматически. Мы просто указываем параметры в обычном,
+        незакодированном, виде, а затем конвертируем URL в строку.
+      </p>
+      <h3 class="h5">Кодирование в строках</h3>
+      <p>
+        Раньше, до того как появились объекты URL, люди использовали для
+        URL-адресов обычные строки. Сейчас URL часто удобнее, но строки всё ещё
+        можно использовать. Во многих случаях код с ними короче. Однако, если мы
+        используем строку, то надо самим позаботиться о кодировании специальных
+        символов.
+      </p>
+      <ul>
+        <li>
+          <a
+            href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/encodeURI"
+            >encodeURI</a
+          >
+          – кодирует URL-адрес целиком.
+        </li>
+        <li>
+          <a
+            href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/decodeURI"
+            >decodeURI</a
+          >
+          – декодирует URL-адрес целиком.
+        </li>
+        <li>
+          <a
+            href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/encodeURIComponent"
+            >encodeURIComponent</a
+          >
+          – кодирует компонент URL, например, параметр, хеш, имя пути и т.п.
+        </li>
+        <li>
+          <a
+            href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/decodeURIComponent"
+            >decodeURIComponent</a
+          >
+          – декодирует компонент URL.
+        </li>
+      </ul>
+    </div>
+  </div>
+  <div class="card mb-3" id="#xmlhttprequest">
+    <div class="card-header d-flex align-items-center">
+      <h2 class="h5 mb-0">6.8</h2>
+
+      <div class="ml-auto">
+        <a href="https://learn.javascript.ru/" target="_blank">Link</a>
+      </div>
+    </div>
+    <div class="card-body">
+      <p>
+        Типичный код GET-запроса с использованием <code>XMLHttpRequest</code>:
+      </p>
+      <pre><code>let xhr = new XMLHttpRequest();
+
+xhr.open('GET', '/my/url');
+
+xhr.send();
+
+xhr.onload = function() {
+  if (xhr.status != 200) { // HTTP ошибка?
+    // обработаем ошибку
+    alert( 'Ошибка: ' + xhr.status);
+    return;
+  }
+
+  // получим ответ из xhr.response
+};
+
+xhr.onprogress = function(event) {
+  // выведем прогресс
+  alert(`Загружено ${event.loaded} из ${event.total}`);
+};
+
+xhr.onerror = function() {
+  // обработаем ошибку, не связанную с HTTP (например, нет соединения)
+};</code></pre>
+      <p>
+        Событий на самом деле больше, в
+        <a href="http://www.w3.org/TR/XMLHttpRequest/#events"
+          >современной спецификации</a
+        >
+        они все перечислены в том порядке, в каком генерируются во время
+        запроса:
+      </p>
+      <ul>
+        <li><code>loadstart</code> – начало запроса.</li>
+        <li>
+          <code>progress</code> – прибыла часть данных ответа, тело ответа
+          полностью на данный момент можно получить из свойства
+          <code>responseText</code>.
+        </li>
+        <li>
+          <code>abort</code> – запрос был прерван вызовом
+          <code>xhr.abort()</code>.
+        </li>
+        <li>
+          <code>error</code> – произошла ошибка соединения, например
+          неправильное доменное имя. Событие не генерируется для HTTP-ошибок
+          как, например, 404.
+        </li>
+        <li><code>load</code> – запрос успешно завершён.</li>
+        <li>
+          <code>timeout</code> – запрос был отменён по причине истечения
+          отведённого для него времени (происходит, только если был установлен
+          таймаут).
+        </li>
+        <li>
+          <code>loadend</code> – срабатывает после <code>load</code>,
+          <code>error</code>, <code>timeout</code> или <code>abort</code>.
+        </li>
+      </ul>
+      <p>
+        События <code>error</code>, <code>abort</code>, <code>timeout</code> и
+        <code>load</code> взаимно исключают друг друга – может произойти только
+        одно из них.
+      </p>
+      <p>
+        Наиболее часто используют события завершения загрузки
+        (<code>load</code>), ошибки загрузки (<code>error</code>), или мы можем
+        использовать единый обработчик <code>loadend</code> для всего и смотреть
+        в свойствах объекта запроса <code>xhr</code> детали произошедшего.
+      </p>
+      <p>
+        Также мы уже видели событие: <code>readystatechange</code>. Исторически
+        оно появилось одним из первых, даже раньше, чем была составлена
+        спецификация. Сегодня нет необходимости использовать его, так как оно
+        может быть заменено современными событиями, но на него можно часто
+        наткнуться в старом коде.
+      </p>
+      <p>
+        Если же нам нужно следить именно за процессом отправки данных на сервер,
+        тогда можно использовать те же события, но для объекта
+        <code>xhr.upload</code>.
+      </p>
+    </div>
+  </div>
+  <div class="card mb-3" id="#resume-upload">
+    <div class="card-header d-flex align-items-center">
+      <h2 class="h5 mb-0">6.9 Возобновляемая загрузка файлов</h2>
+
+      <div class="ml-auto">
+        <a href="https://learn.javascript.ru/resume-upload" target="_blank"
+          >Link</a
+        >
+      </div>
+    </div>
+    <div class="card-body">
+      <ol>
+        <li>
+          <p>
+            Во-первых, создадим уникальный идентификатор для файла, который
+            собираемся загружать:
+          </p>
+          <pre><code>let fileId = file.name + '-' + file.size + '-' + +file.lastModifiedDate;</code></pre>
+          <p>
+            Это нужно, чтобы при возобновлении загрузки серверу было понятно,
+            какой файл мы продолжаем загружать.
+          </p>
+          <p>
+            Если имя или размер или дата модификация файла изменятся, то у него
+            уже будет другой <code>fileId</code>.
+          </p>
+        </li>
+        <li>
+          <p>
+            Далее, посылаем запрос к серверу с просьбой указать количество уже
+            полученных байтов:
+          </p>
+          <pre><code>let response = await fetch('status', {
+  headers: {
+    'X-File-Id': fileId
+  }
+});
+
+// сервер получил столько-то байтов
+let startByte = +await response.text();
+</code></pre>
+          <p>
+            Предполагается, что сервер учитывает загружаемые файлы с помощью
+            заголовка <code>X-File-Id</code>. Это на стороне сервера должно быть
+            реализовано.
+          </p>
+          <p>
+            Если файл серверу неизвестен, то он должен ответить <code>0</code>.
+          </p>
+        </li>
+        <li>
+          <p>
+            Затем мы можем использовать метод <code>slice</code> объекта
+            <code>Blob</code>, чтобы отправить данные, начиная со
+            <code>startByte</code> байта:
+          </p>
+          <pre><code>xhr.open("POST", "upload", true);
+
+// Идентификатор файла, чтобы сервер знал, что мы загружаем
+xhr.setRequestHeader('X-File-Id', fileId);
+
+// Номер байта, начиная с которого мы будем отправлять данные.
+// Таким образом, сервер поймёт, с какого момента мы возобновляем загрузку
+xhr.setRequestHeader('X-Start-Byte', startByte);
+
+xhr.upload.onprogress = (e) => {
+  console.log(`Uploaded ${startByte + e.loaded} of ${startByte + e.total}`);
+};
+
+// файл file может быть взят из input.files[0] или другого источника
+xhr.send(file.slice(startByte));</code></pre>
+          <p>
+            Здесь мы посылаем серверу и идентификатор файла в заголовке
+            <code>X-File-Id</code>, чтобы он знал, что мы загружаем, и номер
+            стартового байта в заголовке <code>X-Start-Byte</code>, чтобы он
+            понял, что мы продолжаем отправку, а не начинаем её с нуля.
+          </p>
+          <p>
+            Сервер должен проверить информацию на своей стороне, и если
+            обнаружится, что такой файл уже когда-то загружался, и его текущий
+            размер равен значению из заголовка <code>X-Start-Byte</code>, то
+            вновь принимаемые данные добавлять в этот файл.
+          </p>
+        </li>
+      </ol>
+    </div>
+  </div>
+  <div class="card mb-3" id="#long-polling">
+    <div class="card-header d-flex align-items-center">
+      <h2 class="h5 mb-0">6.10 Длинные опросы</h2>
+
+      <div class="ml-auto">
+        <a href="https://learn.javascript.ru/long-polling" target="_blank"
+          >Link</a
+        >
+      </div>
+    </div>
+    <div class="card-body">
+      <p>
+        Длинные опросы – это самый простой способ поддерживать постоянное
+        соединение с сервером, не используя при этом никаких специфических
+        протоколов (типа WebSocket или Server Sent Events).
+      </p>
+      <h3 class="h5">Частые опросы</h3>
+      <p>
+        Самый простой способ получать новую информацию от сервера –
+        периодический опрос. То есть, регулярные запросы на сервер вида:
+        «Привет, я здесь, у вас есть какая-нибудь информация для меня?».
+        Например, раз в 10 секунд.
+      </p>
+      <p>Это работает, но есть и недостатки:</p>
+      <ol>
+        <li>
+          Сообщения передаются с задержкой до 10 секунд (между запросами).
+        </li>
+        <li>
+          Даже если сообщений нет, сервер «атакуется» запросами каждые 10
+          секунд, даже если пользователь переключился куда-нибудь или спит. С
+          точки зрения производительности, это довольно большая нагрузка.
+        </li>
+      </ol>
+      <h3 class="h5">Длинные опросы</h3>
+      <p>«Длинные опросы» – гораздо лучший способ взаимодействия с сервером.</p>
+      <p>Как это происходит:</p>
+      <ol>
+        <li>Запрос отправляется на сервер.</li>
+        <li>
+          Сервер не закрывает соединение, пока у него не возникнет сообщение для
+          отсылки.
+        </li>
+        <li>
+          Когда появляется сообщение – сервер отвечает на запрос, посылая его.
+        </li>
+        <li>Браузер немедленно делает новый запрос.</li>
+      </ol>
+      <pre><code>async function subscribe() {
+  let response = await fetch("/subscribe");
+
+  if (response.status == 502) {
+    // Статус 502 - это таймаут соединения;
+    // возможен, когда соединение ожидало слишком долго
+    // и сервер (или промежуточный прокси) закрыл его
+    // давайте восстановим связь
+    await subscribe();
+  } else if (response.status != 200) {
+    // Какая-то ошибка, покажем её
+    showMessage(response.statusText);
+    // Подключимся снова через секунду.
+    await new Promise(resolve => setTimeout(resolve, 1000));
+    await subscribe();
+  } else {
+    // Получим и покажем сообщение
+    let message = await response.text();
+    showMessage(message);
+    // И снова вызовем subscribe() для получения следующего сообщения
+    await subscribe();
+  }
+}
+
+subscribe();</code></pre>
+      <h3 class="h5">Сервер должен поддерживать много ожидающих соединений.</h3>
+      <p>
+        Архитектура сервера должна быть способна работать со многими ожидающими
+        подключениями.
+      </p>
+      <p>
+        Длинные опросы прекрасно работают, когда сообщения приходят редко. Если
+        сообщения приходят очень часто, то схема приёма-отправки сообщений,
+        приведённая выше, становится похожей на «пилу». Каждое сообщение – это
+        отдельный запрос, с заголовками, авторизацией и так далее.
+      </p>
+    </div>
+  </div>
+  <div class="card mb-3" id="#websocket">
+    <div class="card-header d-flex align-items-center">
+      <h2 class="h5 mb-0">6.11 WebSocket</h2>
+
+      <div class="ml-auto">
+        <a href="https://learn.javascript.ru/websocket" target="_blank">Link</a>
+      </div>
+    </div>
+    <div class="card-body">
+      <p>
+        WebSocket – это современный способ иметь постоянное соединение между
+        браузером и сервером.
+      </p>
+      <ul>
+        <li>Нет ограничений, связанных с кросс-доменными запросами.</li>
+        <li>Имеют хорошую поддержку браузерами.</li>
+        <li>Могут отправлять/получать как строки, так и бинарные данные.</li>
+      </ul>
+      <p>API прост.</p>
+      <p>Методы:</p>
+      <ul>
+        <li><code>socket.send(data)</code>,</li>
+        <li><code>socket.close([code], [reason])</code>.</li>
+      </ul>
+      <p>События:</p>
+      <ul>
+        <li><code>open</code>,</li>
+        <li><code>message</code>,</li>
+        <li><code>error</code>,</li>
+        <li><code>close</code>.</li>
+      </ul>
+      <p>
+        WebSocket сам по себе не содержит такие функции, как переподключение при
+        обрыве соединения, аутентификацию пользователей и другие механизмы
+        высокого уровня. Для этого есть клиентские и серверные библиотеки, а
+        также можно реализовать это вручную.
+      </p>
+      <p>
+        Иногда, чтобы добавить WebSocket к уже существующему проекту,
+        WebSocket-сервер запускают параллельно с основным сервером. Они
+        совместно использует одну базу данных. Запросы к WebSocket отправляются
+        на <code>wss://ws.site.com</code> – поддомен, который ведёт к
+        WebSocket-серверу, в то время как <code>https://site.com</code> ведёт на
+        основной HTTP-сервер.
+      </p>
+      <pre><code>const ws = new require('ws');
+const wss = new ws.Server({noServer: true});
+
+const clients = new Set();
+
+http.createServer((req, res) => {
+  // в реальном проекте здесь может также быть код для обработки отличных от websoсket-запросов
+  // здесь мы работаем с каждым запросом как с веб-сокетом
+  wss.handleUpgrade(req, req.socket, Buffer.alloc(0), onSocketConnect);
+});
+
+function onSocketConnect(ws) {
+  clients.add(ws);
+
+  ws.on('message', function(message) {
+    message = message.slice(0, 50); // максимальный размер сообщения 50
+
+    for(let client of clients) {
+      client.send(message);
+    }
+  });
+
+  ws.on('close', function() {
+    clients.delete(ws);
+  });
+}</code></pre>
+    </div>
+  </div>
+  <div class="card mb-3" id="#server-sent-events">
+    <div class="card-header d-flex align-items-center">
+      <h2 class="h5 mb-0">6.</h2>
+
+      <div class="ml-auto">
+        <a href="https://learn.javascript.ru/" target="_blank">Link</a>
+      </div>
+    </div>
+    <div class="card-body">
+      <p>
+        Спецификация
+        <a
+          href="https://html.spec.whatwg.org/multipage/comms.html#the-eventsource-interface"
+          >Server-Sent Events</a
+        >
+        описывает встроенный класс <code>EventSource</code>, который позволяет
+        поддерживать соединение с сервером и получать от него события.
+      </p>
+      <p>Как и в случае с <code>WebSocket</code>, соединение постоянно.</p>
+      <p>Но есть несколько важных различий:</p>
+      <table>
+        <thead>
+          <tr>
+            <th><code>WebSocket</code></th>
+            <th><code>EventSource</code></th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>
+              Двунаправленность: и сервер, и клиент могут обмениваться
+              сообщениями
+            </td>
+            <td>Однонаправленность: данные посылает только сервер</td>
+          </tr>
+          <tr>
+            <td>Бинарные и текстовые данные</td>
+            <td>Только текст</td>
+          </tr>
+          <tr>
+            <td>Протокол WebSocket</td>
+            <td>Обычный HTTP</td>
+          </tr>
+        </tbody>
+      </table>
+      <p>
+        EventSource не настолько мощный способ коммуникации с сервером, как
+        WebSocket. Зачем нам его использовать? Основная причина: он проще.
+        Многим приложениям не требуется вся мощь WebSocket. Если нам нужно
+        получать поток данных с сервера: неважно, сообщения в чате или же цены
+        для магазина – с этим легко справится EventSource. К тому же, он
+        поддерживает автоматическое переподключение при потере соединения,
+        которое, используя WebSocket, нам бы пришлось реализовывать самим. Кроме
+        того, используется старый добрый HTTP, а не новый протокол.
+      </p>
+
+      <p>
+        Объект <code>EventSource</code> автоматически устанавливает постоянное
+        соединение и позволяет серверу отправлять через него сообщения.
+      </p>
+      <p>Он предоставляет:</p>
+      <ul>
+        <li>
+          Автоматическое переподключение с настраиваемой
+          <code>retry</code> задержкой.
+        </li>
+        <li>
+          Идентификаторы сообщений для восстановления соединения. Последний
+          полученный идентификатор посылается в заголовке
+          <code>Last-Event-ID</code> при пересоединении.
+        </li>
+        <li>
+          Текущее состояние, записанное в свойстве <code>readyState</code>.
+        </li>
+      </ul>
+      <p>
+        Это делает <code>EventSource</code> достойной альтернативой протоколу
+        <code>WebSocket</code>, который сравнительно низкоуровневый и не имеет
+        таких встроенных возможностей (хотя их и можно реализовать).
+      </p>
+      <p>
+        Для многих приложений возможностей <code>EventSource</code> вполне
+        достаточно.
+      </p>
+      <p>
+        Поддерживается во всех современных браузерах (кроме Internet Explorer).
+      </p>
+      <p>Синтаксис:</p>
+      <pre><code>let source = new EventSource(url, [credentials]);</code></pre>
+      <p>
+        Второй аргумент – необязательный объект с одним свойством:
+        <code>{ withCredentials: true }</code>. Он позволяет отправлять
+        авторизационные данные на другие домены.
+      </p>
+      <p>
+        В целом, кросс-доменная безопасность реализована так же как в
+        <code>fetch</code> и других методах работы с сетью.
+      </p>
+      <h3 class="h5">Свойства объекта EventSource</h3>
+      <dl>
+        <dt><code>readyState</code></dt>
+        <dd>
+          Текущее состояние подключения:
+          <code>EventSource.CONNECTING (=0)</code>,
+          <code>EventSource.OPEN (=1)</code> или
+          <code>EventSource.CLOSED (=2)</code>.
+        </dd>
+        <dt><code>lastEventId</code></dt>
+        <dd>
+          <code>id</code> последнего полученного сообщения. При переподключении
+          браузер посылает его в заголовке <code>Last-Event-ID</code>.
+        </dd>
+      </dl>
+      <h3 class="h5">Методы</h3>
+      <dl>
+        <dt><code>close()</code></dt>
+        <dd>Закрывает соединение.</dd>
+      </dl>
+      <h3 class="h5">События</h3>
+      <dl>
+        <dt><code>message</code></dt>
+        <dd>
+          Сообщение получено, переданные данные записаны в
+          <code>event.data</code>.
+        </dd>
+        <dt><code>open</code></dt>
+        <dd>Соединение установлено.</dd>
+        <dt><code>error</code></dt>
+        <dd>
+          В случае ошибки, включая как потерю соединения, так и другие ошибки в
+          нём. Мы можем обратиться к свойству <code>readyState</code>, чтобы
+          проверить, происходит ли переподключение.
+        </dd>
+      </dl>
+      <p>
+        Сервер может выставить собственное событие с помощью
+        <code>event:</code>. Такие события должны быть обработаны с помощью
+        <code>addEventListener</code>, а не <code>on&lt;event&gt;</code>.
+      </p>
+      <h3 class="h5">Формат ответа сервера</h3>
+      <p>
+        Сервер посылает сообщения, разделённые двойным переносом строки
+        <code>\n\n</code>.
+      </p>
+      <p>Сообщение состоит из следующих полей:</p>
+      <ul>
+        <li>
+          <code>data:</code> – тело сообщения, несколько
+          <code>data</code> подряд интерпретируются как одно сообщение,
+          разделённое переносами строк <code>\n</code>.
+        </li>
+        <li>
+          <code>id:</code> – обновляет свойство <code>lastEventId</code>,
+          отправляемое в <code>Last-Event-ID</code> при переподключении.
+        </li>
+        <li>
+          <code>retry:</code> – рекомендованная задержка перед переподключением
+          в миллисекундах. Не может быть установлена с помощью JavaScript.
+        </li>
+        <li>
+          <code>event:</code> – имя пользовательского события, должно быть
+          указано перед <code>data:</code>.
+        </li>
+      </ul>
+      <p>
+        Сообщение может включать одно или несколько этих полей в любом порядке,
+        но id обычно ставят в конце.
+      </p>
+    </div>
+  </div>
+</div>

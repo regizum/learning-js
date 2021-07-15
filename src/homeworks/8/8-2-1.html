@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html>
+  <body>
+    <script>
+      function Rabbit(name) {
+        this.name = name;
+      }
+
+      let obj = new Rabbit("lalala");
+
+      let obj2 = new obj.constructor();
+
+      console.log(Rabbit.prototype);
+      console.log(obj.constructor);
+      console.log(obj2);
+
+      let obj3 = new obj.constructor();
+      console.log(obj3);
+    </script>
+  </body>
+</html>

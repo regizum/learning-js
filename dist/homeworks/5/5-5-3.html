@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html>
+  <body>
+    <script>
+      function filterRangeInPlace(arr, a, b) {
+        let index = 0;
+        while (index < arr.length) {
+          if (a <= arr[index] && arr[index] <= b) {
+            index++;
+          } else {
+            arr.splice(index, 1);
+          }
+        }
+      }
+
+      let arr = [5, 3, 8, 1];
+      filterRangeInPlace(arr, 1, 4);
+      alert(arr);
+    </script>
+  </body>
+</html>

@@ -1,61 +1,149 @@
-<!doctype html >
+<!DOCTYPE html>
 <html lang="ru">
-<head>
-    <title>CP all</title>
-    <meta charset="UTF-8">
-    <script src="https://code.jquery.com/jquery-3.4.1.min.js"
-            integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>
+  <head>
+    <title>1. Введение</title>
+    <meta charset="UTF-8" />
+    <script
+      src="https://code.jquery.com/jquery-3.4.1.min.js"
+      integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo="
+      crossorigin="anonymous"
+    ></script>
     <script src="../js/main.js"></script>
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
-          integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
-    <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js" integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous"></script>
-    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
-	<style>
-		xmp {
-			font-family: inherit;
-		}
-		pre {
-			background: #f5f2f0;
-			padding: 16px;
-			border-radius: 8px;
-		}
-	</style>
-</head>
-<body class="pt-5">
-<nav class="navbar navbar-expand-lg navbar-light bg-light fixed-top">
-	<div class="container">
-		<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
-			<span class="navbar-toggler-icon"></span>
-		</button>
-		<div class="collapse navbar-collapse" id="navbarNavDropdown">
-			<ul class="navbar-nav">
-				<li class="nav-item dropdown">
-					<a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink1"
-					   role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-						JavaScript</a>
-					<div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink1">
-						<a class="dropdown-item" href="/dist/1-intro.html">1. Введение</a>
-						<a class="dropdown-item" href="/dist/2-first-steps.html">2. Основы JavaScript</a>
-						<a class="dropdown-item" href="/dist/3-code-quality.html">3. Качество кода</a>
-						<a class="dropdown-item" href="/dist/4-object-basics.html">4. Объекты: основы</a>
-					</div>
-				</li>
+    <link
+      rel="stylesheet"
+      href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+      integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T"
+      crossorigin="anonymous"
+    />
+    <script
+      src="https://code.jquery.com/jquery-3.4.1.slim.min.js"
+      integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n"
+      crossorigin="anonymous"
+    ></script>
+    <script
+      src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"
+      integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo"
+      crossorigin="anonymous"
+    ></script>
+    <script
+      src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"
+      integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6"
+      crossorigin="anonymous"
+    ></script>
+
+    <style>
+      xmp {
+        font-family: inherit;
+      }
+      pre {
+        background: #f5f2f0;
+        padding: 16px;
+        border-radius: 8px;
+        white-space: break-spaces;
+      }
+
+      .card-body div:last-child,
+      .card-body ul:last-child,
+      .card-body ol:last-child,
+      .card-body pre:last-child ,
+      .card-body p:last-child {
+          margin-bottom: 0;
+      }
+    </style>
+  </head>
+  <body class="pt-5">
+    <nav class="navbar navbar-expand-lg navbar-light bg-light fixed-top">
+      <div class="container">
+        <button
+          class="navbar-toggler"
+          type="button"
+          data-toggle="collapse"
+          data-target="#navbarNavDropdown"
+          aria-controls="navbarNavDropdown"
+          aria-expanded="false"
+          aria-label="Toggle navigation"
+        >
+          <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNavDropdown">
+          <ul class="navbar-nav">
+            <li class="nav-item dropdown">
+              <a
+                class="nav-link dropdown-toggle"
+                href="#"
+                id="navbarDropdownMenuLink1"
+                role="button"
+                data-toggle="dropdown"
+                aria-haspopup="true"
+                aria-expanded="false"
+              >
+                JavaScript</a
+              >
+              <div
+                class="dropdown-menu"
+                aria-labelledby="navbarDropdownMenuLink1"
+              >
+                <a class="dropdown-item" href="/dist/1-intro.html"
+                  >1. Введение</a
+                >
+                <a class="dropdown-item" href="/dist/2-first-steps.html"
+                  >2. Основы JavaScript</a
+                >
+                <a class="dropdown-item" href="/dist/3-code-quality.html"
+                  >3. Качество кода</a
+                >
+                <a class="dropdown-item" href="/dist/4-object-basics.html"
+                  >4. Объекты: основы</a
+                >
+                <a class="dropdown-item" href="/dist/5-data-types.html"
+                  >5. Типы данных</a
+                >
+                <a class="dropdown-item" href="/dist/6-advanced-functions.html"
+                  >6. Продвинутая работа с функциями</a
+                >
+                <a class="dropdown-item" href="/dist/7-object-properties.html"
+                  >7. Свойства объекта, их конфигурация</a
+                >
+                <a class="dropdown-item" href="/dist/8-prototypes.html"
+                  >8. Прототипы, наследование</a
+                >
+                <a class="dropdown-item" href="/dist/9-classes.html"
+                  >9. Классы</a
+                >
+                <a class="dropdown-item" href="/dist/10-error-handling.html"
+                  >10. Обработка ошибок</a
+                >
+                <a class="dropdown-item" href="/dist/11-async.html"
+                  >11. Промисы, async/await</a
+                >
+              </div>
+            </li>
+
 <li class="nav-item dropdown">
-    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink"
-       role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-        Введение
-    </a>
-    <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
-        <a class="dropdown-item" href="#intro">1.1 Введение в JavaScript</a>
-        <a class="dropdown-item" href="#manuals-specifications">1.2 Справочники и спецификации</a>
-        <a class="dropdown-item" href="#code-editors">1.3 Редакторы кода</a>
-    </div>
+  <a
+    class="nav-link dropdown-toggle"
+    href="#"
+    id="navbarDropdownMenuLink"
+    role="button"
+    data-toggle="dropdown"
+    aria-haspopup="true"
+    aria-expanded="false"
+    >Введение</a
+  >
+  <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+    <a class="dropdown-item" href="#intro">1.1 Введение в JavaScript</a>
+    <a class="dropdown-item" href="#manuals-specifications"
+      >1.2 Справочники и спецификации</a
+    >
+    <a class="dropdown-item" href="#code-editors">1.3 Редакторы кода</a>
+  </div>
 </li>
+
 </ul>
 </div>
 </div>
 </nav>
+
 <!-- content -->
 <div class="container mt-5">
   <h1>Введение</h1>
@@ -344,3 +432,4 @@
 <!-- footer -->
 </body>
 </html>
+

@@ -1,0 +1,2403 @@
+<!DOCTYPE html>
+<html lang="ru">
+  <head>
+    <title>5. Типы данных</title>
+    <meta charset="UTF-8" />
+    <script
+      src="https://code.jquery.com/jquery-3.4.1.min.js"
+      integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo="
+      crossorigin="anonymous"
+    ></script>
+    <script src="../js/main.js"></script>
+    <link
+      rel="stylesheet"
+      href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+      integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T"
+      crossorigin="anonymous"
+    />
+    <script
+      src="https://code.jquery.com/jquery-3.4.1.slim.min.js"
+      integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n"
+      crossorigin="anonymous"
+    ></script>
+    <script
+      src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"
+      integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo"
+      crossorigin="anonymous"
+    ></script>
+    <script
+      src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"
+      integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6"
+      crossorigin="anonymous"
+    ></script>
+
+    <style>
+      xmp {
+        font-family: inherit;
+      }
+      pre {
+        background: #f5f2f0;
+        padding: 16px;
+        border-radius: 8px;
+        white-space: break-spaces;
+      }
+
+      .card-body div:last-child,
+      .card-body ul:last-child,
+      .card-body ol:last-child,
+      .card-body pre:last-child ,
+      .card-body p:last-child {
+          margin-bottom: 0;
+      }
+    </style>
+  </head>
+  <body class="pt-5">
+    <nav class="navbar navbar-expand-lg navbar-light bg-light fixed-top">
+      <div class="container">
+        <button
+          class="navbar-toggler"
+          type="button"
+          data-toggle="collapse"
+          data-target="#navbarNavDropdown"
+          aria-controls="navbarNavDropdown"
+          aria-expanded="false"
+          aria-label="Toggle navigation"
+        >
+          <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNavDropdown">
+          <ul class="navbar-nav">
+            <li class="nav-item dropdown">
+              <a
+                class="nav-link dropdown-toggle"
+                href="#"
+                id="navbarDropdownMenuLink1"
+                role="button"
+                data-toggle="dropdown"
+                aria-haspopup="true"
+                aria-expanded="false"
+              >
+                JavaScript</a
+              >
+              <div
+                class="dropdown-menu"
+                aria-labelledby="navbarDropdownMenuLink1"
+              >
+                <a class="dropdown-item" href="/dist/1-intro.html"
+                  >1. Введение</a
+                >
+                <a class="dropdown-item" href="/dist/2-first-steps.html"
+                  >2. Основы JavaScript</a
+                >
+                <a class="dropdown-item" href="/dist/3-code-quality.html"
+                  >3. Качество кода</a
+                >
+                <a class="dropdown-item" href="/dist/4-object-basics.html"
+                  >4. Объекты: основы</a
+                >
+                <a class="dropdown-item" href="/dist/5-data-types.html"
+                  >5. Типы данных</a
+                >
+                <a class="dropdown-item" href="/dist/6-advanced-functions.html"
+                  >6. Продвинутая работа с функциями</a
+                >
+                <a class="dropdown-item" href="/dist/7-object-properties.html"
+                  >7. Свойства объекта, их конфигурация</a
+                >
+                <a class="dropdown-item" href="/dist/8-prototypes.html"
+                  >8. Прототипы, наследование</a
+                >
+                <a class="dropdown-item" href="/dist/9-classes.html"
+                  >9. Классы</a
+                >
+                <a class="dropdown-item" href="/dist/10-error-handling.html"
+                  >10. Обработка ошибок</a
+                >
+                <a class="dropdown-item" href="/dist/11-async.html"
+                  >11. Промисы, async/await</a
+                >
+                <a class="dropdown-item" href="/dist/12-generators-iterators.html"
+                  >12. Генераторы, продвинутая итерация</a
+                >
+                <a class="dropdown-item" href="/dist/13-modules.html"
+                  >13. Модули</a
+                >
+                <a class="dropdown-item" href="/dist/_3-6-network.html"
+                  >3-6. Сетевые запросы</a
+                >
+              </div>
+            </li>
+
+<li class="nav-item dropdown">
+  <a
+    class="nav-link dropdown-toggle"
+    href="#"
+    id="navbarDropdownMenuLink"
+    role="button"
+    data-toggle="dropdown"
+    aria-haspopup="true"
+    aria-expanded="false"
+    >Типы данных</a
+  >
+  <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+    <a class="dropdown-item" href="#object">5.1 Методы у примитивов</a>
+    <a class="dropdown-item" href="#number">5.2 Числа</a>
+    <a class="dropdown-item" href="#string">5.3 Строки</a>
+    <a class="dropdown-item" href="#array">5.4 Массивы</a>
+    <a class="dropdown-item" href="#array-methods">5.5 Методы массивов</a>
+    <a class="dropdown-item" href="#iterable">5.6 Перебираемые объекты</a>
+    <a class="dropdown-item" href="#map-set">5.7 Map и Set</a>
+    <a class="dropdown-item" href="#weakmap-weakset">5.8 WeakMap и WeakSet</a>
+    <a class="dropdown-item" href="#keys-values-entries"
+      >5.9 Object.keys, values, entries</a
+    >
+    <a class="dropdown-item" href="#destructuring-assignment"
+      >5.10 Деструктурирующее присваивание</a
+    >
+    <a class="dropdown-item" href="#date">5.11 Дата и время</a>
+    <a class="dropdown-item" href="#json">5.12 Формат JSON, метод toJSON</a>
+  </div>
+</li>
+
+</ul>
+</div>
+</div>
+</nav>
+
+<!-- content -->
+<div class="container mt-5">
+  <h1>Типы данных</h1>
+  <div class="card mb-3" id="primitives-methods">
+    <div class="card-header d-flex align-items-center">
+      <h2 class="h5 mb-0">5.1 Методы у примитивов</h2>
+
+      <div class="ml-auto">
+        <a href="https://learn.javascript.ru/object" target="_blank">Link</a>
+      </div>
+    </div>
+    <div class="card-body">
+      <p>
+        Давайте взглянем на ключевые различия между примитивами и объектами.
+      </p>
+      <p>Примитив</p>
+      <ul>
+        <li>Это – значение «примитивного» типа.</li>
+        <li>
+          Есть 7 примитивных типов: <code>string</code>, <code>number</code>,
+          <code>boolean</code>, <code>symbol</code>, <code>null</code>,
+          <code>undefined</code> и <code>bigint</code>.
+        </li>
+      </ul>
+      <p>Объект</p>
+      <ul>
+        <li>Может хранить множество значений как свойства.</li>
+        <li>
+          Объявляется при помощи фигурных скобок <code>{}</code>, например:
+          <code>{name: "Рома", age: 30}</code>. В JavaScript есть и другие виды
+          объектов: например, функции тоже являются объектами.
+        </li>
+      </ul>
+      <h3 class="h5">Примитив как объект</h3>
+      <p>
+        Каждый примитив имеет свой собственный «объект-обёртку», которые
+        называются: <code>String</code>, <code>Number</code>,
+        <code>Boolean</code> и <code>Symbol</code>. Таким образом, они имеют
+        разный набор методов.
+      </p>
+      <pre><code>let str = "Привет";
+
+alert( str.toUpperCase() ); // ПРИВЕТ</code></pre>
+      <p>
+        Очень просто, не правда ли? Вот, что на самом деле происходит в
+        <code>str.toUpperCase()</code>:
+      </p>
+      <ol>
+        <li>
+          Строка <code>str</code> – примитив. В момент обращения к его свойству,
+          создаётся специальный объект, который знает значение строки и имеет
+          такие полезные методы, как <code>toUpperCase()</code>.
+        </li>
+        <li>
+          Этот метод запускается и возвращает новую строку (показывается в
+          <code>alert</code>).
+        </li>
+        <li>
+          Специальный объект удаляется, оставляя только примитив
+          <code>str</code>.
+        </li>
+      </ol>
+      <h3 class="h5">null/undefined не имеют методов</h3>
+      <p class="mb-0">
+        Особенные примитивы null и undefined являются исключениями. У них нет
+        соответствующих «объектов-обёрток», и они не имеют никаких методов. В
+        некотором смысле, они «самые примитивные».
+      </p>
+    </div>
+  </div>
+  <div class="card mb-3" id="number">
+    <div class="card-header d-flex align-items-center">
+      <h2 class="h5 mb-0">5.2 Числа</h2>
+      <div class="dropdown ml-auto">
+        <button
+          class="btn btn-primary dropdown-toggle"
+          type="button"
+          id="dropdownMenuButton2"
+          data-toggle="dropdown"
+          aria-haspopup="true"
+          aria-expanded="false"
+        >
+          Homeworks
+        </button>
+        <div class="dropdown-menu" aria-labelledby="dropdownMenuButton2">
+          <a
+            class="dropdown-item"
+            target="_blank"
+            href="./homeworks/5/5-2-1.html"
+            >1</a
+          ><a
+            class="dropdown-item"
+            target="_blank"
+            href="./homeworks/5/5-2-2.html"
+            >2</a
+          ><a
+            class="dropdown-item"
+            target="_blank"
+            href="./homeworks/5/5-2-3.html"
+            >3</a
+          ><a
+            class="dropdown-item"
+            target="_blank"
+            href="./homeworks/5/5-2-4.html"
+            >4</a
+          >
+        </div>
+      </div>
+      <div class="ml-4">
+        <a href="https://learn.javascript.ru/number" target="_blank">Link</a>
+      </div>
+    </div>
+    <div class="card-body">
+      <p>В современном JavaScript существует два типа чисел:</p>
+      <ol>
+        <li>
+          Обычные числа в JavaScript хранятся в 64-битном формате
+          <a href="http://en.wikipedia.org/wiki/IEEE_754-1985">IEEE-754</a>,
+          который также называют «числа с плавающей точкой двойной точности»
+          (double precision floating point numbers). Это числа, которые мы будем
+          использовать чаще всего. Мы поговорим о них в этой главе.
+        </li>
+        <li>
+          <code>BigInt</code> числа дают возможность работать с целыми числами
+          произвольной длины. Они нужны достаточно редко и используются в
+          случаях, когда необходимо работать со значениями более чем
+          <code>2<sup>53</sup></code> или менее чем <code>-2<sup>53</sup></code
+          >. Так как <code>BigInt</code> числа нужны достаточно редко, мы
+          рассмотрим их в отдельной главе <a href="/bigint">BigInt</a>.
+        </li>
+      </ol>
+      <p>Чтобы писать числа с большим количеством нулей:</p>
+      <ul>
+        <li>
+          Используйте краткую форму записи чисел – <code>"e"</code>, с указанным
+          количеством нулей. Например: <code>123e6</code> это <code>123</code> с
+          6-ю нулями <code>123000000</code>.
+        </li>
+        <li>
+          Отрицательное число после <code>"e"</code> приводит к делению числа на
+          1 с указанным количеством нулей. Например: <code>123e-6</code> это
+          <code>0.000123</code> (<code>123</code> миллионных).
+        </li>
+      </ul>
+      <p>Для других систем счисления:</p>
+      <ul>
+        <li>
+          Можно записывать числа сразу в шестнадцатеричной (<code>0x</code>),
+          восьмеричной (<code>0o</code>) и бинарной (<code>0b</code>) системах
+          счисления
+        </li>
+        <li>
+          <code>parseInt(str, base)</code> преобразует строку в целое число в
+          соответствии с указанной системой счисления:
+          <code>2 ≤ base ≤ 36</code>.
+        </li>
+        <li>
+          <code>num.toString(base)</code> представляет число в строковом виде в
+          указанной системе счисления <code>base</code>.
+        </li>
+      </ul>
+      <h3 class="h5">Преобразование в число</h3>
+      <p>
+        Для явного преобразования к числу можно использовать + или Number().
+        Если строка не является в точности числом, то результат будет NaN.
+        Единственное исключение — это пробелы в начале строки и в конце, они
+        игнорируются.
+      </p>
+      <p>
+        Для преобразования значений типа <code>12pt</code> и
+        <code>100px</code> в число:
+      </p>
+      <ul>
+        <li>
+          Используйте <code>parseInt/parseFloat</code> для «мягкого»
+          преобразования строки в число, данные функции по порядку считывают
+          число из строки до тех пор пока не возникнет ошибка.
+        </li>
+      </ul>
+      <h3 class="h5">Округление</h3>
+      <dl>
+        <dt><code>Math.floor</code></dt>
+        <dd>
+          Округление в меньшую сторону: <code>3.1</code> становится
+          <code>3</code>, а <code>-1.1</code> — <code>-2</code>.
+        </dd>
+        <dt><code>Math.ceil</code></dt>
+        <dd>
+          Округление в большую сторону: <code>3.1</code> становится
+          <code>4</code>, а <code>-1.1</code> — <code>-1</code>.
+        </dd>
+        <dt><code>Math.round</code></dt>
+        <dd>
+          Округление до ближайшего целого: <code>3.1</code> становится
+          <code>3</code>, <code>3.6</code> — <code>4</code>, а
+          <code>-1.1</code> — <code>-1</code>.
+        </dd>
+        <dt><code>Math.trunc</code> (не поддерживается в Internet Explorer)</dt>
+        <dd>
+          Производит удаление дробной части без округления:
+          <code>3.1</code> становится <code>3</code>, а <code>-1.1</code> —
+          <code>-1</code>.
+        </dd>
+      </dl>
+      <h3 class="h5">Неточные вычисления</h3>
+      <ul>
+        <li>
+          <p>
+            Если число слишком большое, оно переполнит 64-битное хранилище,
+            JavaScript вернёт бесконечность:Если число слишком большое, оно
+            переполнит 64-битное хранилище, JavaScript вернёт бесконечность:
+          </p>
+          <pre><code>alert( 1e500 ); // Infinity</code></pre>
+        </li>
+        <li>
+          <pre><code>alert( 0.1 + 0.2 == 0.3 ); // false</code></pre>
+          <p>
+            Ой! Здесь гораздо больше последствий, чем просто некорректное
+            сравнение. Представьте, вы делаете интернет-магазин и посетители
+            формируют заказ из 2-х позиций за $0.10 и $0.20. Итоговый заказ
+            будет $0.30000000000000004.
+          </p>
+        </li>
+        <li>
+          <pre><code>alert( 9999999999999999 ); // покажет 10000000000000000</code></pre>
+          <p>
+            Причина та же – потеря точности. Из 64 бит, отведённых на число,
+            сами цифры числа занимают до 52 бит, остальные 11 бит хранят позицию
+            десятичной точки и один бит – знак. Так что если 52 бит не хватает
+            на цифры, то при записи пропадут младшие разряды.
+          </p>
+        </li>
+      </ul>
+      <h3 class="h5">Проверка: isFinite и isNaN</h3>
+      <ul>
+        <li>
+          <p>
+            <code>isNaN(value)</code> преобразует значение в число и проверяет
+            является ли оно <code>NaN</code>:
+          </p>
+        </li>
+        <li>
+          <p>
+            <code>isFinite(value)</code> преобразует аргумент в число и
+            возвращает <code>true</code>, если оно является обычным числом, т.е.
+            не <code>NaN/Infinity/-Infinity</code>:
+          </p>
+        </li>
+      </ul>
+      <h3 class="h5">Другие математические функции</h3>
+      <dl class="mb-0">
+        <dt><code>Math.random()</code></dt>
+        <dd>
+          <p>
+            Возвращает псевдослучайное число в диапазоне от 0 (включительно) до
+            1 (но не включая 1)
+          </p>
+          <pre><code>alert( Math.random() ); // 0.1234567894322
+alert( Math.random() ); // 0.5435252343232
+alert( Math.random() ); // ... (любое количество псевдослучайных чисел)</code></pre>
+        </dd>
+        <dt>
+          <code>Math.max(a, b, c...)</code> / <code>Math.min(a, b, c...)</code>
+        </dt>
+        <dd>
+          <p>
+            Возвращает наибольшее/наименьшее число из перечисленных аргументов.
+          </p>
+          <pre><code>alert( Math.max(3, 5, -10, 0, 1) ); // 5
+alert( Math.min(1, 2) ); // 1</code></pre>
+        </dd>
+        <dt><code>Math.pow(n, power)</code></dt>
+        <dd>
+          <p>
+            Возвращает число <code>n</code>, возведённое в степень
+            <code>power</code>
+          </p>
+          <pre><code>alert( Math.pow(2, 10) ); // 2 в степени 10 = 1024</code></pre>
+        </dd>
+        <p class="mb-0">
+          Документация по объекту
+          <a
+            href="https://developer.mozilla.org/ru/docs/Web/JavaScript/Reference/Global_Objects/Math"
+            >Math</a
+          >. Библиотека маленькая, но содержит всё самое важное.
+        </p>
+      </dl>
+    </div>
+  </div>
+  <div class="card mb-3" id="string">
+    <div class="card-header d-flex align-items-center">
+      <h2 class="h5 mb-0">5.3 Строки</h2>
+      <div class="dropdown ml-auto">
+        <button
+          class="btn btn-primary dropdown-toggle"
+          type="button"
+          id="dropdownMenuButton3"
+          data-toggle="dropdown"
+          aria-haspopup="true"
+          aria-expanded="false"
+        >
+          Homeworks
+        </button>
+        <div class="dropdown-menu" aria-labelledby="dropdownMenuButton3">
+          <a
+            class="dropdown-item"
+            target="_blank"
+            href="./homeworks/5/5-3-1.html"
+            >1</a
+          >
+          <a
+            class="dropdown-item"
+            target="_blank"
+            href="./homeworks/5/5-3-2.html"
+            >2</a
+          >
+          <a
+            class="dropdown-item"
+            target="_blank"
+            href="./homeworks/5/5-3-3.html"
+            >3</a
+          >
+          <a
+            class="dropdown-item"
+            target="_blank"
+            href="./homeworks/5/5-3-4.html"
+            >4</a
+          >
+        </div>
+      </div>
+      <div class="ml-4">
+        <a href="https://learn.javascript.ru/string" target="_blank">Link</a>
+      </div>
+    </div>
+    <div class="card-body">
+      <ul>
+        <li>
+          Есть три типа кавычек. Строки, использующие обратные кавычки, могут
+          занимать более одной строки в коде и включать выражения
+          <code>${…}</code>.
+        </li>
+        <li>Строки в JavaScript кодируются в UTF-16.</li>
+        <li>
+          Есть специальные символы, такие как <code>\n</code>, и можно добавить
+          символ по его юникодному коду, используя <code>\u…</code>.
+        </li>
+        <li>Для получения символа используйте <code>[]</code>.</li>
+        <li>
+          Также можно перебрать строку посимвольно, используя
+          <code>for..of</code>:
+        </li>
+        <li>
+          Для того, чтобы перевести строку в нижний или верхний регистр,
+          используйте <code>toLowerCase/toUpperCase</code>.
+        </li>
+        <li>
+          Для поиска подстроки используйте <code>indexOf</code>
+          <pre><code>let str = "Widget";
+
+if (~str.indexOf("Widget")) {
+  alert( 'Совпадение есть' ); // работает
+}</code></pre>
+        </li>
+        <li>
+          Более современный метод str.includes(substr, pos) возвращает true,
+          если в строке str есть подстрока substr, либо false, если нет.
+          <pre><code>alert( "Widget with id".includes("Widget") ); // true
+alert("Hello".includes("Bye") ); // false</code></pre>
+        </li>
+        <li>
+          Методы str.startsWith и str.endsWith проверяют, соответственно,
+          начинается ли и заканчивается ли строка определённой строкой:
+          <pre><code>alert( "Widget".startsWith("Wid") ); // true, "Wid" — начало "Widget"
+alert( "Widget".endsWith("get") ); // true, "get" — окончание "Widget"</code></pre>
+        </li>
+      </ul>
+
+      <h3 class="h5">Получение подстроки</h3>
+      <dl>
+        <dt><code>str.slice(start [, end])</code></dt>
+        <dd>
+          <p>
+            Возвращает часть строки от <code>start</code> до (не включая)
+            <code>end</code>.
+          </p>
+          <pre><code>let str = "stringify";
+// 'strin', символы от 0 до 5 (не включая 5)
+alert( str.slice(0, 5) );
+// 's', от 0 до 1, не включая 1, т. е. только один символ на позиции 0
+alert( str.slice(0, 1) );</code></pre>
+          <p>
+            Если аргумент <code>end</code> отсутствует,
+            <code>slice</code> возвращает символы до конца строки:
+          </p>
+          <p>
+            Также для <code>start/end</code> можно задавать отрицательные
+            значения. Это означает, что позиция определена как заданное
+            количество символов <em>с конца строки</em>:
+          </p>
+          <pre><code>let str = "stringify";
+
+// начинаем с позиции 4 справа, а заканчиваем на позиции 1 справа
+alert( str.slice(-4, -1) ); // gif</code></pre>
+        </dd>
+        <dt><code>str.substring(start [, end])</code></dt>
+        <dd>
+          <p>
+            Возвращает часть строки <em>между</em> <code>start</code> и
+            <code>end</code>. Это — почти то же, что и <code>slice</code>, но
+            можно задавать <code>start</code> больше <code>end</code>.
+          </p>
+          <p>
+            Отрицательные значения <code>substring</code>, в отличие от
+            <code>slice</code>, не поддерживает, они интерпретируются как
+            <code>0</code>.
+          </p>
+          <pre><code>let str = "stringify";
+
+// для substring эти два примера — одинаковы
+alert( str.substring(2, 6) ); // "ring"
+alert( str.substring(6, 2) ); // "ring"
+
+// …но не для slice:
+alert( str.slice(2, 6) ); // "ring" (то же самое)
+alert( str.slice(6, 2) ); // "" (пустая строка)</code></pre>
+        </dd>
+        <dt><code>str.substr(start [, length])</code></dt>
+        <dd>
+          <p>
+            Возвращает часть строки от <code>start</code> длины
+            <code>length</code>. В противоположность предыдущим методам, этот
+            позволяет указать длину вместо конечной позиции:
+          </p>
+          <pre><code>let str = "stringify";
+// ring, получаем 4 символа, начиная с позиции 2
+alert( str.substr(2, 4) );</code></pre>
+          <p>
+            Значение первого аргумента может быть отрицательным, тогда позиция
+            определяется с конца:
+          </p>
+          <pre><code>let str = "stringify";
+// gi, получаем 2 символа, начиная с позиции 4 с конца строки
+alert( str.substr(-4, 2) );</code></pre>
+        </dd>
+      </dl>
+      <table class="table">
+        <thead>
+          <tr>
+            <th>метод</th>
+            <th>выбирает…</th>
+            <th>отрицательные значения</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><code>slice(start, end)</code></td>
+            <td>
+              от <code>start</code> до <code>end</code> (не включая
+              <code>end</code>)
+            </td>
+            <td>можно передавать отрицательные значения</td>
+          </tr>
+          <tr>
+            <td><code>substring(start, end)</code></td>
+            <td>между <code>start</code> и <code>end</code></td>
+            <td>отрицательные значения равнозначны <code>0</code></td>
+          </tr>
+          <tr>
+            <td><code>substr(start, length)</code></td>
+            <td><code>length</code> символов, начиная от <code>start</code></td>
+            <td>значение <code>start</code> может быть отрицательным</td>
+          </tr>
+        </tbody>
+      </table>
+
+      <h3 class="h5">Сравнение строк</h3>
+      <dl>
+        <dt><code>str.codePointAt(pos)</code></dt>
+        <dd>
+          <p>
+            Возвращает код для символа, находящегося на позиции
+            <code>pos</code>:
+          </p>
+          <pre><code>// одна и та же буква в нижнем и верхнем регистре
+// будет иметь разные коды
+alert( "z".codePointAt(0) ); // 122
+alert( "Z".codePointAt(0) ); // 90</code></pre>
+        </dd>
+        <dt><code>String.fromCodePoint(code)</code></dt>
+        <dd>
+          <p>Создаёт символ по его коду <code>code</code></p>
+          <pre><code>alert( String.fromCodePoint(90) ); // Z</code></pre>
+          <p>
+            Также можно добавлять юникодные символы по их кодам, используя
+            <code>\u</code> с шестнадцатеричным кодом символа:
+          </p>
+          <pre><code>// 90 — 5a в шестнадцатеричной системе счисления
+alert( '\u005a' ); // Z</code></pre>
+        </dd>
+      </dl>
+
+      <h3 class="h5">Правильное сравнение</h3>
+      <p class="mb-0">
+        Вызов str.localeCompare(str2) возвращает число, которое показывает,
+        какая строка больше в соответствии с правилами языка:
+      </p>
+
+      <ul>
+        <li>
+          Отрицательное число, если <code>str</code> меньше <code>str2</code>.
+        </li>
+        <li>
+          Положительное число, если <code>str</code> больше <code>str2</code>.
+        </li>
+        <li><code>0</code>, если строки равны.</li>
+      </ul>
+      <pre><code>alert( 'Österreich'.localeCompare('Zealand') ); // -1</code></pre>
+    </div>
+  </div>
+  <div class="card mb-3" id="array">
+    <div class="card-header d-flex align-items-center">
+      <h2 class="h5 mb-0">5.4 Массивы</h2>
+      <div class="dropdown ml-auto">
+        <button
+          class="btn btn-primary dropdown-toggle"
+          type="button"
+          id="dropdownMenuButton4"
+          data-toggle="dropdown"
+          aria-haspopup="true"
+          aria-expanded="false"
+        >
+          Homeworks
+        </button>
+        <div class="dropdown-menu" aria-labelledby="dropdownMenuButton4">
+          <a
+            class="dropdown-item"
+            target="_blank"
+            href="./homeworks/5/5-4-1.html"
+            >1</a
+          >
+          <a
+            class="dropdown-item"
+            target="_blank"
+            href="./homeworks/5/5-4-2.html"
+            >2</a
+          >
+          <a
+            class="dropdown-item"
+            target="_blank"
+            href="./homeworks/5/5-4-3.html"
+            >3</a
+          >
+        </div>
+      </div>
+      <div class="ml-4">
+        <a href="https://learn.javascript.ru/array" target="_blank">Link</a>
+      </div>
+    </div>
+    <div class="card-body">
+      <p>
+        Массив – это особый тип объекта, предназначенный для работы с
+        упорядоченным набором элементов.
+      </p>
+      <ul>
+        <li>
+          <p>Объявление:</p>
+          <pre><code>// квадратные скобки (обычно)
+let arr = [item1, item2...];
+
+// new Array (очень редко)
+let arr = new Array(item1, item2...);</code></pre>
+          <p>
+            Вызов <code>new Array(number)</code> создаёт массив с заданной
+            длиной, но без элементов.
+          </p>
+        </li>
+        <li>
+          <p>
+            Свойство <code>length</code> отражает длину массива или, если
+            точнее, его последний цифровой индекс плюс один. Длина
+            корректируется автоматически методами массива.
+          </p>
+        </li>
+        <li>
+          <p>
+            Если мы уменьшаем <code>length</code> вручную, массив укорачивается.
+          </p>
+        </li>
+      </ul>
+      <p>
+        Мы можем использовать массив как двустороннюю очередь, используя
+        следующие операции:
+      </p>
+      <ul>
+        <li>
+          <code>push(...items)</code>добавляет <code>items</code> в конец
+          массива. (Быстро)
+        </li>
+        <li>
+          <code>pop()</code> удаляет элемент в конце массива и возвращает его.
+          (Быстро)
+        </li>
+        <li>
+          <code>shift()</code> удаляет элемент в начале массива и возвращает
+          его. (Медленно)
+        </li>
+        <li>
+          <code>unshift(...items)</code> добавляет <code>items</code> в начало
+          массива. (Медленно)
+        </li>
+      </ul>
+      <p>Чтобы пройтись по элементам массива:</p>
+      <ul>
+        <li>
+          <code>for (let i=0; i&lt;arr.length; i++)</code> – работает быстрее
+          всего, совместим со старыми браузерами.
+        </li>
+        <li>
+          <code>for (let item of arr)</code> – современный синтаксис только для
+          значений элементов (к индексам нет доступа).
+        </li>
+        <li>
+          <code>for (let i in arr)</code> – никогда не используйте для массивов!
+        </li>
+      </ul>
+
+      <h3 class="h5">toString</h3>
+      <p>
+        Массивы не имеют ни <code>Symbol.toPrimitive</code>, ни функционирующего
+        <code>valueOf</code>, они реализуют только преобразование
+        <code>toString</code>, таким образом, здесь <code>[]</code> становится
+        пустой строкой, <code>[1]</code> становится <code>"1"</code>, а
+        <code>[1,2]</code> становится <code>"1,2"</code>.
+      </p>
+      <pre class="mb-0"><code>alert( "" + 1 ); // "1"
+alert( "1" + 1 ); // "11"
+alert( "1,2" + 1 ); // "1,21"</code></pre>
+    </div>
+  </div>
+  <div class="card mb-3" id="array-methods">
+    <div class="card-header d-flex align-items-center">
+      <h2 class="h5 mb-0">5.5 Методы массивов</h2>
+      <div class="dropdown ml-auto">
+        <button
+          class="btn btn-primary dropdown-toggle"
+          type="button"
+          id="dropdownMenuButton5"
+          data-toggle="dropdown"
+          aria-haspopup="true"
+          aria-expanded="false"
+        >
+          Homeworks
+        </button>
+        <div class="dropdown-menu" aria-labelledby="dropdownMenuButton5">
+          <a
+            class="dropdown-item"
+            target="_blank"
+            href="./homeworks/5/5-5-1.html"
+            >1</a
+          >
+          <a
+            class="dropdown-item"
+            target="_blank"
+            href="./homeworks/5/5-5-2.html"
+            >2</a
+          >
+          <a
+            class="dropdown-item"
+            target="_blank"
+            href="./homeworks/5/5-5-3.html"
+            >3</a
+          >
+          <a
+            class="dropdown-item"
+            target="_blank"
+            href="./homeworks/5/5-5-4.html"
+            >4</a
+          >
+          <a
+            class="dropdown-item"
+            target="_blank"
+            href="./homeworks/5/5-5-5.html"
+            >5</a
+          >
+          <a
+            class="dropdown-item"
+            target="_blank"
+            href="./homeworks/5/5-5-6.html"
+            >6</a
+          >
+          <a
+            class="dropdown-item"
+            target="_blank"
+            href="./homeworks/5/5-5-7.html"
+            >7</a
+          >
+          <a
+            class="dropdown-item"
+            target="_blank"
+            href="./homeworks/5/5-5-8.html"
+            >8</a
+          >
+          <a
+            class="dropdown-item"
+            target="_blank"
+            href="./homeworks/5/5-5-9.html"
+            >9</a
+          >
+          <a
+            class="dropdown-item"
+            target="_blank"
+            href="./homeworks/5/5-5-10.html"
+            >10</a
+          >
+          <a
+            class="dropdown-item"
+            target="_blank"
+            href="./homeworks/5/5-5-11.html"
+            >11</a
+          >
+          <a
+            class="dropdown-item"
+            target="_blank"
+            href="./homeworks/5/5-5-12.html"
+            >12</a
+          >
+        </div>
+      </div>
+      <div class="ml-4">
+        <a href="https://learn.javascript.ru/array-methods" target="_blank"
+          >Link</a
+        >
+      </div>
+    </div>
+    <div class="card-body">
+      <ul class="mb-0">
+        <li>
+          <p>Для добавления/удаления элементов:</p>
+          <ul>
+            <li><code>push (...items)</code> – добавляет элементы в конец,</li>
+            <li><code>pop()</code> – извлекает элемент с конца,</li>
+            <li><code>shift()</code> – извлекает элемент с начала,</li>
+            <li>
+              <code>unshift(...items)</code> – добавляет элементы в начало.
+            </li>
+            <li>
+              <code>splice(pos, deleteCount, ...items)</code> – начиная с
+              индекса <code>pos</code>, удаляет
+              <code>deleteCount</code> элементов и вставляет <code>items</code>.
+              Это универсальный «швейцарский нож» для работы с массивами. Умеет
+              всё: добавлять, удалять и заменять элементы. В этом и в других
+              методах массива допускается использование отрицательного индекса.
+              Он позволяет начать отсчёт элементов с конца.
+              <pre><code>let arr = ["Я", "изучаю", "JavaScript", "прямо", "сейчас"];
+
+// удалить 3 первых элемента и заменить их другими
+arr.splice(0, 3, "Давай", "танцевать");
+
+alert( arr ) // теперь ["Давай", "танцевать", "прямо", "сейчас"]</code></pre>
+            </li>
+            <li>
+              <code>slice(start, end)</code> – создаёт новый массив, копируя в
+              него элементы с позиции <code>start</code> до <code>end</code> (не
+              включая <code>end</code>). Оба индекса start и end могут быть
+              отрицательными.
+              <pre><code>let arr = ["t", "e", "s", "t"];
+
+alert( arr.slice(1, 3) ); // e,s (копирует с 1 до 3)
+
+alert( arr.slice(-2) ); // s,t (копирует с -2 до конца)</code></pre>
+            </li>
+            <li>
+              <code>concat(...items)</code> – возвращает новый массив: копирует
+              все члены текущего массива и добавляет к нему <code>items</code>.
+              Если какой-то из <code>items</code> является массивом, тогда
+              берутся его элементы.
+              <pre><code>let arr = [1, 2];
+
+// создать массив из: arr и [3,4]
+alert( arr.concat([3, 4]) ); // 1,2,3,4
+
+// создать массив из: arr и [3,4] и [5,6]
+alert( arr.concat([3, 4], [5, 6]) ); // 1,2,3,4,5,6
+
+// создать массив из: arr и [3,4], потом добавить значения 5 и 6
+alert( arr.concat([3, 4], 5, 6) ); // 1,2,3,4,5,6</code></pre>
+            </li>
+          </ul>
+        </li>
+        <li>
+          <p>Для поиска среди элементов:</p>
+          <ul>
+            <li>
+              <code>indexOf/lastIndexOf(item, pos)</code> – ищет
+              <code>item</code>, начиная с позиции <code>pos</code>, и
+              возвращает его индекс или <code>-1</code>, если ничего не найдено.
+            </li>
+            <li>
+              <code>includes(value)</code> – возвращает <code>true</code>, если
+              в массиве имеется элемент <code>value</code>, в противном случае
+              <code>false</code>.
+            </li>
+            <li>
+              <code>find/filter(func)</code> – фильтрует элементы через функцию
+              и отдаёт первое/все значения, при прохождении которых через
+              функцию возвращается <code>true</code>.
+              <pre><code>let result = arr.find(function(item, index, array) {
+  // если true - возвращается текущий элемент и перебор прерывается
+  // если все итерации оказались ложными, возвращается undefined
+});
+
+let users = [
+  {id: 1, name: "Вася"},
+  {id: 2, name: "Петя"},
+  {id: 3, name: "Маша"}
+];
+
+let user = users.find(item => item.id == 1);
+
+alert(user.name); // Вася</code></pre>
+              <pre><code>let results = arr.filter(function(item, index, array) {
+  // если true - элемент добавляется к результату, и перебор продолжается
+  // возвращается пустой массив в случае, если ничего не найдено
+});
+
+let users = [
+  {id: 1, name: "Вася"},
+  {id: 2, name: "Петя"},
+  {id: 3, name: "Маша"}
+];
+
+// возвращает массив, состоящий из двух первых пользователей
+let someUsers = users.filter(item => item.id < 3);
+
+alert(someUsers.length); // 2</code></pre>
+            </li>
+            <li>
+              <code>findIndex</code> похож на <code>find</code>, но возвращает
+              индекс вместо значения.
+            </li>
+          </ul>
+        </li>
+        <li>
+          <p>Для перебора элементов:</p>
+          <ul>
+            <li>
+              <code>forEach(func)</code> – вызывает <code>func</code> для
+              каждого элемента. Ничего не возвращает.
+              <pre><code>arr.forEach(function(item, index, array) {
+  // ... делать что-то с item
+});</code></pre>
+            </li>
+          </ul>
+        </li>
+        <li>
+          <p>Для преобразования массива:</p>
+          <ul>
+            <li>
+              <code>map(func)</code> – создаёт новый массив из результатов
+              вызова <code>func</code> для каждого элемента.
+              <pre><code>let result = arr.map(function(item, index, array) {
+  // возвращается новое значение вместо элемента
+});
+
+let lengths = ["Bilbo", "Gandalf", "Nazgul"].map(item => item.length);
+alert(lengths); // 5,7,6</code></pre>
+            </li>
+            <li>
+              <code>sort(func)</code> – сортирует массив «на месте», а потом
+              возвращает его. По умолчанию элементы сортируются как строки.
+              <pre><code>function compareNumeric(a, b) {
+  if (a > b) return 1;
+  if (a == b) return 0;
+  if (a < b) return -1;
+}
+
+let arr = [ 1, 2, 15 ];
+
+arr.sort(compareNumeric);
+
+alert(arr);  // 1, 2, 15</code></pre>
+            </li>
+            <li>
+              <code>reverse()</code> – «на месте» меняет порядок следования
+              элементов на противоположный и возвращает изменённый массив.
+              <pre><code>let arr = [1, 2, 3, 4, 5];
+arr.reverse();
+
+alert( arr ); // 5,4,3,2,1</code></pre>
+            </li>
+            <li>
+              <code>split/join</code> – преобразует строку в массив и обратно.
+              <pre><code>let names = 'Вася, Петя, Маша';
+
+let arr = names.split(', ');
+
+for (let name of arr) {
+  alert( `Сообщение получат: ${name}.` ); // Сообщение получат: Вася (и другие имена)
+}
+
+let arr = ['Вася', 'Петя', 'Маша'];
+
+let str = arr.join(';'); // объединить массив в строку через ;
+
+alert( str ); // Вася;Петя;Маша</code></pre>
+            </li>
+            <li>
+              <code>reduce(func, initial)</code> – вычисляет одно значение на
+              основе всего массива, вызывая <code>func</code> для каждого
+              элемента и передавая промежуточный результат между вызовами.
+              <pre><code>let value = arr.reduce(function(previousValue, item, index, array) {
+  // ...
+}, [initial]);</code></pre>
+              <pre><code>let arr = [1, 2, 3, 4, 5];
+
+let result = arr.reduce((sum, current) => sum + current, 0);
+
+alert(result); // 15</code></pre>
+              При отсутствии initial в качестве первого значения берётся первый
+              элемент массива, а перебор стартует со второго. Метод
+              arr.reduceRight работает аналогично, но проходит по массиву справа
+              налево.
+            </li>
+          </ul>
+        </li>
+        <li>
+          <p>Дополнительно:</p>
+          <ul>
+            <li>
+              <code>Array.isArray(arr)</code> проверяет, является ли
+              <code>arr</code> массивом.
+              <pre><code>alert(Array.isArray({})); // false
+
+alert(Array.isArray([])); // true</code></pre>
+            </li>
+          </ul>
+        </li>
+        <li>
+          Почти все методы массива, которые вызывают функции – такие как find,
+          filter, map, за исключением метода sort, принимают необязательный
+          параметр thisArg. Значение параметра thisArg становится this для func.
+          <pre><code>Вызов users.filter(army.canJoin, army) можно заменить на users.filter(user => army.canJoin(user)), который делает то же самое. Последняя запись используется даже чаще, так как функция-стрелка более наглядна.</code></pre>
+        </li>
+      </ul>
+
+      <ul>
+        <li>
+          <p>
+            <a
+              href="https://developer.mozilla.org/ru/docs/Web/JavaScript/Reference/Global_Objects/Array/some"
+              >arr.some(fn)</a
+            >/<a
+              href="https://developer.mozilla.org/ru/docs/Web/JavaScript/Reference/Global_Objects/Array/every"
+              >arr.every(fn)</a
+            >
+            проверяет массив.
+          </p>
+          <p>
+            Функция <code>fn</code> вызывается для каждого элемента массива
+            аналогично <code>map</code>. Если какие-либо/все результаты вызовов
+            являются <code>true</code>, то метод возвращает <code>true</code>,
+            иначе <code>false</code>.
+          </p>
+        </li>
+        <li>
+          <p>
+            <a
+              href="https://developer.mozilla.org/ru/docs/Web/JavaScript/Reference/Global_Objects/Array/fill"
+              >arr.fill(value, start, end)</a
+            >
+            – заполняет массив повторяющимися <code>value</code>, начиная с
+            индекса <code>start</code> до <code>end</code>.
+          </p>
+        </li>
+        <li>
+          <p>
+            <a
+              href="https://developer.mozilla.org/ru/docs/Web/JavaScript/Reference/Global_Objects/Array/copyWithin"
+              >arr.copyWithin(target, start, end)</a
+            >
+            – копирует свои элементы, начиная со <code>start</code> и заканчивая
+            <code>end</code>, в <em>собственную</em> позицию
+            <code>target</code> (перезаписывает существующие).
+          </p>
+        </li>
+      </ul>
+    </div>
+  </div>
+  <div class="card mb-3" id="iterable">
+    <div class="card-header d-flex align-items-center">
+      <h2 class="h5 mb-0">5.6 Перебираемые объекты</h2>
+      <div class="ml-auto">
+        <a href="https://learn.javascript.ru/iterable" target="_blank">Link</a>
+      </div>
+    </div>
+    <div class="card-body">
+      <p>
+        Объекты, которые можно использовать в цикле <code>for..of</code>,
+        называются <em>итерируемыми</em>.
+      </p>
+      <ul>
+        <li>
+          Технически итерируемые объекты должны иметь метод
+          <code>Symbol.iterator</code>.
+          <ul>
+            <li>
+              Результат вызова <code>obj[Symbol.iterator]</code> называется
+              <em>итератором</em>. Он управляет процессом итерации.
+            </li>
+            <li>
+              Итератор должен иметь метод <code>next()</code>, который
+              возвращает объект <code>{done: Boolean, value: any}</code>, где
+              <code>done:true</code> сигнализирует об окончании процесса
+              итерации, в противном случае <code>value</code> – следующее
+              значение.
+            </li>
+          </ul>
+          <pre><code>let range = {
+  from: 1,
+  to: 5
+};
+
+// 1. вызов for..of сначала вызывает эту функцию
+range[Symbol.iterator] = function() {
+
+  // ...она возвращает объект итератора:
+  // 2. Далее, for..of работает только с этим итератором, запрашивая у него новые значения
+  return {
+    current: this.from,
+    last: this.to,
+
+    // 3. next() вызывается на каждой итерации цикла for..of
+    next() {
+      // 4. он должен вернуть значение в виде объекта {done:.., value :...}
+      if (this.current <= this.last) {
+        return { done: false, value: this.current++ };
+      } else {
+        return { done: true };
+      }
+    }
+  };
+};
+
+// теперь работает!
+for (let num of range) {
+  alert(num); // 1, затем 2, 3, 4, 5
+}</code></pre>
+        </li>
+        <li>
+          Метод <code>Symbol.iterator</code> автоматически вызывается циклом
+          <code>for..of</code>, но можно вызвать его и напрямую.
+          <pre><code>let str = "Hello";
+
+// делает то же самое, что и
+// for (let char of str) alert(char);
+
+let iterator = str[Symbol.iterator]();
+
+while (true) {
+  let result = iterator.next();
+  if (result.done) break;
+  alert(result.value); // выводит символы один за другим
+}</code></pre>
+        </li>
+        <li>
+          Встроенные итерируемые объекты, такие как строки или массивы, также
+          реализуют метод <code>Symbol.iterator</code>.
+        </li>
+        <li>Строковый итератор знает про суррогатные пары.</li>
+      </ul>
+      <p>
+        Объекты, имеющие индексированные свойства и <code>length</code>,
+        называются <em>псевдомассивами</em>. Они также могут иметь другие
+        свойства и методы, но у них нет встроенных методов массивов.
+      </p>
+      <pre><code>let arrayLike = { // есть индексы и свойство length => псевдомассив
+  0: "Hello",
+  1: "World",
+  length: 2
+};
+
+// Ошибка (отсутствует Symbol.iterator)
+for (let item of arrayLike) {}</code></pre>
+      <p>
+        <code>Array.from(obj[, mapFn, thisArg])</code> создаёт настоящий
+        <code>Array</code> из итерируемого объекта или псевдомассива
+        <code>obj</code>, и затем мы можем применять к нему методы массивов.
+        Необязательные аргументы <code>mapFn</code> и
+        <code>thisArg</code> позволяют применять функцию с задаваемым контекстом
+        к каждому элементу.
+      </p>
+      <pre><code>let arrayLike = {
+  0: "Hello",
+  1: "World",
+  length: 2
+};
+
+let arr = Array.from(arrayLike); // (*)
+alert(arr.pop()); // World (метод работает)</code></pre>
+      <pre class="mb-0"><code>// range взят из примера выше
+let arr = Array.from(range);
+alert(arr); // 1,2,3,4,5 (преобразование массива через toString работает)
+
+// возводим каждое число в квадрат
+let arr = Array.from(range, num => num * num);
+
+alert(arr); // 1,4,9,16,25</code></pre>
+    </div>
+  </div>
+  <div class="card mb-3" id="map-set">
+    <div class="card-header d-flex align-items-center">
+      <h2 class="h5 mb-0">5.7 Map и Set</h2>
+      <div class="dropdown ml-auto">
+        <button
+          class="btn btn-primary dropdown-toggle"
+          type="button"
+          id="dropdownMenuButton7"
+          data-toggle="dropdown"
+          aria-haspopup="true"
+          aria-expanded="false"
+        >
+          Homeworks
+        </button>
+        <div class="dropdown-menu" aria-labelledby="dropdownMenuButton7">
+          <a
+            class="dropdown-item"
+            target="_blank"
+            href="./homeworks/5/5-7-1.html"
+            >1</a
+          >
+          <a
+            class="dropdown-item"
+            target="_blank"
+            href="./homeworks/5/5-7-2.html"
+            >2</a
+          >
+          <a
+            class="dropdown-item"
+            target="_blank"
+            href="./homeworks/5/5-7-3.html"
+            >3</a
+          >
+        </div>
+      </div>
+      <div class="ml-4">
+        <a href="https://learn.javascript.ru/map-set" target="_blank">Link</a>
+      </div>
+    </div>
+    <div class="card-body">
+      <p><code>Map</code> – коллекция пар ключ-значение.</p>
+      <p>Методы и свойства:</p>
+      <ul>
+        <li>
+          <code>new Map([iterable])</code> – создаёт коллекцию, можно указать
+          перебираемый объект (обычно массив) из пар
+          <code>[ключ,значение]</code> для инициализации.
+        </li>
+        <li>
+          <code>map.set(key, value)</code> – записывает по ключу
+          <code>key</code> значение <code>value</code>.
+        </li>
+        <li>
+          <code>map.get(key)</code> – возвращает значение по ключу или
+          <code>undefined</code>, если ключ <code>key</code> отсутствует.
+        </li>
+        <li>
+          <code>map.has(key)</code> – возвращает <code>true</code>, если ключ
+          <code>key</code> присутствует в коллекции, иначе <code>false</code>.
+        </li>
+        <li>
+          <code>map.delete(key)</code> – удаляет элемент по ключу
+          <code>key</code>.
+        </li>
+        <li><code>map.clear()</code> – очищает коллекцию от всех элементов.</li>
+        <li>
+          <code>map.size</code> – возвращает текущее количество элементов.
+        </li>
+      </ul>
+      <pre><code>let recipeMap = new Map([
+  ["огурец", 500],
+  ["помидор", 350],
+  ["лук",    50]
+]);
+
+// перебор по ключам (овощи)
+for (let vegetable of recipeMap.keys()) {
+  alert(vegetable); // огурец, помидор, лук
+}
+
+// перебор по значениям (числа)
+for (let amount of recipeMap.values()) {
+  alert(amount); // 500, 350, 50
+}
+
+// перебор по элементам в формате [ключ, значение]
+for (let entry of recipeMap) { // то же самое, что и recipeMap.entries()
+  alert(entry); // огурец,500 (и так далее)
+}
+
+// выполняем функцию для каждой пары (ключ, значение)
+recipeMap.forEach((value, key, map) => {
+  alert(`${key}: ${value}`); // огурец: 500 и так далее
+});</code></pre>
+      <p>Отличия от обычного объекта <code>Object</code>:</p>
+      <ul>
+        <li>Что угодно может быть ключом, в том числе и объекты.</li>
+        <li>Есть дополнительные методы, свойство <code>size</code>.</li>
+      </ul>
+      <h3 class="h5">Object.entries: Map из Object</h3>
+      <pre><code>let obj = {
+  name: "John",
+  age: 30
+};
+
+let map = new Map(Object.entries(obj));</code></pre>
+      <h3 class="h5">Object.fromEntries: Object из Map</h3>
+      <pre><code>let prices = Object.fromEntries([
+  ['banana', 1],
+  ['orange', 2],
+  ['meat', 4]
+]);
+
+// now prices = { banana: 1, orange: 2, meat: 4 }
+
+alert(prices.orange); // 2</code></pre>
+      <p>
+        <code>Set</code> – коллекция уникальных значений, так называемое
+        «множество».
+      </p>
+      <p>Методы и свойства:</p>
+      <ul>
+        <li>
+          <code>new Set([iterable])</code> – создаёт <code>Set</code>, можно
+          указать перебираемый объект со значениями для инициализации.
+        </li>
+        <li>
+          <code>set.add(value)</code> – добавляет значение (если оно уже есть,
+          то ничего не делает), возвращает тот же объект <code>set</code>.
+        </li>
+        <li>
+          <code>set.delete(value)</code> – удаляет значение, возвращает
+          <code>true</code> если <code>value</code> было в множестве на момент
+          вызова, иначе <code>false</code>.
+        </li>
+        <li>
+          <code>set.has(value)</code> – возвращает <code>true</code>, если
+          значение присутствует в множестве, иначе <code>false</code>.
+        </li>
+        <li><code>set.clear()</code> – удаляет все имеющиеся значения.</li>
+        <li>
+          <code>set.size</code> – возвращает количество элементов в множестве.
+        </li>
+      </ul>
+      <p class="mb-0">
+        Перебор <code>Map</code> и <code>Set</code> всегда осуществляется в
+        порядке добавления элементов, так что нельзя сказать, что это –
+        неупорядоченные коллекции, но поменять порядок элементов или получить
+        элемент напрямую по его номеру нельзя.
+      </p>
+    </div>
+  </div>
+  <div class="card mb-3" id="weakmap-weakset">
+    <div class="card-header d-flex align-items-center">
+      <h2 class="h5 mb-0">5.8 WeakMap и WeakSet</h2>
+      <div class="dropdown ml-auto">
+        <button
+          class="btn btn-primary dropdown-toggle"
+          type="button"
+          id="dropdownMenuButton8"
+          data-toggle="dropdown"
+          aria-haspopup="true"
+          aria-expanded="false"
+        >
+          Homeworks
+        </button>
+        <div class="dropdown-menu" aria-labelledby="dropdownMenuButton8">
+          <a
+            class="dropdown-item"
+            target="_blank"
+            href="./homeworks/5/5-8-1.html"
+            >1</a
+          ><a
+            class="dropdown-item"
+            target="_blank"
+            href="./homeworks/5/5-8-2.html"
+            >2</a
+          >
+        </div>
+      </div>
+      <div class="ml-4">
+        <a href="https://learn.javascript.ru/weakmap-weakset" target="_blank"
+          >Link</a
+        >
+      </div>
+    </div>
+    <div class="card-body">
+      <p>
+        <code>WeakMap</code> – это <code>Map</code>-подобная коллекция,
+        позволяющая использовать в качестве ключей только объекты, и
+        автоматически удаляющая их вместе с соответствующими значениями, как
+        только они становятся недостижимыми иными путями.
+      </p>
+      <p>
+        <code>WeakSet</code> – это <code>Set</code>-подобная коллекция, которая
+        хранит только объекты и удаляет их, как только они становятся
+        недостижимыми иными путями.
+      </p>
+      <p>
+        Обе этих структуры данных не поддерживают методы и свойства, работающие
+        со всем содержимым сразу или возвращающие информацию о размере
+        коллекции. Возможны только операции на отдельном элементе коллекции.
+      </p>
+      <p>
+        <code>WeakMap</code> и <code>WeakSet</code> используются как
+        вспомогательные структуры данных в дополнение к «основному» месту
+        хранения объекта. Если объект удаляется из основного хранилища и нигде
+        не используется, кроме как в качестве ключа в <code>WeakMap</code> или в
+        <code>WeakSet</code>, то он будет удалён автоматически.
+      </p>
+      <pre class="mb-0"><code>let john = { name: "John" };
+
+let map = new Map();
+map.set(john, "...");
+
+john = null; // перезаписываем ссылку на объект
+
+// объект john сохранён внутри объекта `Map`,
+// он доступен через map.keys()
+
+
+let john = { name: "John" };
+
+let weakMap = new WeakMap();
+weakMap.set(john, "...");
+
+john = null; // перезаписываем ссылку на объект
+
+// объект john удалён из памяти!</code></pre>
+    </div>
+  </div>
+  <div class="card mb-3" id="keys-values-entries">
+    <div class="card-header d-flex align-items-center">
+      <h2 class="h5 mb-0">5.9 Object.keys, values, entries</h2>
+      <div class="dropdown ml-auto">
+        <button
+          class="btn btn-primary dropdown-toggle"
+          type="button"
+          id="dropdownMenuButton9"
+          data-toggle="dropdown"
+          aria-haspopup="true"
+          aria-expanded="false"
+        >
+          Homeworks
+        </button>
+        <div class="dropdown-menu" aria-labelledby="dropdownMenuButton9">
+          <a
+            class="dropdown-item"
+            target="_blank"
+            href="./homeworks/5/5-9-1.html"
+            >1</a
+          ><a
+            class="dropdown-item"
+            target="_blank"
+            href="./homeworks/5/5-9-2.html"
+            >2</a
+          >
+        </div>
+      </div>
+      <div class="ml-4">
+        <a
+          href="https://learn.javascript.ru/keys-values-entries"
+          target="_blank"
+          >Link</a
+        >
+      </div>
+    </div>
+    <div class="card-body">
+      <p>Для простых объектов доступны следующие методы:</p>
+      <ul>
+        <li>
+          <a
+            href="https://developer.mozilla.org/ru/docs/Web/JavaScript/Reference/Global_Objects/Object/keys"
+            >Object.keys(obj)</a
+          >
+          – возвращает массив ключей.
+        </li>
+        <li>
+          <a
+            href="https://developer.mozilla.org/ru/docs/Web/JavaScript/Reference/Global_Objects/Object/values"
+            >Object.values(obj)</a
+          >
+          – возвращает массив значений.
+        </li>
+        <li>
+          <a
+            href="https://developer.mozilla.org/ru/docs/Web/JavaScript/Reference/Global_Objects/Object/entries"
+            >Object.entries(obj)</a
+          >
+          – возвращает массив пар <code>[ключ, значение]</code>.
+          <pre><code>for (let [key, value] of Object.entries(this)) {
+          console.log(key, value);
+        }</code></pre>
+        </li>
+      </ul>
+      <table>
+        <thead>
+          <tr>
+            <th></th>
+            <th>Map</th>
+            <th>Object</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Синтаксис вызова</td>
+            <td><code>map.keys()</code></td>
+            <td><code>Object.keys(obj)</code>, не <code>obj.keys()</code></td>
+          </tr>
+          <tr>
+            <td>Возвращает</td>
+            <td>перебираемый объект</td>
+            <td>«реальный» массив</td>
+          </tr>
+        </tbody>
+      </table>
+      <p>
+        Первое отличие в том, что мы должны вызвать
+        <code>Object.keys(obj)</code>, а не <code>obj.keys()</code>.
+      </p>
+      <p>
+        Второе отличие в том, что методы вида <code>Object.*</code> возвращают
+        «реальные» массивы, а не просто итерируемые объекты.
+      </p>
+      <p>
+        <strong
+          >Object.keys/values/entries игнорируют символьные свойства</strong
+        >
+      </p>
+      <h4 class="h5">Трансформации объекта</h4>
+      <p>
+        У объектов нет множества методов, которые есть в массивах, например map,
+        filter и других. Если мы хотели бы их применить, то можно использовать
+        Object.entries с последующим вызовом Object.fromEntries:
+      </p>
+      <pre class="mb-0"><code>let prices = {
+  banana: 1,
+  orange: 2,
+  meat: 4,
+};
+
+let doublePrices = Object.fromEntries(
+  // преобразовать в массив, затем map, затем fromEntries обратно объект
+  Object.entries(prices).map(([key, value]) => [key, value * 2])
+);
+
+alert(doublePrices.meat); // 8</code></pre>
+    </div>
+  </div>
+  <div class="card mb-3" id="destructuring-assignment">
+    <div class="card-header d-flex align-items-center">
+      <h2 class="h5 mb-0">5.10 Деструктурирующее присваивание</h2>
+      <div class="dropdown ml-auto">
+        <button
+          class="btn btn-primary dropdown-toggle"
+          type="button"
+          id="dropdownMenuButton10"
+          data-toggle="dropdown"
+          aria-haspopup="true"
+          aria-expanded="false"
+        >
+          Homeworks
+        </button>
+        <div class="dropdown-menu" aria-labelledby="dropdownMenuButton10">
+          <a
+            class="dropdown-item"
+            target="_blank"
+            href="./homeworks/5/5-10-1.html"
+            >1</a
+          ><a
+            class="dropdown-item"
+            target="_blank"
+            href="./homeworks/5/5-10-2.html"
+            >2</a
+          >
+        </div>
+      </div>
+      <div class="ml-4">
+        <a
+          href="https://learn.javascript.ru/destructuring-assignment"
+          target="_blank"
+          >Link</a
+        >
+      </div>
+    </div>
+    <div class="card-body">
+      <ul class="mb-0">
+        <li>
+          <p>
+            Деструктуризация позволяет разбивать объект или массив на переменные
+            при присвоении.
+          </p>
+        </li>
+        <li>
+          <p>Полный синтаксис для массива:</p>
+          <pre><code>let [item1 = default, item2, ...rest] = array</code></pre>
+          <p>
+            Первый элемент отправляется в <code>item1</code>; второй
+            отправляется в <code>item2</code>, все остальные элементы попадают в
+            массив <code>rest</code>.
+          </p>
+          <ul>
+            <li>
+              «Деструктурирующее присваивание» не уничтожает массив. Оно вообще
+              ничего не делает с правой частью присваивания.
+            </li>
+            <li>
+              <p>Пропускайте элементы, используя запятые</p>
+              <pre><code>// второй элемент не нужен
+let [firstName, , title] = ["Julius", "Caesar", "Consul", "of the Roman Republic"];</code></pre>
+            </li>
+            <li>
+              <p>Работает с любым перебираемым объектом с правой стороны</p>
+              <pre><code>let [a, b, c] = "abc";
+let [one, two, three] = new Set([1, 2, 3]);</code></pre>
+            </li>
+            <li>
+              <p>Присваивайте чему угодно с левой стороны</p>
+              <pre><code>let user = {};
+[user.name, user.surname] = "Ilya Kantor".split(' ');
+
+alert(user.name); // Ilya</code></pre>
+            </li>
+            <li>
+              <p>Цикл с .entries()</p>
+              <pre><code>let user = {
+  name: "John",
+  age: 30
+};
+
+// цикл по ключам и значениям
+for (let [key, value] of Object.entries(user)) {
+  alert(`${key}:${value}`); // name:John, затем age:30
+}</code></pre>
+            </li>
+            <li>
+              <p>Остаточные параметры «…»</p>
+              <pre><code>let [name1, name2, ...rest] = ["Julius", "Caesar", "Consul", "of the Roman Republic"];
+
+alert(name1); // Julius
+alert(name2); // Caesar
+alert(rest); // `rest` является массивом</code></pre>
+            </li>
+            <li>
+              <p>Отсутствующие значения считаются неопределёнными</p>
+              <pre><code>let [firstName, surname] = [];
+
+alert(firstName); // undefined
+alert(surname); // undefined</code></pre>
+            </li>
+            <li>
+              <p>Значения по умолчанию</p>
+              <pre><code>// значения по умолчанию
+let [name = "Guest", surname = "Anonymous"] = ["Julius"];
+
+alert(name);    // Julius (из массива)
+alert(surname); // Anonymous (значение по умолчанию)</code></pre>
+            </li>
+          </ul>
+        </li>
+        <li>
+          <p>Полный синтаксис для объекта:</p>
+          <pre><code>let {prop : varName = default, ...rest} = object</code></pre>
+          <p>
+            Свойства, которые не были упомянуты, копируются в объект
+            <code>rest</code>.
+          </p>
+          <ul>
+            <li>
+              <p>Двоеточие показывает «что : куда идёт»</p>
+              <pre><code>let options = {
+  title: "Menu",
+  width: 100,
+  height: 200
+};
+
+// { sourceProperty: targetVariable }
+let {width: w, height: h, title} = options;
+
+// width -> w
+// height -> h
+// title -> title
+
+alert(title);  // Menu
+alert(w);      // 100
+alert(h);      // 200</code></pre>
+            </li>
+            <li>
+              <p>
+                Если у нас есть большой объект с множеством свойств, можно взять
+                только то, что нужно:
+              </p>
+              <pre><code>let options = {
+  title: "Menu",
+  width: 100,
+  height: 200
+};
+
+// взять только title, игнорировать остальное
+let { title } = options;
+
+alert(title); // Menu</code></pre>
+            </li>
+            <li>
+              <p>Обратите внимание на let</p>
+              <pre><code>let title, width, height;
+
+// сейчас всё работает
+({title, width, height} = {title: "Menu", width: 200, height: 100});
+
+alert( title ); // Menu</code></pre>
+            </li>
+          </ul>
+        </li>
+        <li>
+          <p>
+            Можно извлекать данные из вложенных объектов и массивов, для этого
+            левая сторона должна иметь ту же структуру, что и правая.
+          </p>
+          <pre><code>let options = {
+  size: {
+    width: 100,
+    height: 200
+  },
+  items: ["Cake", "Donut"],
+  extra: true
+};
+
+// деструктуризация разбита на несколько строк для ясности
+let {
+  size: { // положим size сюда
+    width,
+    height
+  },
+  items: [item1, item2], // добавим элементы к items
+  title = "Menu" // отсутствует в объекте (используется значение по умолчанию)
+} = options;
+
+alert(title);  // Menu
+alert(width);  // 100
+alert(height); // 200
+alert(item1);  // Cake
+alert(item2);  // Donut
+          </code></pre>
+        </li>
+        <li>
+          <p>Умные параметры функций</p>
+          <pre><code>// мы передаём объект в функцию
+let options = {
+  title: "My menu",
+  items: ["Item1", "Item2"]
+};
+
+// ...и она немедленно извлекает свойства в переменные
+function showMenu({title = "Untitled", width = 200, height = 100, items = []}) {
+  // title, items – взято из options,
+  // width, height – используются значения по умолчанию
+  alert( `${title} ${width} ${height}` ); // My Menu 200 100
+  alert( items ); // Item1, Item2
+}
+
+showMenu(options);</code></pre>
+        </li>
+      </ul>
+    </div>
+  </div>
+  <div class="card mb-3" id="date">
+    <div class="card-header d-flex align-items-center">
+      <h2 class="h5 mb-0">5.11 Дата и время</h2>
+      <div class="dropdown ml-auto">
+        <button
+          class="btn btn-primary dropdown-toggle"
+          type="button"
+          id="dropdownMenuButton11"
+          data-toggle="dropdown"
+          aria-haspopup="true"
+          aria-expanded="false"
+        >
+          Homeworks
+        </button>
+        <div class="dropdown-menu" aria-labelledby="dropdownMenuButton11">
+          <a
+            class="dropdown-item"
+            target="_blank"
+            href="./homeworks/5/5-11-1.html"
+            >1</a
+          >
+          <a
+            class="dropdown-item"
+            target="_blank"
+            href="./homeworks/5/5-11-2.html"
+            >2</a
+          >
+          <a
+            class="dropdown-item"
+            target="_blank"
+            href="./homeworks/5/5-11-3.html"
+            >3</a
+          >
+          <a
+            class="dropdown-item"
+            target="_blank"
+            href="./homeworks/5/5-11-4.html"
+            >4</a
+          >
+          <a
+            class="dropdown-item"
+            target="_blank"
+            href="./homeworks/5/5-11-5.html"
+            >5</a
+          >
+          <a
+            class="dropdown-item"
+            target="_blank"
+            href="./homeworks/5/5-11-6.html"
+            >6</a
+          >
+          <a
+            class="dropdown-item"
+            target="_blank"
+            href="./homeworks/5/5-11-7.html"
+            >7</a
+          >
+          <a
+            class="dropdown-item"
+            target="_blank"
+            href="./homeworks/5/5-11-8.html"
+            >8</a
+          >
+        </div>
+      </div>
+      <div class="ml-4">
+        <a href="https://learn.javascript.ru/date" target="_blank">Link</a>
+      </div>
+    </div>
+
+    <div class="card-body">
+      <p>
+        Дата и время в JavaScript представлены объектом
+        <a
+          href="https://developer.mozilla.org/ru/docs/Web/JavaScript/Reference/Global_Objects/Date"
+          >Date</a
+        >. Нельзя создать «только дату» или «только время»: объекты
+        <code>Date</code> всегда содержат и то, и другое.
+      </p>
+      <h3 class="h5">Создание</h3>
+      <ul>
+        <li>
+          <p><code>new Date()</code></p>
+          <p>
+            Без аргументов – создать объект Date с текущими датой и временем:
+          </p>
+          <pre><code>let now = new Date();
+alert( now ); // показывает текущие дату и время</code></pre>
+        </li>
+        <li>
+          <p><code>new Date(milliseconds)</code></p>
+          <p>
+            Создать объект Date с временем, равным количеству миллисекунд
+            (тысячная доля секунды), прошедших с 1 января 1970 года UTC+0.
+          </p>
+          <pre><code>// 0 соответствует 01.01.1970 UTC+0
+let Jan01_1970 = new Date(0);
+alert( Jan01_1970 );
+
+// теперь добавим 24 часа и получим 02.01.1970 UTC+0
+let Jan02_1970 = new Date(24 * 3600 * 1000);
+alert( Jan02_1970 );</code></pre>
+          <p>
+            Целое число, представляющее собой количество миллисекунд, прошедших
+            с начала 1970 года, называется таймстамп (англ. timestamp). Датам до
+            1 января 1970 будут соответствовать отрицательные таймстампы.
+          </p>
+        </li>
+        <li>
+          <p><code>new Date(datestring)</code></p>
+          <p>
+            Если аргумент всего один, и это строка, то из неё «прочитывается»
+            дата. Алгоритм разбора – такой же, как в Date.parse, который мы
+            рассмотрим позже.
+          </p>
+        </li>
+        <li>
+          <p>
+            <code
+              >new Date(year, month, date, hours, minutes, seconds, ms)</code
+            >
+          </p>
+          <p>
+            Создать объект Date с заданными компонентами в местном часовом
+            поясе. Обязательны только первые два аргумента.
+          </p>
+          <ul>
+            <li>
+              <code>year</code> должен состоять из четырёх цифр: значение
+              <code>2013</code> корректно, <code>98</code> – нет.
+            </li>
+            <li>
+              <code>month</code> начинается с <code>0</code> (январь) по
+              <code>11</code> (декабрь).
+            </li>
+            <li>
+              Параметр <code>date</code> здесь представляет собой день месяца.
+              Если параметр не задан, то принимается значение <code>1</code>.
+            </li>
+            <li>
+              Если параметры <code>hours/minutes/seconds/ms</code> отсутствуют,
+              их значением становится <code>0</code>.
+            </li>
+          </ul>
+        </li>
+      </ul>
+      <h3 class="h5">Получение компонентов даты</h3>
+      <dl>
+        <dt>
+          <a
+            href="https://developer.mozilla.org/ru/docs/Web/JavaScript/Reference/Global_Objects/Date/getFullYear"
+            >getFullYear()</a
+          >
+        </dt>
+        <dd>Получить год (4 цифры)</dd>
+        <dt>
+          <a
+            href="https://developer.mozilla.org/ru/docs/Web/JavaScript/Reference/Global_Objects/Date/getMonth"
+            >getMonth()</a
+          >
+        </dt>
+        <dd>Получить месяц, <strong>от 0 до 11</strong>.</dd>
+        <dt>
+          <a
+            href="https://developer.mozilla.org/ru/docs/Web/JavaScript/Reference/Global_Objects/Date/getDate"
+            >getDate()</a
+          >
+        </dt>
+        <dd>
+          Получить день месяца, от 1 до 31, что несколько противоречит названию
+          метода.
+        </dd>
+        <dt>
+          <a
+            href="https://developer.mozilla.org/ru/docs/Web/JavaScript/Reference/Global_Objects/Date/getHours"
+            >getHours()</a
+          >,
+          <a
+            href="https://developer.mozilla.org/ru/docs/Web/JavaScript/Reference/Global_Objects/Date/getMinutes"
+            >getMinutes()</a
+          >,
+          <a
+            href="https://developer.mozilla.org/ru/docs/Web/JavaScript/Reference/Global_Objects/Date/getSeconds"
+            >getSeconds()</a
+          >,
+          <a
+            href="https://developer.mozilla.org/ru/docs/Web/JavaScript/Reference/Global_Objects/Date/getMilliseconds"
+            >getMilliseconds()</a
+          >
+        </dt>
+        <dd>
+          Получить, соответственно, часы, минуты, секунды или миллисекунды.
+        </dd>
+        <dt>
+          <a
+            href="https://developer.mozilla.org/ru/docs/Web/JavaScript/Reference/Global_Objects/Date/getDay"
+            >getDay()</a
+          >
+        </dt>
+        <dd>
+          Вернуть день недели от <code>0</code> (воскресенье) до
+          <code>6</code> (суббота). Несмотря на то, что в ряде стран за первый
+          день недели принят понедельник, в JavaScript начало недели приходится
+          на воскресенье.
+        </dd>
+      </dl>
+      <p>
+        <strong
+          >Все вышеперечисленные методы возвращают значения в соответствии с
+          местным часовым поясом.</strong
+        >
+      </p>
+      <p>
+        Однако существуют и их UTC-варианты, возвращающие день, месяц, год для
+        временной зоны UTC+0: getUTCFullYear(), getUTCMonth(), getUTCDay(). Для
+        их использования требуется после "get" подставить "UTC".
+      </p>
+      <p>
+        Помимо вышеприведённых методов, существуют два особых метода без
+        UTC-варианта:
+      </p>
+      <dl>
+        <dt>
+          <a
+            href="https://developer.mozilla.org/ru/docs/Web/JavaScript/Reference/Global_Objects/Date/getTime"
+            >getTime()</a
+          >
+        </dt>
+        <dd>
+          <p>
+            Для заданной даты возвращает таймстамп – количество миллисекунд,
+            прошедших с 1 января 1970 года UTC+0.
+          </p>
+        </dd>
+        <dt>
+          <a
+            href="https://developer.mozilla.org/ru/docs/Web/JavaScript/Reference/Global_Objects/Date/getTimezoneOffset"
+            >getTimezoneOffset()</a
+          >
+        </dt>
+        <dd>
+          <p>
+            Возвращает разницу в минутах между местным часовым поясом и UTC:
+          </p>
+          <pre><code>// если вы в часовом поясе UTC-1, то выводится 60
+// если вы в часовом поясе UTC+3, выводится -180
+alert( new Date().getTimezoneOffset() );</code></pre>
+        </dd>
+      </dl>
+      <h3 class="h5">Установка компонентов даты</h3>
+      <ul>
+        <li>
+          <a
+            href="https://developer.mozilla.org/ru/docs/Web/JavaScript/Reference/Global_Objects/Date/setFullYear"
+            ><code>setFullYear(year, [month], [date])</code></a
+          >
+        </li>
+        <li>
+          <a
+            href="https://developer.mozilla.org/ru/docs/Web/JavaScript/Reference/Global_Objects/Date/setMonth"
+            ><code>setMonth(month, [date])</code></a
+          >
+        </li>
+        <li>
+          <a
+            href="https://developer.mozilla.org/ru/docs/Web/JavaScript/Reference/Global_Objects/Date/setDate"
+            ><code>setDate(date)</code></a
+          >
+        </li>
+        <li>
+          <a
+            href="https://developer.mozilla.org/ru/docs/Web/JavaScript/Reference/Global_Objects/Date/setHours"
+            ><code>setHours(hour, [min], [sec], [ms])</code></a
+          >
+        </li>
+        <li>
+          <a
+            href="https://developer.mozilla.org/ru/docs/Web/JavaScript/Reference/Global_Objects/Date/setMinutes"
+            ><code>setMinutes(min, [sec], [ms])</code></a
+          >
+        </li>
+        <li>
+          <a
+            href="https://developer.mozilla.org/ru/docs/Web/JavaScript/Reference/Global_Objects/Date/setSeconds"
+            ><code>setSeconds(sec, [ms])</code></a
+          >
+        </li>
+        <li>
+          <a
+            href="https://developer.mozilla.org/ru/docs/Web/JavaScript/Reference/Global_Objects/Date/setMilliseconds"
+            ><code>setMilliseconds(ms)</code></a
+          >
+        </li>
+        <li>
+          <a
+            href="https://developer.mozilla.org/ru/docs/Web/JavaScript/Reference/Global_Objects/Date/setTime"
+            ><code>setTime(milliseconds)</code></a
+          >
+          (устанавливает дату в виде целого количества миллисекунд, прошедших с
+          01.01.1970 UTC)
+        </li>
+      </ul>
+      <p>
+        У всех этих методов, кроме setTime(), есть UTC-вариант, например:
+        setUTCHours().
+      </p>
+      <h3 class="h5">Автоисправление даты</h3>
+      <p>
+        Автоисправление – это очень полезная особенность объектов Date. Можно
+        устанавливать компоненты даты вне обычного диапазона значений, а объект
+        сам себя исправит. Неправильные компоненты даты автоматически
+        распределяются по остальным.
+      </p>
+      <pre><code>let date = new Date(2013, 0, 32); // 32 Jan 2013 ?!?
+alert(date); // ...1st Feb 2013!</code></pre>
+      <h3 class="h5">Преобразование к числу, разность дат</h3>
+      <pre><code>let date = new Date();
+alert(+date); // количество миллисекунд, то же самое, что date.getTime()</code></pre>
+      <h3 class="h5">Date.now()</h3>
+      <p>
+        Если нужно просто измерить время, объект Date нам не нужен. Существует
+        особый метод Date.now(), возвращающий текущую метку времени.
+        Семантически он эквивалентен new Date().getTime(), однако метод не
+        создаёт промежуточный объект Date. Так что этот способ работает быстрее
+        и не нагружает сборщик мусора.
+      </p>
+      <h3 class="h5">Разбор строки с датой</h3>
+      <p>
+        Метод
+        <a
+          href="https://developer.mozilla.org/ru/docs/Web/JavaScript/Reference/Global_Objects/Date/parse"
+          >Date.parse(str)</a
+        >
+        считывает дату из строки.
+      </p>
+      <p>
+        Формат строки должен быть следующим:
+        <code>YYYY-MM-DDTHH:mm:ss.sssZ</code>, где:
+      </p>
+      <ul>
+        <li><code>YYYY-MM-DD</code> – это дата: год-месяц-день.</li>
+        <li>Символ <code>"T"</code> используется в качестве разделителя.</li>
+        <li>
+          <code>HH:mm:ss.sss</code> – время: часы, минуты, секунды и
+          миллисекунды.
+        </li>
+        <li>
+          Необязательная часть <code>'Z'</code> обозначает часовой пояс в
+          формате <code>+-hh:mm</code>. Если указать просто букву
+          <code>Z</code>, то получим UTC+0.
+        </li>
+      </ul>
+      <p>
+        Возможны и более короткие варианты, например, YYYY-MM-DD или YYYY-MM,
+        или даже YYYY. Вызов Date.parse(str) обрабатывает строку в заданном
+        формате и возвращает таймстамп (количество миллисекунд с 1 января 1970
+        года UTC+0). Если формат неправильный, возвращается NaN.
+      </p>
+      <pre
+        class="mb-0"
+      ><code>let ms = Date.parse('2012-01-26T13:51:50.417-07:00');
+
+alert(ms); // 1327611110417 (таймстамп)</code></pre>
+    </div>
+  </div>
+  <div class="card mb-3" id="json">
+    <div class="card-header d-flex align-items-center">
+      <h2 class="h5 mb-0">5.12 Формат JSON, метод toJSON</h2>
+      <div class="dropdown ml-auto">
+        <button
+          class="btn btn-primary dropdown-toggle"
+          type="button"
+          id="dropdownMenuButton12"
+          data-toggle="dropdown"
+          aria-haspopup="true"
+          aria-expanded="false"
+        >
+          Homeworks
+        </button>
+        <div class="dropdown-menu" aria-labelledby="dropdownMenuButton12">
+          <a
+            class="dropdown-item"
+            target="_blank"
+            href="./homeworks/5/5-12-1.html"
+            >1</a
+          >
+          <a
+            class="dropdown-item"
+            target="_blank"
+            href="./homeworks/5/5-12-2.html"
+            >2</a
+          >
+        </div>
+      </div>
+      <div class="ml-4">
+        <a href="https://learn.javascript.ru/json" target="_blank">Link</a>
+      </div>
+    </div>
+    <div class="card-body">
+      <ul>
+        <li>
+          JSON – это формат данных, который имеет собственный независимый
+          стандарт и библиотеки для большинства языков программирования.
+        </li>
+        <li>
+          JSON поддерживает простые объекты, массивы, строки, числа, логические
+          значения и <code>null</code>.
+        </li>
+        <li>
+          <p>
+            JavaScript предоставляет метод
+            <a
+              href="https://developer.mozilla.org/ru/docs/Web/JavaScript/Reference/Global_Objects/JSON/stringify"
+              >JSON.stringify</a
+            >
+            для сериализации в JSON.
+          </p>
+
+          <p>
+            JSON является независимой от языка спецификацией для данных, поэтому
+            <code>JSON.stringify</code> пропускает некоторые специфические
+            свойства объектов JavaScript.
+          </p>
+          <ul>
+            <li>Свойства-функции (методы).</li>
+            <li>Символьные свойства.</li>
+            <li>Свойства, содержащие <code>undefined</code>.</li>
+          </ul>
+
+          <p>Полный синтаксис JSON.stringify:</p>
+          <pre><code>let json = JSON.stringify(value[, replacer, space])</code></pre>
+          <dl>
+            <dt>value</dt>
+            <dd>Значение для кодирования.</dd>
+            <dt>replacer</dt>
+            <dd>
+              Массив свойств для кодирования или функция соответствия
+              <code>function(key, value)</code>.
+            </dd>
+            <dt>space</dt>
+            <dd>
+              Дополнительное пространство (отступы), используемое для
+              форматирования.
+            </dd>
+          </dl>
+
+          <pre><code>let room = {
+  number: 23
+};
+
+let meetup = {
+  title: "Conference",
+  participants: [{name: "John"}, {name: "Alice"}],
+  place: room // meetup ссылается на room
+};
+
+room.occupiedBy = meetup; // room ссылается на meetup
+
+alert( JSON.stringify(meetup, ['title', 'participants', 'place', 'name', 'number']) );
+/*
+{
+  "title":"Conference",
+  "participants":[{"name":"John"},{"name":"Alice"}],
+  "place":{"number":23}
+}
+*/</code></pre>
+
+          <pre><code>let room = {
+  number: 23
+};
+
+let meetup = {
+  title: "Conference",
+  participants: [{name: "John"}, {name: "Alice"}],
+  place: room // meetup ссылается на room
+};
+
+room.occupiedBy = meetup; // room ссылается на meetup
+
+alert( JSON.stringify(meetup, function replacer(key, value) {
+  alert(`${key}: ${value}`);
+  return (key == 'occupiedBy') ? undefined : value;
+}));
+
+/* пары ключ:значение, которые приходят в replacer:
+:             [object Object]
+title:        Conference
+participants: [object Object],[object Object]
+0:            [object Object]
+name:         John
+1:            [object Object]
+name:         Alice
+place:        [object Object]
+number:       23
+*/</code></pre>
+        </li>
+        <li>
+          <p>
+            JavaScript предоставляет метод
+            <a
+              href="https://developer.mozilla.org/ru/docs/Web/JavaScript/Reference/Global_Objects/JSON/parse"
+              >JSON.parse</a
+            >
+            для чтения из JSON.
+          </p>
+          <pre><code>let value = JSON.parse(str, [reviver]);</code></pre>
+          <dl>
+            <dt>str</dt>
+            <dd>JSON для преобразования в объект.</dd>
+            <dt>reviver</dt>
+            <dd>
+              Необязательная функция, которая будет вызываться для каждой пары
+              <code>(ключ, значение)</code> и может преобразовывать значение.
+            </dd>
+          </dl>
+          <pre><code>let str = '{"title":"Conference","date":"2017-11-30T12:00:00.000Z"}';
+
+let meetup = JSON.parse(str, function(key, value) {
+  if (key == 'date') return new Date(value);
+  return value;
+});
+
+alert( meetup.date.getDate() ); // 30 - теперь работает!</code></pre>
+        </li>
+        <li>
+          Оба метода поддерживают функции преобразования для интеллектуального
+          чтения/записи.
+        </li>
+        <li>
+          Если объект имеет метод <code>toJSON</code>, то он вызывается через
+          <code>JSON.stringify</code>.
+          <pre><code>let room = {
+  number: 23,
+  toJSON() {
+    return this.number;
+  }
+};
+
+let meetup = {
+  title: "Conference",
+  room
+};
+
+alert( JSON.stringify(room) ); // 23
+
+alert( JSON.stringify(meetup) );
+/*
+  {
+    "title":"Conference",
+    "room": 23
+  }
+*/</code></pre>
+        </li>
+      </ul>
+    </div>
+  </div>
+</div>
+
+<!-- content -->
+<!-- footer -->
+</body>
+</html>

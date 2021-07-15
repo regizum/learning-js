@@ -1,0 +1,574 @@
+<!DOCTYPE html>
+<html lang="ru">
+  <head>
+    <title>8. Прототипы, наследование</title>
+    <meta charset="UTF-8" />
+    <script
+      src="https://code.jquery.com/jquery-3.4.1.min.js"
+      integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo="
+      crossorigin="anonymous"
+    ></script>
+    <script src="../js/main.js"></script>
+    <link
+      rel="stylesheet"
+      href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+      integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T"
+      crossorigin="anonymous"
+    />
+    <script
+      src="https://code.jquery.com/jquery-3.4.1.slim.min.js"
+      integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n"
+      crossorigin="anonymous"
+    ></script>
+    <script
+      src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"
+      integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo"
+      crossorigin="anonymous"
+    ></script>
+    <script
+      src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"
+      integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6"
+      crossorigin="anonymous"
+    ></script>
+
+    <style>
+      xmp {
+        font-family: inherit;
+      }
+      pre {
+        background: #f5f2f0;
+        padding: 16px;
+        border-radius: 8px;
+        white-space: break-spaces;
+      }
+
+      .card-body div:last-child,
+      .card-body ul:last-child,
+      .card-body ol:last-child,
+      .card-body pre:last-child ,
+      .card-body p:last-child {
+          margin-bottom: 0;
+      }
+    </style>
+  </head>
+  <body class="pt-5">
+    <nav class="navbar navbar-expand-lg navbar-light bg-light fixed-top">
+      <div class="container">
+        <button
+          class="navbar-toggler"
+          type="button"
+          data-toggle="collapse"
+          data-target="#navbarNavDropdown"
+          aria-controls="navbarNavDropdown"
+          aria-expanded="false"
+          aria-label="Toggle navigation"
+        >
+          <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNavDropdown">
+          <ul class="navbar-nav">
+            <li class="nav-item dropdown">
+              <a
+                class="nav-link dropdown-toggle"
+                href="#"
+                id="navbarDropdownMenuLink1"
+                role="button"
+                data-toggle="dropdown"
+                aria-haspopup="true"
+                aria-expanded="false"
+              >
+                JavaScript</a
+              >
+              <div
+                class="dropdown-menu"
+                aria-labelledby="navbarDropdownMenuLink1"
+              >
+                <a class="dropdown-item" href="/dist/1-intro.html"
+                  >1. Введение</a
+                >
+                <a class="dropdown-item" href="/dist/2-first-steps.html"
+                  >2. Основы JavaScript</a
+                >
+                <a class="dropdown-item" href="/dist/3-code-quality.html"
+                  >3. Качество кода</a
+                >
+                <a class="dropdown-item" href="/dist/4-object-basics.html"
+                  >4. Объекты: основы</a
+                >
+                <a class="dropdown-item" href="/dist/5-data-types.html"
+                  >5. Типы данных</a
+                >
+                <a class="dropdown-item" href="/dist/6-advanced-functions.html"
+                  >6. Продвинутая работа с функциями</a
+                >
+                <a class="dropdown-item" href="/dist/7-object-properties.html"
+                  >7. Свойства объекта, их конфигурация</a
+                >
+                <a class="dropdown-item" href="/dist/8-prototypes.html"
+                  >8. Прототипы, наследование</a
+                >
+                <a class="dropdown-item" href="/dist/9-classes.html"
+                  >9. Классы</a
+                >
+                <a class="dropdown-item" href="/dist/10-error-handling.html"
+                  >10. Обработка ошибок</a
+                >
+                <a class="dropdown-item" href="/dist/11-async.html"
+                  >11. Промисы, async/await</a
+                >
+                <a class="dropdown-item" href="/dist/12-generators-iterators.html"
+                  >12. Генераторы, продвинутая итерация</a
+                >
+                <a class="dropdown-item" href="/dist/13-modules.html"
+                  >13. Модули</a
+                >
+                <a class="dropdown-item" href="/dist/_3-6-network.html"
+                  >3-6. Сетевые запросы</a
+                >
+              </div>
+            </li>
+
+<li class="nav-item dropdown">
+  <a
+    class="nav-link dropdown-toggle"
+    href="#"
+    id="navbarDropdownMenuLink"
+    role="button"
+    data-toggle="dropdown"
+    aria-haspopup="true"
+    aria-expanded="false"
+    >Прототипы, наследование</a
+  >
+  <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+    <a class="dropdown-item" href="#prototype-inheritance"
+      >8.1 Прототипное наследование</a
+    >
+    <a class="dropdown-item" href="#function-prototype">8.2 F.prototype</a>
+    <a class="dropdown-item" href="#native-prototypes"
+      >8.3 Встроенные прототипы</a
+    >
+    <a class="dropdown-item" href="#prototype-methods"
+      >8.4 Методы прототипов, объекты без свойства __proto__</a
+    >
+  </div>
+</li>
+
+</ul>
+</div>
+</div>
+</nav>
+
+<!-- content -->
+<div class="container mt-5">
+  <h1>
+    Свойства объекта, их конфигурация
+  </h1>
+  <div class="card mb-3" id="#prototype-inheritance">
+    <div class="card-header d-flex align-items-center">
+      <h2 class="h5 mb-0">8.1 Прототипное наследование</h2>
+      <div class="dropdown ml-auto">
+        <button
+          class="btn btn-primary dropdown-toggle"
+          type="button"
+          id="dropdownMenuButton1"
+          data-toggle="dropdown"
+          aria-haspopup="true"
+          aria-expanded="false"
+        >
+          Homeworks
+        </button>
+        <div class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
+          <a
+            class="dropdown-item"
+            target="_blank"
+            href="./homeworks/8/8-1-1.html"
+            >1</a
+          >
+        </div>
+      </div>
+      <div class="ml-4">
+        <a
+          href="https://learn.javascript.ru/prototype-inheritance"
+          target="_blank"
+          >Link</a
+        >
+      </div>
+    </div>
+    <div class="card-body">
+      <ul>
+        <li>
+          В JavaScript все объекты имеют скрытое свойство
+          <code>[[Prototype]]</code>, которое является либо другим объектом,
+          либо <code>null</code>.
+        </li>
+        <li>
+          Мы можем использовать <code>obj.__proto__</code> для доступа к нему
+          (исторически обусловленный геттер/сеттер, есть другие способы, которые
+          скоро будут рассмотрены).
+        </li>
+        <li>
+          Объект, на который ссылается <code>[[Prototype]]</code>, называется
+          «прототипом».
+        </li>
+        <li>
+          Если мы хотим прочитать свойство <code>obj</code> или вызвать метод,
+          которого не существует у <code>obj</code>, тогда JavaScript попытается
+          найти его в прототипе.
+        </li>
+        <li>
+          Операции записи/удаления работают непосредственно с объектом, они не
+          используют прототип (если это обычное свойство, а не сеттер).
+        </li>
+        <li>
+          Если мы вызываем <code>obj.method()</code>, а метод при этом взят из
+          прототипа, то <code>this</code> всё равно ссылается на
+          <code>obj</code>. Таким образом, методы всегда работают с текущим
+          объектом, даже если они наследуются.
+        </li>
+        <li>
+          Цикл <code>for..in</code> перебирает как свои, так и унаследованные
+          свойства. Остальные методы получения ключей/значений работают только с
+          собственными свойствами объекта.
+        </li>
+      </ul>
+      <pre><code>let animal = {
+  eats: true
+};
+
+let rabbit = {
+  jumps: true,
+  __proto__: animal
+};
+
+// Object.keys возвращает только собственные ключи
+alert(Object.keys(rabbit)); // jumps
+
+// for..in проходит и по своим, и по унаследованным ключам
+for(let prop in rabbit) alert(prop); // jumps, затем eats</code></pre>
+    </div>
+  </div>
+  <div class="card mb-3" id="#function-prototype">
+    <div class="card-header d-flex align-items-center">
+      <h2 class="h5 mb-0">8.2 F.prototype</h2>
+      <div class="dropdown ml-auto">
+        <button
+          class="btn btn-primary dropdown-toggle"
+          type="button"
+          id="dropdownMenuButton2"
+          data-toggle="dropdown"
+          aria-haspopup="true"
+          aria-expanded="false"
+        >
+          Homeworks
+        </button>
+        <div class="dropdown-menu" aria-labelledby="dropdownMenuButton2">
+          <a
+            class="dropdown-item"
+            target="_blank"
+            href="./homeworks/8/8-2-1.html"
+            >1</a
+          >
+        </div>
+      </div>
+      <div class="ml-4">
+        <a href="https://learn.javascript.ru/function-prototype" target="_blank"
+          >Link</a
+        >
+      </div>
+    </div>
+    <div class="card-body">
+      <ul>
+        <li>
+          Свойство <code>F.prototype</code> (не путать с
+          <code>[[Prototype]]</code>) устанавливает<code>[[Prototype]]</code>
+          для новых объектов при вызове <code>new F()</code>.
+        </li>
+        <li>
+          Значение <code>F.prototype</code> должно быть либо объектом, либо
+          <code>null</code>. Другие значения не будут работать.
+        </li>
+        <li>
+          Свойство <code>"prototype"</code> является особым, только когда оно
+          назначено функции-конструктору, которая вызывается оператором
+          <code>new</code>.
+        </li>
+      </ul>
+      <pre><code>let animal = {
+  eats: true
+};
+
+function Rabbit(name) {
+  this.name = name;
+}
+
+Rabbit.prototype = animal;
+
+let rabbit = new Rabbit("White Rabbit"); //  rabbit.__proto__ == animal
+
+alert( rabbit.eats ); // true</code></pre>
+      <p>
+        В обычных объектах <code>prototype</code> не является чем-то особенным:
+      </p>
+      <pre><code>let user = {
+  name: "John",
+  prototype: "Bla-bla" // никакой магии нет - обычное свойство
+};</code></pre>
+      <p>
+        По умолчанию все функции имеют
+        <code>F.prototype = { constructor: F }</code>, поэтому мы можем получить
+        конструктор объекта через свойство <code>"constructor"</code>.
+      </p>
+    </div>
+  </div>
+  <div class="card mb-3" id="#native-prototypes">
+    <div class="card-header d-flex align-items-center">
+      <h2 class="h5 mb-0">8.3 Встроенные прототипы</h2>
+      <div class="dropdown ml-auto">
+        <button
+          class="btn btn-primary dropdown-toggle"
+          type="button"
+          id="dropdownMenuButton3"
+          data-toggle="dropdown"
+          aria-haspopup="true"
+          aria-expanded="false"
+        >
+          Homeworks
+        </button>
+        <div class="dropdown-menu" aria-labelledby="dropdownMenuButton3">
+          <a
+            class="dropdown-item"
+            target="_blank"
+            href="./homeworks/8/8-3-1.html"
+            >1</a
+          ><a
+            class="dropdown-item"
+            target="_blank"
+            href="./homeworks/8/8-3-2.html"
+            >2</a
+          >
+        </div>
+      </div>
+      <div class="ml-4">
+        <a href="https://learn.javascript.ru/native-prototypes" target="_blank"
+          >Link</a
+        >
+      </div>
+    </div>
+    <div class="card-body">
+      <ul>
+        <li>
+          Все встроенные объекты следуют одному шаблону:
+          <ul>
+            <li>
+              Методы хранятся в прототипах (<code>Array.prototype</code>,
+              <code>Object.prototype</code>, <code>Date.prototype</code> и
+              т.д.).
+            </li>
+            <li>
+              Сами объекты хранят только данные (элементы массивов, свойства
+              объектов, даты).
+            </li>
+          </ul>
+        </li>
+        <li>
+          Примитивы также хранят свои методы в прототипах объектов-обёрток:
+          <code>Number.prototype</code>, <code>String.prototype</code>,
+          <code>Boolean.prototype</code>. Только у значений
+          <code>undefined</code> и <code>null</code> нет объектов-обёрток.
+        </li>
+        <li>
+          Встроенные прототипы могут быть изменены или дополнены новыми
+          методами. Но не рекомендуется менять их. Единственная допустимая
+          причина – это добавление нового метода из стандарта, который ещё не
+          поддерживается движком JavaScript.
+        </li>
+      </ul>
+      <pre><code>let arr = [1, 2, 3];
+
+// наследует ли от Array.prototype?
+alert( arr.__proto__ === Array.prototype ); // true
+
+// затем наследует ли от Object.prototype?
+alert( arr.__proto__.__proto__ === Object.prototype ); // true
+
+// и null на вершине иерархии
+alert( arr.__proto__.__proto__.__proto__ ); // null</code></pre>
+    </div>
+  </div>
+  <div class="card mb-3" id="#prototype-methods">
+    <div class="card-header d-flex align-items-center">
+      <h2 class="h5 mb-0">
+        8.4 Методы прототипов, объекты без свойства __proto__
+      </h2>
+
+      <div class="dropdown ml-auto">
+        <button
+          class="btn btn-primary dropdown-toggle"
+          type="button"
+          id="dropdownMenuButton4"
+          data-toggle="dropdown"
+          aria-haspopup="true"
+          aria-expanded="false"
+        >
+          Homeworks
+        </button>
+        <div class="dropdown-menu" aria-labelledby="dropdownMenuButton4">
+          <a
+            class="dropdown-item"
+            target="_blank"
+            href="./homeworks/8/8-4-1.html"
+            >1</a
+          >
+        </div>
+      </div>
+      <div class="ml-4">
+        <a href="https://learn.javascript.ru/prototype-methods" target="_blank"
+          >Link</a
+        >
+      </div>
+    </div>
+    <div class="card-body">
+      <p>Современные способы установки и прямого доступа к прототипу это:</p>
+      <ul>
+        <li>
+          <a
+            href="https://developer.mozilla.org/ru/docs/Web/JavaScript/Reference/Global_Objects/Object/create"
+            >Object.create(proto[, descriptors])</a
+          >
+          – создаёт пустой объект со свойством <code>[[Prototype]]</code>,
+          указанным как <code>proto</code> (может быть <code>null</code>), и
+          необязательными дескрипторами свойств.
+        </li>
+        <li>
+          <a
+            href="https://developer.mozilla.org/ru/docs/Web/JavaScript/Reference/Global_Objects/Object.getPrototypeOf"
+            >Object.getPrototypeOf(obj)</a
+          >
+          – возвращает свойство <code>[[Prototype]]</code> объекта
+          <code>obj</code> (то же самое, что и геттер <code>__proto__</code>).
+        </li>
+        <li>
+          <a
+            href="https://developer.mozilla.org/ru/docs/Web/JavaScript/Reference/Global_Objects/Object.setPrototypeOf"
+            >Object.setPrototypeOf(obj, proto)</a
+          >
+          – устанавливает свойство <code>[[Prototype]]</code> объекта
+          <code>obj</code> как <code>proto</code> (то же самое, что и сеттер
+          <code>__proto__</code>).
+        </li>
+      </ul>
+      <p>
+        Встроенный геттер/сеттер <code>__proto__</code> не безопасен, если мы
+        хотим использовать <em>созданные пользователями</em> ключи в объекте.
+        Как минимум потому, что пользователь может ввести
+        <code>"__proto__"</code> как ключ, от чего может возникнуть ошибка. Если
+        повезёт – последствия будут лёгкими, но, вообще говоря, они
+        непредсказуемы.
+      </p>
+      <p>
+        Так что мы можем использовать либо <code>Object.create(null)</code> для
+        создания «простейшего» объекта, либо использовать коллекцию
+        <code>Map</code>.
+      </p>
+      <p>
+        Кроме этого, <code>Object.create</code> даёт нам лёгкий способ создать
+        поверхностную копию объекта со всеми дескрипторами:
+      </p>
+      <pre><code>let clone = Object.create(Object.getPrototypeOf(obj), Object.getOwnPropertyDescriptors(obj));</code></pre>
+      <p>
+        Мы также ясно увидели, что <code>__proto__</code> – это геттер/сеттер
+        для свойства <code>[[Prototype]]</code>, и находится он в
+        <code>Object.prototype</code>, как и другие методы.
+      </p>
+      <p>
+        Мы можем создавать объекты без прототипов с помощью
+        <code>Object.create(null)</code>. Такие объекты можно использовать как
+        «чистые словари», у них нет проблем с использованием строки
+        <code>"__proto__"</code> в качестве ключа.
+      </p>
+      <p>Ещё методы:</p>
+      <ul>
+        <li>
+          <a
+            href="https://developer.mozilla.org/ru/docs/Web/JavaScript/Reference/Global_Objects/Object/keys"
+            >Object.keys(obj)</a
+          >
+          /
+          <a
+            href="https://developer.mozilla.org/ru/docs/Web/JavaScript/Reference/Global_Objects/Object/values"
+            >Object.values(obj)</a
+          >
+          /
+          <a
+            href="https://developer.mozilla.org/ru/docs/Web/JavaScript/Reference/Global_Objects/Object/entries"
+            >Object.entries(obj)</a
+          >
+          – возвращают массив всех перечисляемых собственных строковых
+          ключей/значений/пар ключ-значение.
+        </li>
+        <li>
+          <a
+            href="https://developer.mozilla.org/ru/docs/Web/JavaScript/Reference/Global_Objects/Object/getOwnPropertySymbols"
+            >Object.getOwnPropertySymbols(obj)</a
+          >
+          – возвращает массив всех собственных символьных ключей.
+        </li>
+        <li>
+          <a
+            href="https://developer.mozilla.org/ru/docs/Web/JavaScript/Reference/Global_Objects/Object/getOwnPropertyNames"
+            >Object.getOwnPropertyNames(obj)</a
+          >
+          – возвращает массив всех собственных строковых ключей.
+        </li>
+        <li>
+          <a
+            href="https://developer.mozilla.org/ru/docs/Web/JavaScript/Reference/Global_Objects/Reflect/ownKeys"
+            >Reflect.ownKeys(obj)</a
+          >
+          – возвращает массив всех собственных ключей.
+        </li>
+        <li>
+          <a
+            href="https://developer.mozilla.org/ru/docs/Web/JavaScript/Reference/Global_Objects/Object/hasOwnProperty"
+            >obj.hasOwnProperty(key)</a
+          >: возвращает <code>true</code>, если у <code>obj</code> есть
+          собственное (не унаследованное) свойство с именем <code>key</code>.
+        </li>
+      </ul>
+      <p>
+        Все методы, которые возвращают свойства объектов (такие как
+        <code>Object.keys</code> и другие), возвращают «собственные» свойства.
+        Если мы хотим получить и унаследованные, можно воспользоваться циклом
+        <code>for..in</code>.
+      </p>
+      <pre><code>let dictionary = Object.create(null, {
+        toString: {
+          // определяем свойство toString
+          value() {
+            // значение -- это функция
+            return Object.keys(this).join();
+          }
+        }
+      });
+
+      // ваш код, который добавляет метод dictionary.toString
+
+      // добавляем немного данных
+      dictionary.apple = "Apple";
+      dictionary.__proto__ = "test"; // здесь __proto__ -- это обычный ключ
+
+      // только apple и __proto__ выведены в цикле
+      for (let key in dictionary) {
+        alert(key); // "apple", затем "__proto__"
+      }
+
+      // ваш метод toString в действии
+      alert(dictionary); // "apple,__proto__"</code></pre>
+    </div>
+  </div>
+</div>
+
+<!-- content -->
+<!-- footer -->
+</body>
+</html>

@@ -1,0 +1,238 @@
+<div class="container mt-5">
+  <h1>Обработка ошибок</h1>
+  <div class="card mb-3" id="#try-catch">
+    <div class="card-header d-flex align-items-center">
+      <h2 class="h5 mb-0">10.1 Обработка ошибок, "try..catch"</h2>
+      <div class="ml-auto">
+        <a href="https://learn.javascript.ru/try-catch" target="_blank">Link</a>
+      </div>
+    </div>
+    <div class="card-body">
+      <p>
+        Конструкция <code>try..catch</code> позволяет обрабатывать ошибки во
+        время исполнения кода. Она позволяет запустить код и перехватить ошибки,
+        которые могут в нём возникнуть.
+      </p>
+      <p>Синтаксис:</p>
+      <pre><code>try {
+  // исполняем код
+} catch(err) {
+  // если случилась ошибка, прыгаем сюда
+  // err - это объект ошибки
+} finally {
+  // выполняется всегда после try/catch
+}
+
+let json = "{ некорректный JSON }";
+
+try {
+
+  let user = JSON.parse(json); // <-- тут возникает ошибка...
+  alert( user.name ); // не сработает
+
+} catch (e) {
+  // ...выполнение прыгает сюда
+  alert( "Извините, в данных ошибка, мы попробуем получить их ещё раз." );
+  alert( e.name );
+  alert( e.message );
+}</code></pre>
+      <p>
+        Секций <code>catch</code> или <code>finally</code> может не быть, то
+        есть более короткие конструкции <code>try..catch</code> и
+        <code>try..finally</code> также корректны. Блок finally срабатывает при
+        любом выходе из try..catch, в том числе и return.
+      </p>
+      <pre><code>try {
+  alert( 'try' );
+  if (confirm('Сгенерировать ошибку?')) BAD_CODE();
+} catch (e) {
+  alert( 'catch' );
+} finally {
+  alert( 'finally' );
+}</code></pre>
+      <p>Объекты ошибок содержат следующие свойства:</p>
+      <ul>
+        <li><code>message</code> – понятное человеку сообщение.</li>
+        <li>
+          <code>name</code> – строка с именем ошибки (имя конструктора ошибки).
+        </li>
+        <li>
+          <code>stack</code> (нестандартное, но хорошо поддерживается) – стек на
+          момент ошибки.
+        </li>
+      </ul>
+      <p>
+        Если объект ошибки не нужен, мы можем пропустить его, используя
+        <code>catch {</code> вместо <code>catch(err) {</code>.
+      </p>
+      <p>
+        Мы можем также генерировать собственные ошибки, используя оператор
+        <code>throw</code>. Аргументом <code>throw</code> может быть что угодно,
+        но обычно это объект ошибки, наследуемый от встроенного класса
+        <code>Error</code>. Подробнее о расширении ошибок см. в следующей главе.
+      </p>
+      <pre><code>let json = '{ "age": 30 }'; // данные неполны
+
+try {
+
+  let user = JSON.parse(json); // <-- выполнится без ошибок
+
+  if (!user.name) {
+    throw new SyntaxError("Данные неполны: нет имени"); // (*)
+  }
+
+  alert( user.name );
+
+} catch(e) {
+  alert( "JSON Error: " + e.message ); // JSON Error: Данные неполны: нет имени
+}</code></pre>
+      <p>
+        <em>Проброс исключения</em> – это очень важный приём обработки ошибок:
+        блок <code>catch</code> обычно ожидает и знает, как обработать
+        определённый тип ошибок, поэтому он должен пробрасывать дальше ошибки, о
+        которых он не знает.
+      </p>
+      <p>
+        <strong>try..catch работает синхронно</strong> Исключение, которое
+        произойдёт в коде, запланированном «на будущее», например в setTimeout,
+        try..catch не поймает. Это потому, что функция выполняется позже, когда
+        движок уже покинул конструкцию try..catch. Чтобы поймать исключение
+        внутри запланированной функции, try..catch должен находиться внутри
+        самой этой функции
+      </p>
+      <p>
+        Даже если у нас нет <code>try..catch</code>, большинство сред позволяют
+        настроить «глобальный» обработчик ошибок, чтобы ловить ошибки, которые
+        «выпадают наружу». В браузере это <code>window.onerror</code>.
+      </p>
+    </div>
+  </div>
+  <div class="card mb-3" id="#custom-errors">
+    <div class="card-header d-flex align-items-center">
+      <h2 class="h5 mb-0">10.2 Пользовательские ошибки, расширение Error</h2>
+      <div class="dropdown ml-auto">
+        <button
+          class="btn btn-primary dropdown-toggle"
+          type="button"
+          id="dropdownMenuButton1"
+          data-toggle="dropdown"
+          aria-haspopup="true"
+          aria-expanded="false"
+        >
+          Homeworks
+        </button>
+        <div class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
+          <a
+            class="dropdown-item"
+            target="_blank"
+            href="./homeworks/10/10-2-1.html"
+            >1</a
+          >
+        </div>
+      </div>
+      <div class="ml-4">
+        <a href="https://learn.javascript.ru/custom-errors" target="_blank"
+          >Link</a
+        >
+      </div>
+    </div>
+    <div class="card-body">
+      <ul>
+        <li>
+          Мы можем наследовать свои классы ошибок от <code>Error</code> и других
+          встроенных классов ошибок, но нужно позаботиться о свойстве
+          <code>name</code> и не забыть вызвать <code>super</code>.
+          <pre><code>class ValidationError extends Error {
+  constructor(message) {
+    super(message); // (1)
+    this.name = "ValidationError"; // (2)
+  }
+}
+
+function test() {
+  throw new ValidationError("Упс!");
+}
+
+try {
+  test();
+} catch(err) {
+  alert(err.message); // Упс!
+  alert(err.name); // ValidationError
+  alert(err.stack); // список вложенных вызовов с номерами строк для каждого
+}</code></pre>
+        </li>
+        <li>
+          Мы можем использовать <code>instanceof</code> для проверки типа
+          ошибок. Это также работает с наследованием. Но иногда у нас объект
+          ошибки, возникшей в сторонней библиотеке, и нет простого способа
+          получить класс. Тогда для проверки типа ошибки можно использовать
+          свойство <code>name</code>.
+        </li>
+        <li>
+          Обёртывание исключений является распространённой техникой: функция
+          ловит низкоуровневые исключения и создаёт одно «высокоуровневое»
+          исключение вместо разных низкоуровневых. Иногда низкоуровневые
+          исключения становятся свойствами этого объекта, как
+          <code>err.cause</code> в примерах выше, но это не обязательно.
+        </li>
+      </ul>
+      <pre><code>class ReadError extends Error {
+  constructor(message, cause) {
+    super(message);
+    this.cause = cause;
+    this.name = 'ReadError';
+  }
+}
+
+class ValidationError extends Error { /*...*/ }
+class PropertyRequiredError extends ValidationError { /* ... */ }
+
+function validateUser(user) {
+  if (!user.age) {
+    throw new PropertyRequiredError("age");
+  }
+
+  if (!user.name) {
+    throw new PropertyRequiredError("name");
+  }
+}
+
+function readUser(json) {
+  let user;
+
+  try {
+    user = JSON.parse(json);
+  } catch (err) {
+    if (err instanceof SyntaxError) {
+      throw new ReadError("Синтаксическая ошибка", err);
+    } else {
+      throw err;
+    }
+  }
+
+  try {
+    validateUser(user);
+  } catch (err) {
+    if (err instanceof ValidationError) {
+      throw new ReadError("Ошибка валидации", err);
+    } else {
+      throw err;
+    }
+  }
+
+}
+
+try {
+  readUser('{bad json}');
+} catch (e) {
+  if (e instanceof ReadError) {
+    alert(e);
+    // Исходная ошибка: SyntaxError:Unexpected token b in JSON at position 1
+    alert("Исходная ошибка: " + e.cause);
+  } else {
+    throw e;
+  }
+}</code></pre>
+    </div>
+  </div>
+</div>

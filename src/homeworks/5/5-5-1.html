@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html>
+  <body>
+    <script>
+      function camelize(str) {
+        let arr = str.split("-");
+        let result = arr.map(function(item, index) {
+          if (index) {
+            return item[0].toUpperCase() + item.slice(1);
+          } else {
+            return item;
+          }
+        });
+
+        return result.join("");
+      }
+
+      alert(camelize("ddd-rrr-ttt"));
+    </script>
+  </body>
+</html>

@@ -1,0 +1,765 @@
+<!DOCTYPE html>
+<html lang="ru">
+  <head>
+    <title>9. Классы</title>
+    <meta charset="UTF-8" />
+    <script
+      src="https://code.jquery.com/jquery-3.4.1.min.js"
+      integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo="
+      crossorigin="anonymous"
+    ></script>
+    <script src="../js/main.js"></script>
+    <link
+      rel="stylesheet"
+      href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+      integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T"
+      crossorigin="anonymous"
+    />
+    <script
+      src="https://code.jquery.com/jquery-3.4.1.slim.min.js"
+      integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n"
+      crossorigin="anonymous"
+    ></script>
+    <script
+      src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"
+      integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo"
+      crossorigin="anonymous"
+    ></script>
+    <script
+      src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"
+      integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6"
+      crossorigin="anonymous"
+    ></script>
+
+    <style>
+      xmp {
+        font-family: inherit;
+      }
+      pre {
+        background: #f5f2f0;
+        padding: 16px;
+        border-radius: 8px;
+        white-space: break-spaces;
+      }
+
+      .card-body div:last-child,
+      .card-body ul:last-child,
+      .card-body ol:last-child,
+      .card-body pre:last-child ,
+      .card-body p:last-child {
+          margin-bottom: 0;
+      }
+    </style>
+  </head>
+  <body class="pt-5">
+    <nav class="navbar navbar-expand-lg navbar-light bg-light fixed-top">
+      <div class="container">
+        <button
+          class="navbar-toggler"
+          type="button"
+          data-toggle="collapse"
+          data-target="#navbarNavDropdown"
+          aria-controls="navbarNavDropdown"
+          aria-expanded="false"
+          aria-label="Toggle navigation"
+        >
+          <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNavDropdown">
+          <ul class="navbar-nav">
+            <li class="nav-item dropdown">
+              <a
+                class="nav-link dropdown-toggle"
+                href="#"
+                id="navbarDropdownMenuLink1"
+                role="button"
+                data-toggle="dropdown"
+                aria-haspopup="true"
+                aria-expanded="false"
+              >
+                JavaScript</a
+              >
+              <div
+                class="dropdown-menu"
+                aria-labelledby="navbarDropdownMenuLink1"
+              >
+                <a class="dropdown-item" href="/dist/1-intro.html"
+                  >1. Введение</a
+                >
+                <a class="dropdown-item" href="/dist/2-first-steps.html"
+                  >2. Основы JavaScript</a
+                >
+                <a class="dropdown-item" href="/dist/3-code-quality.html"
+                  >3. Качество кода</a
+                >
+                <a class="dropdown-item" href="/dist/4-object-basics.html"
+                  >4. Объекты: основы</a
+                >
+                <a class="dropdown-item" href="/dist/5-data-types.html"
+                  >5. Типы данных</a
+                >
+                <a class="dropdown-item" href="/dist/6-advanced-functions.html"
+                  >6. Продвинутая работа с функциями</a
+                >
+                <a class="dropdown-item" href="/dist/7-object-properties.html"
+                  >7. Свойства объекта, их конфигурация</a
+                >
+                <a class="dropdown-item" href="/dist/8-prototypes.html"
+                  >8. Прототипы, наследование</a
+                >
+                <a class="dropdown-item" href="/dist/9-classes.html"
+                  >9. Классы</a
+                >
+                <a class="dropdown-item" href="/dist/10-error-handling.html"
+                  >10. Обработка ошибок</a
+                >
+                <a class="dropdown-item" href="/dist/11-async.html"
+                  >11. Промисы, async/await</a
+                >
+                <a class="dropdown-item" href="/dist/12-generators-iterators.html"
+                  >12. Генераторы, продвинутая итерация</a
+                >
+                <a class="dropdown-item" href="/dist/13-modules.html"
+                  >13. Модули</a
+                >
+                <a class="dropdown-item" href="/dist/_3-6-network.html"
+                  >3-6. Сетевые запросы</a
+                >
+              </div>
+            </li>
+
+<li class="nav-item dropdown">
+  <a
+    class="nav-link dropdown-toggle"
+    href="#"
+    id="navbarDropdownMenuLink"
+    role="button"
+    data-toggle="dropdown"
+    aria-haspopup="true"
+    aria-expanded="false"
+    >Прототипы, наследование</a
+  >
+  <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+    <a class="dropdown-item" href="#class">9.1 Класс: базовый синтаксис</a>
+    <a class="dropdown-item" href="#class-inheritance"
+      >9.2 Наследование классов</a
+    >
+    <a class="dropdown-item" href="#static-properties-methods"
+      >9.3 Статические свойства и методы</a
+    >
+    <a class="dropdown-item" href="#private-protected-properties-methods"
+      >9.4 Приватные и защищённые методы и свойства</a
+    >
+    <a class="dropdown-item" href="#extend-natives"
+      >9.5 Расширение встроенных классов</a
+    >
+    <a class="dropdown-item" href="#instanceof"
+      >9.6 Проверка класса: "instanceof"</a
+    >
+    <a class="dropdown-item" href="#mixins">9.7 Примеси</a>
+  </div>
+</li>
+
+</ul>
+</div>
+</div>
+</nav>
+
+<!-- content -->
+<div class="container mt-5">
+  <h1>Свойства объекта, их конфигурация</h1>
+  <div class="card mb-3" id="#class">
+    <div class="card-header d-flex align-items-center">
+      <h2 class="h5 mb-0">9.1 Класс: базовый синтаксис</h2>
+      <div class="dropdown ml-auto">
+        <button
+          class="btn btn-primary dropdown-toggle"
+          type="button"
+          id="dropdownMenuButton1"
+          data-toggle="dropdown"
+          aria-haspopup="true"
+          aria-expanded="false"
+        >
+          Homeworks
+        </button>
+        <div class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
+          <a
+            class="dropdown-item"
+            target="_blank"
+            href="./homeworks/9/9-1-1.html"
+            >1</a
+          >
+        </div>
+      </div>
+      <div class="ml-4">
+        <a href="https://learn.javascript.ru/class" target="_blank">Link</a>
+      </div>
+    </div>
+    <div class="card-body">
+      <p>Базовый синтаксис для классов выглядит так:</p>
+      <pre><code>class MyClass {
+  prop = value; // свойство
+  constructor(...) { // конструктор
+    // ...
+  }
+  method(...) {} // метод
+  get something(...) {} // геттер
+  set something(...) {} // сеттер
+  [Symbol.iterator]() {} // метод с вычисляемым именем (здесь - символом)
+  // ...
+}</code></pre>
+      <p>
+        <code>MyClass</code> технически является функцией (той, которую мы
+        определяем как <code>constructor</code>), в то время как методы, геттеры
+        и сеттеры записываются в <code>MyClass.prototype</code>.
+      </p>
+      <p>
+        В следующих главах мы узнаем больше о классах, включая наследование и
+        другие возможности.
+      </p>
+    </div>
+  </div>
+  <div class="card mb-3" id="#class-inheritance">
+    <div class="card-header d-flex align-items-center">
+      <h2 class="h5 mb-0">9.2 Наследование классов</h2>
+      <div class="dropdown ml-auto">
+        <button
+          class="btn btn-primary dropdown-toggle"
+          type="button"
+          id="dropdownMenuButton2"
+          data-toggle="dropdown"
+          aria-haspopup="true"
+          aria-expanded="false"
+        >
+          Homeworks
+        </button>
+        <div class="dropdown-menu" aria-labelledby="dropdownMenuButton2">
+          <a
+            class="dropdown-item"
+            target="_blank"
+            href="./homeworks/9/9-2-1.html"
+            >1</a
+          ><a
+            class="dropdown-item"
+            target="_blank"
+            href="./homeworks/9/9-2-2.html"
+            >2</a
+          >
+        </div>
+      </div>
+      <div class="ml-4">
+        <a href="https://learn.javascript.ru/class-inheritance" target="_blank"
+          >Link</a
+        >
+      </div>
+    </div>
+    <div class="card-body">
+      <ol>
+        <li>
+          Чтобы унаследовать от класса: <code>class Child extends Parent</code>:
+          <ul>
+            <li>
+              При этом <code>Child.prototype.__proto__</code> будет равен
+              <code>Parent.prototype</code>, так что методы будут унаследованы.
+            </li>
+          </ul>
+        </li>
+        <li>
+          При переопределении конструктора:
+          <ul>
+            <li>
+              Обязателен вызов конструктора родителя <code>super()</code> в
+              конструкторе <code>Child</code> до обращения к <code>this</code>.
+            </li>
+          </ul>
+        </li>
+        <li>
+          При переопределении другого метода:
+          <ul>
+            <li>
+              Мы можем вызвать <code>super.method()</code> в методе
+              <code>Child</code> для обращения к методу родителя
+              <code>Parent</code>.
+            </li>
+          </ul>
+        </li>
+        <li>
+          Внутренние детали:
+          <ul>
+            <li>
+              Методы запоминают свой объект во внутреннем свойстве
+              <code>[[HomeObject]]</code>. Благодаря этому работает
+              <code>super</code>, он в его прототипе ищет родительские методы.
+            </li>
+            <li>
+              Поэтому копировать метод, использующий <code>super</code>, между
+              разными объектами небезопасно.
+            </li>
+          </ul>
+        </li>
+      </ol>
+      <p>Также:</p>
+      <ul>
+        <li>
+          У функций-стрелок нет своего <code>this</code> и <code>super</code>,
+          поэтому они «прозрачно» встраиваются во внешний контекст.
+        </li>
+      </ul>
+    </div>
+  </div>
+  <div class="card mb-3" id="#static-properties-methods">
+    <div class="card-header d-flex align-items-center">
+      <h2 class="h5 mb-0">9.3 Статические свойства и методы</h2>
+      <div class="dropdown ml-auto">
+        <button
+          class="btn btn-primary dropdown-toggle"
+          type="button"
+          id="dropdownMenuButton3"
+          data-toggle="dropdown"
+          aria-haspopup="true"
+          aria-expanded="false"
+        >
+          Homeworks
+        </button>
+        <div class="dropdown-menu" aria-labelledby="dropdownMenuButton3">
+          <a
+            class="dropdown-item"
+            target="_blank"
+            href="./homeworks/9/9-3-1.html"
+            >1</a
+          >
+        </div>
+      </div>
+      <div class="ml-4">
+        <a
+          href="https://learn.javascript.ru/static-properties-methods"
+          target="_blank"
+          >Link</a
+        >
+      </div>
+    </div>
+    <div class="card-body">
+      <p>
+        Статические методы используются для функциональности, принадлежат классу
+        «в целом», а не относятся к конкретному объекту класса.
+      </p>
+      <p>
+        Например, метод для сравнения двух статей
+        <code>Article.compare(article1, article2)</code> или фабричный метод
+        <code>Article.createTodays()</code>.
+      </p>
+      <p>
+        В объявлении класса они помечаются ключевым словом <code>static</code>.
+      </p>
+      <p>
+        Статические свойства используются в тех случаях, когда мы хотели бы
+        сохранить данные на уровне класса, а не какого-то одного объекта.
+      </p>
+      <p>Синтаксис:</p>
+      <pre><code>class MyClass {
+  static property = ...;
+
+  static method() {
+    ...
+  }
+}</code></pre>
+      <p>
+        Технически, статическое объявление – это то же самое, что и присвоение
+        классу:
+      </p>
+      <pre><code>MyClass.property = ...
+MyClass.method = ...</code></pre>
+      <p>Статические свойства и методы наследуются.</p>
+      <p>
+        Для <code>class B extends A</code> прототип класса
+        <code>B</code> указывает на <code>A</code>:
+        <code>B.[[Prototype]] = A</code>. Таким образом, если поле не найдено в
+        <code>B</code>, поиск продолжается в <code>A</code>.
+      </p>
+    </div>
+  </div>
+  <div class="card mb-3" id="#private-protected-properties-methods">
+    <div class="card-header d-flex align-items-center">
+      <h2 class="h5 mb-0">9.4 Приватные и защищённые методы и свойства</h2>
+      <div class="dropdown ml-auto">
+        <button
+          class="btn btn-primary dropdown-toggle"
+          type="button"
+          id="dropdownMenuButton4"
+          data-toggle="dropdown"
+          aria-haspopup="true"
+          aria-expanded="false"
+        >
+          Homeworks
+        </button>
+        <div class="dropdown-menu" aria-labelledby="dropdownMenuButton4">
+          <a
+            class="dropdown-item"
+            target="_blank"
+            href="./homeworks/9/9-4-1.html"
+            >1</a
+          >
+        </div>
+      </div>
+      <div class="ml-4">
+        <a
+          href="https://learn.javascript.ru/private-protected-properties-methods"
+          target="_blank"
+          >Link</a
+        >
+      </div>
+    </div>
+    <div class="card-body">
+      <p>
+        В терминах ООП отделение внутреннего интерфейса от внешнего называется
+        инкапсуляция.
+      </p>
+      <p>Это даёт следующие выгоды:</p>
+      <dl>
+        <dt>Защита для пользователей, чтобы они не выстрелили себе в ногу</dt>
+        <dd>
+          <p>
+            Представьте себе, что есть команда разработчиков, использующая
+            кофеварку. Она была изготовлена компанией «Лучшие Кофеварки» и
+            работает нормально, но защитный кожух был снят. Внутренний интерфейс
+            стал доступен извне.
+          </p>
+          <p>
+            Все разработчики культурны – они используют кофеварку по назначению.
+            Но один из них, Джон, решил, что он самый умный, и сделал некоторые
+            изменения во внутренностях кофеварки. После чего кофеварка вышла из
+            строя через два дня.
+          </p>
+          <p>
+            Это, конечно, не вина Джона, а скорее человека, который снял
+            защитный кожух и позволил Джону делать свои манипуляции.
+          </p>
+          <p>
+            То же самое в программировании. Если пользователь класса изменит
+            вещи, не предназначенные для изменения извне – последствия
+            непредсказуемы.
+          </p>
+        </dd>
+        <dt>Поддерживаемость</dt>
+        <dd>
+          <p>
+            Ситуация в программировании сложнее, чем с реальной кофеваркой,
+            потому что мы не просто покупаем её один раз. Код постоянно
+            подвергается разработке и улучшению.
+          </p>
+          <p>
+            <strong
+              >Если мы чётко отделим внутренний интерфейс, то разработчик класса
+              сможет свободно менять его внутренние свойства и методы, даже не
+              информируя пользователей…</strong
+            >
+          </p>
+          <p>
+            Если вы разработчик такого класса, то приятно знать, что приватные
+            методы можно безопасно переименовывать, их параметры можно изменять
+            и даже удалять, потому что от них не зависит никакой внешний код.
+          </p>
+          <p>
+            В новой версии вы можете полностью всё переписать, но пользователю
+            будет легко обновиться, если внешний интерфейс остался такой же.
+          </p>
+        </dd>
+        <dt>Сокрытие сложности</dt>
+        <dd>
+          <p>
+            Люди обожают использовать простые вещи. По крайней мере, снаружи.
+            Что внутри – это другое дело.
+          </p>
+          <p>Программисты не являются исключением.</p>
+          <p>
+            <strong
+              >Всегда удобно, когда детали реализации скрыты, и доступен
+              простой, хорошо документированный внешний интерфейс.</strong
+            >
+          </p>
+        </dd>
+      </dl>
+      <p>
+        Для сокрытия внутреннего интерфейса мы используем защищённые или
+        приватные свойства:
+      </p>
+      <ul>
+        <li>
+          Защищённые поля имеют префикс <code>_</code>. Это хорошо известное
+          соглашение, не поддерживаемое на уровне языка. Программисты должны
+          обращаться к полю, начинающемуся с <code>_</code>, только из его
+          класса и классов, унаследованных от него.
+          <pre><code>class CoffeeMachine {
+  _waterAmount = 0;
+
+  set waterAmount(value) {
+    if (value < 0) throw new Error("Отрицательное количество воды");
+    this._waterAmount = value;
+  }
+
+  get waterAmount() {
+    return this._waterAmount;
+  }
+
+  constructor(power) {
+    this._power = power;
+  }
+
+}
+
+// создаём новую кофеварку
+let coffeeMachine = new CoffeeMachine(100);
+
+// устанавливаем количество воды
+coffeeMachine.waterAmount = -10; // Error: Отрицательное количество воды</code></pre>
+        </li>
+        <li>
+          Приватные поля имеют префикс <code>#</code>. JavaScript гарантирует,
+          что мы можем получить доступ к таким полям только внутри класса.
+          <pre><code>class CoffeeMachine {
+  #waterLimit = 200;
+
+  #checkWater(value) {
+    if (value < 0) throw new Error("Отрицательный уровень воды");
+    if (value > this.#waterLimit) throw new Error("Слишком много воды");
+  }
+}
+
+let coffeeMachine = new CoffeeMachine();
+
+// снаружи  нет доступа к приватным методам класса
+coffeeMachine.#checkWater(); // Error
+coffeeMachine.#waterLimit = 1000; // Error</code></pre>
+        </li>
+      </ul>
+      <p>
+        В настоящее время приватные поля не очень хорошо поддерживаются в
+        браузерах, но можно использовать полифил.
+      </p>
+    </div>
+  </div>
+  <div class="card mb-3" id="#extend-natives">
+    <div class="card-header d-flex align-items-center">
+      <h2 class="h5 mb-0">9.5 Расширение встроенных классов</h2>
+
+      <div class="ml-auto">
+        <a href="https://learn.javascript.ru/extend-natives" target="_blank"
+          >Link</a
+        >
+      </div>
+    </div>
+    <div class="card-body">
+      <p>
+        Встроенные методы, такие как filter, map и другие возвращают новые
+        объекты унаследованного класса PowerArray. Их внутренняя реализация
+        такова, что для этого они используют свойство объекта constructor
+      </p>
+      <pre><code>// добавим один метод (можно более одного)
+class PowerArray extends Array {
+  isEmpty() {
+    return this.length === 0;
+  }
+}
+
+let arr = new PowerArray(1, 2, 5, 10, 50);
+alert(arr.isEmpty()); // false
+
+let filteredArr = arr.filter(item => item >= 10);
+alert(filteredArr); // 10, 50
+alert(filteredArr.isEmpty()); // false</code></pre>
+      <p>
+        При помощи специального статического геттера Symbol.species можно
+        вернуть конструктор, который JavaScript будет использовать в filter, map
+        и других методах для создания новых объектов.
+      </p>
+      <pre><code>class PowerArray extends Array {
+  isEmpty() {
+    return this.length === 0;
+  }
+
+  // встроенные методы массива будут использовать этот метод как конструктор
+  static get [Symbol.species]() {
+    return Array;
+  }
+}
+
+let arr = new PowerArray(1, 2, 5, 10, 50);
+alert(arr.isEmpty()); // false
+
+// filter создаст новый массив, используя arr.constructor[Symbol.species] как конструктор
+let filteredArr = arr.filter(item => item >= 10);
+
+// filteredArr не является PowerArray, это Array
+alert(filteredArr.isEmpty()); // Error: filteredArr.isEmpty is not a function</code></pre>
+      <p>
+        Другие коллекции, такие как <code>Map</code>, <code>Set</code>, работают
+        аналогично. Они также используют <code>Symbol.species</code>.
+      </p>
+      <h3 class="h5">
+        Отсутствие статического наследования встроенных классов
+      </h3>
+      <p>
+        Обычно, когда один класс наследует другой, то наследуются и статические
+        методы. Но встроенные классы – исключение. Они не наследуют статические
+        методы друг друга.
+      </p>
+      <p>
+        Например, и <code>Array</code>, и <code>Date</code> наследуют от
+        <code>Object</code>, так что в их экземплярах доступны методы из
+        <code>Object.prototype</code>. Но <code>Array.[[Prototype]]</code> не
+        ссылается на <code>Object</code>, поэтому нет методов
+        <code>Array.keys()</code> или <code>Date.keys()</code>.
+      </p>
+    </div>
+  </div>
+  <div class="card mb-3" id="#instanceof">
+    <div class="card-header d-flex align-items-center">
+      <h2 class="h5 mb-0">9.6 Проверка класса: "instanceof"</h2>
+
+      <div class="ml-auto">
+        <a href="https://learn.javascript.ru/instanceof" target="_blank"
+          >Link</a
+        >
+      </div>
+    </div>
+    <div class="card-body">
+      <pre><code>class Rabbit {}
+let rabbit = new Rabbit();
+
+// это объект класса Rabbit?
+alert( rabbit instanceof Rabbit ); // true
+
+let arr = [1, 2, 3];
+alert( arr instanceof Array ); // true
+alert( arr instanceof Object ); // true</code></pre>
+      <p>Давайте обобщим, какие методы для проверки типа мы знаем:</p>
+      <table>
+        <thead>
+          <tr>
+            <th></th>
+            <th>работает для</th>
+            <th>возвращает</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><code>typeof</code></td>
+            <td>примитивов</td>
+            <td>строка</td>
+          </tr>
+          <tr>
+            <td><code>{}.toString</code></td>
+            <td>
+              примитивов, встроенных объектов, объектов с
+              <code>Symbol.toStringTag</code>
+            </td>
+            <td>строка</td>
+          </tr>
+          <tr>
+            <td><code>instanceof</code></td>
+            <td>объектов</td>
+            <td>true/false</td>
+          </tr>
+        </tbody>
+      </table>
+      <p>
+        Как мы можем видеть, технически <code>{}.toString</code> «более
+        продвинут», чем <code>typeof</code>.
+      </p>
+      <p>
+        А оператор <code>instanceof</code> – отличный выбор, когда мы работаем с
+        иерархией классов и хотим делать проверки с учётом наследования.
+      </p>
+    </div>
+  </div>
+  <div class="card mb-3" id="#mixins">
+    <div class="card-header d-flex align-items-center">
+      <h2 class="h5 mb-0">9.7 Примеси</h2>
+      <div class="ml-auto">
+        <a href="https://learn.javascript.ru/mixins" target="_blank">Link</a>
+      </div>
+    </div>
+    <div class="card-body">
+      <p>
+        <em>Примесь</em> – общий термин в объектно-ориентированном
+        программировании: класс, который содержит в себе методы для других
+        классов.
+      </p>
+      <p>
+        Некоторые другие языки допускают множественное наследование. JavaScript
+        не поддерживает множественное наследование, но с помощью примесей мы
+        можем реализовать нечто похожее, скопировав методы в прототип.
+      </p>
+      <p>
+        Мы можем использовать примеси для расширения функциональности классов,
+        например, для обработки событий, как мы сделали это выше.
+      </p>
+      <p>
+        С примесями могут возникнуть конфликты, если они перезаписывают
+        существующие методы класса. Стоит помнить об этом и быть внимательнее
+        при выборе имён для методов примеси, чтобы их избежать.
+      </p>
+      <pre><code>let eventMixin = {
+  /**
+   * Подписаться на событие, использование:
+   * menu.on('select', function(item) { ... }
+   */
+  on(eventName, handler) {
+    if (!this._eventHandlers) this._eventHandlers = {};
+    if (!this._eventHandlers[eventName]) {
+      this._eventHandlers[eventName] = [];
+    }
+    this._eventHandlers[eventName].push(handler);
+  },
+
+  /**
+   * Отменить подписку, использование:
+   * menu.off('select', handler)
+   */
+  off(eventName, handler) {
+    let handlers = this._eventHandlers && this._eventHandlers[eventName];
+    if (!handlers) return;
+    for (let i = 0; i < handlers.length; i++) {
+      if (handlers[i] === handler) {
+        handlers.splice(i--, 1);
+      }
+    }
+  },
+
+  /**
+   * Сгенерировать событие с указанным именем и данными
+   * this.trigger('select', data1, data2);
+   */
+  trigger(eventName, ...args) {
+    if (!this._eventHandlers || !this._eventHandlers[eventName]) {
+      return; // обработчиков для этого события нет
+    }
+
+    // вызовем обработчики
+    this._eventHandlers[eventName].forEach(handler => handler.apply(this, args));
+  }
+};</code></pre>
+      <pre><code>// Создадим класс
+class Menu {
+  choose(value) {
+    this.trigger("select", value);
+  }
+}
+// Добавим примесь с методами для событий
+Object.assign(Menu.prototype, eventMixin);
+
+let menu = new Menu();
+
+// Добавить обработчик, который будет вызван при событии "select":
+menu.on("select", value => alert(`Выбранное значение: ${value}`));
+
+// Генерирует событие => обработчик выше запускается и выводит:
+menu.choose("123"); // Выбранное значение: 123</code></pre>
+    </div>
+  </div>
+</div>
+
+<!-- content -->
+<!-- footer -->
+</body>
+</html>

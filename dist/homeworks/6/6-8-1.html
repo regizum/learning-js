@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html>
+  <body>
+    <script>
+      function printNumbers(from, to) {
+        let currentNumber = from;
+        let intervalTimer = setInterval(() => {
+          if (currentNumber <= to) {
+            console.log(currentNumber++);
+          } else {
+            clearInterval(intervalTimer);
+          }
+        }, 1000);
+      }
+
+      function printNumbers2(from, to) {
+        let currentNumber = from;
+        let timeoutFunction = () => {
+          setTimeout(() => {
+            if (currentNumber <= to) {
+              console.log(currentNumber++);
+              timeoutFunction();
+            }
+          }, 1000);
+        };
+        timeoutFunction();
+      }
+
+      printNumbers2(0, 10);
+    </script>
+  </body>
+</html>

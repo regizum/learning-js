@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html>
+  <body>
+    <script>
+      function getAverageAge(arr) {
+        let sum = arr.reduce(
+          (previousValue, item) => previousValue + item.age,
+          0
+        );
+
+        return Math.round(sum / arr.length);
+      }
+
+      let vasya = { name: "Вася", age: 25 };
+      let petya = { name: "Петя", age: 30 };
+      let masha = { name: "Маша", age: 29 };
+
+      let arr = [vasya, petya, masha];
+
+      alert(getAverageAge(arr)); // (25 + 30 + 29) / 3 = 28
+    </script>
+  </body>
+</html>

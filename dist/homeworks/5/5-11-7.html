@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html>
+  <body>
+    <script>
+      function getSecondsToTomorrow() {
+        let date = Date.now();
+        let date2 = new Date();
+        date2.setSeconds(0);
+        date2.setMinutes(0);
+        date2.setHours(0);
+        date2.setDate(date2.getDate() + 1);
+
+        return (date2 - date) / 1000;
+      }
+
+      alert(getSecondsToTomorrow());
+    </script>
+  </body>
+</html>

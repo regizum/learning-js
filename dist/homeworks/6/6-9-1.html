@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html>
+  <body>
+    <script>
+      function spy(func) {
+        let resultFunction = function(a, b) {
+          resultFunction.calls.push([a, b]);
+
+          return func.call(this, a, b);
+        };
+        resultFunction.calls = [];
+
+        return resultFunction;
+      }
+
+      function work(a, b) {
+        alert(a + b); // произвольная функция или метод
+      }
+
+      work = spy(work);
+
+      work(1, 2); // 3
+      work(4, 5); // 9
+
+      console.log(work.calls);
+
+      for (let args of work.calls) {
+        alert("call:" + args.join()); // "call:1,2", "call:4,5"
+      }
+    </script>
+  </body>
+</html>

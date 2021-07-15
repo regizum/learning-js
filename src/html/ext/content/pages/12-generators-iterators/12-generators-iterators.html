@@ -1,0 +1,301 @@
+<div class="container mt-5">
+  <h1>Генераторы</h1>
+  <div class="card mb-3" id="#generators">
+    <div class="card-header d-flex align-items-center">
+      <h2 class="h5 mb-0">11.1 Введение: колбэки</h2>
+      <div class="dropdown ml-auto">
+        <button
+          class="btn btn-primary dropdown-toggle"
+          type="button"
+          id="dropdownMenuButton1"
+          data-toggle="dropdown"
+          aria-haspopup="true"
+          aria-expanded="false"
+        >
+          Homeworks
+        </button>
+        <div class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
+          <a
+            class="dropdown-item"
+            target="_blank"
+            href="./homeworks/12/12-1-1.html"
+            >1</a
+          >
+        </div>
+      </div>
+      <div class="ml-4">
+        <a href="https://learn.javascript.ru/generators" target="_blank"
+          >Link</a
+        >
+      </div>
+    </div>
+    <div class="card-body">
+      <ul>
+        <li>
+          Генераторы создаются при помощи функций-генераторов
+          <code>function* f(…) {…}</code>.
+          <pre><code>function* generateSequence() {
+  yield 1;
+  yield 2;
+  return 3;
+}
+
+let generator = generateSequence();
+
+let one = generator.next();
+
+alert(JSON.stringify(one)); // {value: 1, done: false}</code></pre>
+          <pre><code>function* generateSequence() {
+  yield 1;
+  yield 2;
+  return 3;
+}
+
+let generator = generateSequence();
+
+for(let value of generator) {
+  alert(value); // 1, затем 2
+}</code></pre>
+        </li>
+        <li>
+          Внутри генераторов и только внутри них существует оператор
+          <code>yield</code>.
+        </li>
+        <li>
+          Внешний код и генератор обмениваются промежуточными результатами
+          посредством вызовов <code>next/yield</code>.
+        </li>
+        <pre><code>function* gen() {
+  let ask1 = yield "2 + 2 = ?";
+
+  alert(ask1); // 4
+
+  let ask2 = yield "3 * 3 = ?"
+
+  alert(ask2); // 9
+}
+
+let generator = gen();
+
+alert( generator.next().value ); // "2 + 2 = ?"
+
+alert( generator.next(4).value ); // "3 * 3 = ?"
+
+alert( generator.next(9).done ); // true</code></pre>
+      </ul>
+      <p>
+        В современном JavaScript генераторы используются редко. Но иногда они
+        оказываются полезными, потому что способность функции обмениваться
+        данными с вызывающим кодом во время выполнения совершенно уникальна. И,
+        конечно, для создания перебираемых объектов.
+      </p>
+      <p>
+        В веб-программировании мы часто работаем с потоками данных, так что это
+        ещё один важный случай использования.
+      </p>
+      <h3 class="h5">Использование генераторов для перебираемых объектов</h3>
+      <pre><code>let range = {
+  from: 1,
+  to: 5,
+
+  *[Symbol.iterator]() { // краткая запись для [Symbol.iterator]: function*()
+    for(let value = this.from; value <= this.to; value++) {
+      yield value;
+    }
+  }
+};
+
+alert( [...range] ); // 1,2,3,4,5</code></pre>
+      <h3 class="h5">Композиция генераторов</h3>
+      <pre><code>function* generateSequence(start, end) {
+  for (let i = start; i <= end; i++) yield i;
+}
+
+function* generatePasswordCodes() {
+
+  // 0..9
+  yield* generateSequence(48, 57);
+
+  // A..Z
+  yield* generateSequence(65, 90);
+
+  // a..z
+  yield* generateSequence(97, 122);
+
+}
+
+let str = '';
+
+for(let code of generatePasswordCodes()) {
+  str += String.fromCharCode(code);
+}
+
+alert(str); // 0..9A..Za..z</code></pre>
+      <h3 class="h5">generator.throw</h3>
+      <pre><code>function* gen() {
+  try {
+    let result = yield "2 + 2 = ?"; // (1)
+
+    alert("Выполнение программы не дойдёт до этой строки, потому что выше возникнет исключение");
+  } catch(e) {
+    alert(e); // покажет ошибку
+  }
+}
+
+let generator = gen();
+
+let question = generator.next().value;
+
+generator.throw(new Error("Ответ не найден в моей базе данных")); // (2)</code></pre>
+    </div>
+  </div>
+  <div class="card mb-3" id="#async-iterators-generators">
+    <div class="card-header d-flex align-items-center">
+      <h2 class="h5 mb-0">11.1 Введение: колбэки</h2>
+      <div class="ml-auto">
+        <a
+          href="https://learn.javascript.ru/async-iterators-generators"
+          target="_blank"
+          >Link</a
+        >
+      </div>
+    </div>
+    <div class="card-body">
+      <p>
+        Обычные итераторы и генераторы прекрасно работают с данными, которые не
+        требуют времени для их создания или получения.
+      </p>
+      <p>
+        Когда мы ожидаем, что данные будут поступать асинхронно, с задержками,
+        можно использовать их асинхронные аналоги и
+        <code>for await..of</code> вместо<code>for..of</code>.
+      </p>
+      <h3 class="h5">Асинхронные итераторы</h3>
+      <pre><code>let range = {
+  from: 1,
+  to: 5,
+
+  // for await..of вызывает этот метод один раз в самом начале
+  [Symbol.asyncIterator]() { // (1)
+    // ...возвращает объект-итератор:
+    // далее for await..of работает только с этим объектом,
+    // запрашивая у него следующие значения вызовом next()
+    return {
+      current: this.from,
+      last: this.to,
+
+      // next() вызывается на каждой итерации цикла for await..of
+      async next() { // (2)
+        // должен возвращать значение как объект {done:.., value :...}
+        // (автоматически оборачивается в промис с помощью async)
+
+        // можно использовать await внутри для асинхронности:
+        await new Promise(resolve => setTimeout(resolve, 1000)); // (3)
+
+        if (this.current <= this.last) {
+          return { done: false, value: this.current++ };
+        } else {
+          return { done: true };
+        }
+      }
+    };
+  }
+};
+
+(async () => {
+
+  for await (let value of range) { // (4)
+    alert(value); // 1,2,3,4,5
+  }
+
+})()</code></pre>
+      <h3 class="h5">Асинхронные генераторы</h3>
+      <pre><code>async function* fetchCommits(repo) {
+  let url = `https://api.github.com/repos/${repo}/commits`;
+
+  while (url) {
+    const response = await fetch(url, { // (1)
+      headers: {'User-Agent': 'Our script'}, // GitHub требует заголовок user-agent
+    });
+
+    const body = await response.json(); // (2) ответ в формате JSON (массив коммитов)
+
+    // (3) Ссылка на следующую страницу находится в заголовках, извлекаем её
+    let nextPage = response.headers.get('Link').match(/<(.*?)>; rel="next"/);
+    nextPage = nextPage && nextPage[1];
+
+    url = nextPage;
+
+    for(let commit of body) { // (4) вернуть коммиты один за другим, до окончания страницы
+      yield commit;
+    }
+  }
+}
+
+(async () => {
+
+  let count = 0;
+
+  for await (const commit of fetchCommits('javascript-tutorial/en.javascript.info')) {
+
+    console.log(commit.author.login);
+
+    if (++count == 100) { // остановимся на 100 коммитах
+      break;
+    }
+  }
+
+})();</code></pre>
+      <p>Синтаксические различия между асинхронными и обычными итераторами:</p>
+      <table>
+        <thead>
+          <tr>
+            <th></th>
+            <th>Перебираемый объект</th>
+            <th>Асинхронно перебираемый</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Метод для получения итератора</td>
+            <td><code>Symbol.iterator</code></td>
+            <td><code>Symbol.asyncIterator</code></td>
+          </tr>
+          <tr>
+            <td><code>next()</code> возвращает</td>
+            <td><code>{value:…, done: true/false}</code></td>
+            <td>
+              промис, который завершается с
+              <code>{value:…, done: true/false}</code>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+      <p>Синтаксические различия между асинхронными и обычными генераторами:</p>
+      <table>
+        <thead>
+          <tr>
+            <th></th>
+            <th>Генераторы</th>
+            <th>Асинхронные генераторы</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Объявление</td>
+            <td><code>function*</code></td>
+            <td><code>async function*</code></td>
+          </tr>
+          <tr>
+            <td><code>generator.next()</code> возвращает</td>
+            <td><code>{value:…, done: true/false}</code></td>
+            <td>
+              промис, который завершается с
+              <code>{value:…, done: true/false}</code>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>

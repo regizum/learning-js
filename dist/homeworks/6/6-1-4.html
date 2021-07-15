@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html>
+  <body>
+    <script>
+      function printList(list) {
+        let newList = list;
+        let result = "";
+        while (newList.next) {
+          result += newList.value + " ";
+          newList = newList.next;
+        }
+        result += newList.value + " ";
+        return result;
+      }
+
+      function printList2(list) {
+        if (list.next) {
+          return list.value + " " + printList2(list.next);
+        }
+
+        return list.value;
+      }
+
+      let list = {
+        value: 1,
+        next: {
+          value: 2,
+          next: {
+            value: 3,
+            next: {
+              value: 4,
+              next: null
+            }
+          }
+        }
+      };
+
+      console.log(printList2(list));
+    </script>
+  </body>
+</html>

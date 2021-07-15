@@ -1,214 +1,270 @@
 <div class="container mt-5">
-    <h1>Объекты: основы</h1>
-    <div class="card mb-3" id="object">
-        <div class="card-header d-flex align-items-center">
-            <h2 class="h5 mb-0">4.1 Объекты</h2>
-            <div class="dropdown ml-auto">
-                <button
-                        class="btn btn-primary dropdown-toggle"
-                        type="button"
-                        id="dropdownMenuButton1"
-                        data-toggle="dropdown"
-                        aria-haspopup="true"
-                        aria-expanded="false">
-                    Homeworks
-                </button>
-                <div class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
-                    <a
-                            class="dropdown-item"
-                            target="_blank"
-                            href="./homeworks/4/4-1-1.html"
-                    >1</a
-                    ><a
-                        class="dropdown-item"
-                        target="_blank"
-                        href="./homeworks/4/4-1-2.html"
-                >2</a><a
-                        class="dropdown-item"
-                        target="_blank"
-                        href="./homeworks/4/4-1-3.html"
-                >3</a><a
-                        class="dropdown-item"
-                        target="_blank"
-                        href="./homeworks/4/4-1-4.html"
-                >4</a>
-                </div>
-            </div>
-            <div class="ml-4">
-                <a href="https://learn.javascript.ru/object" target="_blank"
-                >Link</a
-                >
-            </div>
+  <h1>Объекты: основы</h1>
+  <div class="card mb-3" id="object">
+    <div class="card-header d-flex align-items-center">
+      <h2 class="h5 mb-0">4.1 Объекты</h2>
+      <div class="dropdown ml-auto">
+        <button
+          class="btn btn-primary dropdown-toggle"
+          type="button"
+          id="dropdownMenuButton1"
+          data-toggle="dropdown"
+          aria-haspopup="true"
+          aria-expanded="false"
+        >
+          Homeworks
+        </button>
+        <div class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
+          <a
+            class="dropdown-item"
+            target="_blank"
+            href="./homeworks/4/4-1-1.html"
+            >1</a
+          ><a
+            class="dropdown-item"
+            target="_blank"
+            href="./homeworks/4/4-1-2.html"
+            >2</a
+          ><a
+            class="dropdown-item"
+            target="_blank"
+            href="./homeworks/4/4-1-3.html"
+            >3</a
+          ><a
+            class="dropdown-item"
+            target="_blank"
+            href="./homeworks/4/4-1-4.html"
+            >4</a
+          >
         </div>
-        <div class="card-body">
-            <p>Объекты – это ассоциативные массивы с рядом дополнительных возможностей.</p>
-            <p>Они хранят свойства (пары ключ-значение), где:</p>
-            <ul>
-                <li>Ключи свойств должны быть строками или символами (обычно строками).</li>
-                <li>Значения могут быть любого типа.</li>
-                <li>Имя переменной не может совпадать с зарезервированными словами, такими как «for», «let»,
-                    «return» и
-                    т.д. Но для свойств объекта такого ограничения нет
-                </li>
-            </ul>
-            <p>Чтобы получить доступ к свойству, мы можем использовать:</p>
-            <ul>
-                <li>Запись через точку: <code>obj.property</code>.</li>
-                <li>Квадратные скобки <code>obj["property"]</code>. Квадратные скобки позволяют взять ключ из
-                    переменной, например, <code>obj[varWithKey]</code>.
-                </li>
-            </ul>
-            <h3 class="h5">Вычисляемые свойства</h3>
-            <pre><code>let fruit = 'apple';
+      </div>
+      <div class="ml-4">
+        <a href="https://learn.javascript.ru/object" target="_blank">Link</a>
+      </div>
+    </div>
+    <div class="card-body">
+      <p>
+        Объекты – это ассоциативные массивы с рядом дополнительных возможностей.
+      </p>
+      <p>Они хранят свойства (пары ключ-значение), где:</p>
+      <ul>
+        <li>
+          Ключи свойств должны быть строками или символами (обычно строками).
+        </li>
+        <li>Значения могут быть любого типа.</li>
+        <li>
+          Имя переменной не может совпадать с зарезервированными словами, такими
+          как «for», «let», «return» и т.д. Но для свойств объекта такого
+          ограничения нет
+        </li>
+      </ul>
+      <p>Чтобы получить доступ к свойству, мы можем использовать:</p>
+      <ul>
+        <li>Запись через точку: <code>obj.property</code>.</li>
+        <li>
+          Квадратные скобки <code>obj["property"]</code>. Квадратные скобки
+          позволяют взять ключ из переменной, например,
+          <code>obj[varWithKey]</code>.
+        </li>
+      </ul>
+      <h3 class="h5">Вычисляемые свойства</h3>
+      <pre><code>let fruit = 'apple';
 let bag = {
   [fruit + 'Computers']: 5 // bag.appleComputers = 5
 };
             </code></pre>
-            <h3 class="h5">Свойство из переменной</h3>
-            <pre><code>function makeUser(name, age) {
+      <h3 class="h5">Свойство из переменной</h3>
+      <pre><code>function makeUser(name, age) {
   return {
     name, // то же самое, что и name: name
     age   // то же самое, что и age: age
     // ...
   };
 }</code></pre>
-            <h3 class="h5">Дополнительные операторы:</h3>
-            <ul>
-                <li>Удаление свойства: <code>delete obj.prop</code>.</li>
-                <li>Проверка существования свойства: <code>"key" in obj</code>.</li>
-                <li>Перебор свойств объекта: цикл for <code>for (let key in obj)</code>.</li>
-            </ul>
-            <p>То, что мы изучали в этой главе, называется «простым объектом» («plain object») или просто
-                <code>Object</code>.</p>
-            <h3 class="h5">В JavaScript есть много других типов объектов:</h3>
-            <ul>
-                <li><code>Array</code> для хранения упорядоченных коллекций данных,</li>
-                <li><code>Date</code> для хранения информации о дате и времени,</li>
-                <li><code>Error</code> для хранения информации об ошибке.</li>
-                <li>… и так далее.</li>
-            </ul>
-            <p class="mb-0">Иногда люди говорят что-то вроде «тип
-                данных Array»
-                или «тип данных Date», но формально они не являются отдельными типами, а относятся к типу данных
-                <code>Object</code>.
-                Они лишь расширяют его различными способами.</p>
-        </div>
+      <h3 class="h5">Дополнительные операторы:</h3>
+      <ul>
+        <li>Удаление свойства: <code>delete obj.prop</code>.</li>
+        <li>Проверка существования свойства: <code>"key" in obj</code>.</li>
+        <li>
+          Перебор свойств объекта: цикл for <code>for (let key in obj)</code>.
+        </li>
+      </ul>
+      <p>
+        То, что мы изучали в этой главе, называется «простым объектом» («plain
+        object») или просто <code>Object</code>.
+      </p>
+      <h3 class="h5">В JavaScript есть много других типов объектов:</h3>
+      <ul>
+        <li><code>Array</code> для хранения упорядоченных коллекций данных,</li>
+        <li><code>Date</code> для хранения информации о дате и времени,</li>
+        <li><code>Error</code> для хранения информации об ошибке.</li>
+        <li>… и так далее.</li>
+      </ul>
+      <p class="mb-0">
+        Иногда люди говорят что-то вроде «тип данных Array» или «тип данных
+        Date», но формально они не являются отдельными типами, а относятся к
+        типу данных <code>Object</code>. Они лишь расширяют его различными
+        способами.
+      </p>
     </div>
-    <div class="card mb-3" id="object-copy">
-        <div class="card-header d-flex align-items-center">
-            <h2 class="h5 mb-0">4.2 Копирование объектов и ссылки</h2>
-            <div class="ml-auto">
-                <a href="https://learn.javascript.ru/object-copy" target="_blank"
-                >Link</a
-                >
-            </div>
-        </div>
-        <div class="card-body">
-            <p>Объекты присваиваются и копируются по ссылке. Другими словами, переменная хранит не «значение объекта», а
-                «ссылку» (адрес в памяти) на это значение. Поэтому копирование такой переменной или передача её в
-                качестве аргумента функции приводит к копированию этой ссылки, а не самого объекта.</p>
+  </div>
 
-            <h3 class="h5">Сравнение по ссылке</h3>
-            <p>Операторы равенства == и строгого равенства === для объектов работают одинаково.</p>
-            <p>Два объекта равны только в том случае, если это один и тот же объект.</p>
-
-            <h3 class="h5">Клонирование и объединение объектов, Object.assign</h3>
-            <pre><code>Object.assign(dest, [src1, src2, src3...])</code></pre>
-            <ul class="mb-0">
-                <li>Первый аргумент <code>dest</code> — целевой объект.</li>
-                <li>Остальные аргументы <code>src1, ..., srcN</code> (может быть столько, сколько нужно)) являются
-                    исходными объектами
-                </li>
-                <li>Метод копирует свойства всех исходных объектов <code>src1, ..., srcN</code> в целевой объект <code>dest</code>.
-                    То есть, свойства всех перечисленных объектов, начиная со второго, копируются в первый объект.
-                </li>
-                <li>Возвращает объект <code>dest</code>.</li>
-                <li>Необходимо помнить, что Object.assign не делает глубокое клонирования объекта. Если внутри
-                    копируемого объекта есть свойство значение, которого не является примитивом, оно будет передано по
-                    ссылке. Для создания «настоящей копии» (полного клона объекта) можно воспользоваться методом из
-                    сторонней JavaScript-библиотеки _.cloneDeep(obj).
-                </li>
-            </ul>
-        </div>
+  <div class="card mb-3" id="object-copy">
+    <div class="card-header d-flex align-items-center">
+      <h2 class="h5 mb-0">4.2 Копирование объектов и ссылки</h2>
+      <div class="ml-auto">
+        <a href="https://learn.javascript.ru/object-copy" target="_blank"
+          >Link</a
+        >
+      </div>
     </div>
+    <div class="card-body">
+      <p>
+        Объекты присваиваются и копируются по ссылке. Другими словами,
+        переменная хранит не «значение объекта», а «ссылку» (адрес в памяти) на
+        это значение. Поэтому копирование такой переменной или передача её в
+        качестве аргумента функции приводит к копированию этой ссылки, а не
+        самого объекта.
+      </p>
 
-    <div class="card mb-3" id="garbage-collection">
-        <div class="card-header d-flex align-items-center">
-            <h2 class="h5 mb-0">4.3 Сборка мусора</h2>
-            <div class="ml-auto">
-                <a href="https://learn.javascript.ru/garbage-collection" target="_blank"
-                >Link</a
-                >
-            </div>
-        </div>
-        <div class="card-body">
-            <ul>
-                <li>Сборка мусора выполняется автоматически. Мы не можем ускорить или предотвратить её.</li>
-                <li>Объекты сохраняются в памяти, пока они достижимы.</li>
-                <li>Наличие ссылки не гарантирует, что объект достижим (от корня): несколько взаимосвязанных объектов
-                    могут стать недостижимыми как единое целое.
-                </li>
-            </ul>
-            <p>Интерпретаторы JavaScript применяют множество оптимизаций, чтобы сборка мусора работала быстрее и не
-                влияла на производительность.</p>
-            <p>Вот некоторые из оптимизаций:</p>
-            <ul class="mb-0">
-                <li><strong>Сборка по поколениям (Generational collection)</strong> – объекты делятся на «новые» и
-                    «старые». Многие объекты появляются, выполняют свою задачу и быстро умирают, их можно удалять более
-                    агрессивно. Те, которые живут достаточно долго, становятся «старыми» и проверяются реже.
-                </li>
-                <li><strong>Инкрементальная сборка (Incremental collection)</strong> – если объектов много, то обход
-                    всех ссылок и пометка достижимых объектов может занять значительное время и привести к видимым
-                    задержкам выполнения скрипта. Поэтому интерпретатор пытается организовать сборку мусора поэтапно.
-                    Этапы выполняются по отдельности один за другим. Это требует дополнительного учёта для отслеживания
-                    изменений между этапами, но зато теперь у нас есть много крошечных задержек вместо одной большой.
-                </li>
-                <li><strong>Сборка в свободное время (Idle-time collection)</strong> – чтобы уменьшить возможное влияние
-                    на производительность, сборщик мусора старается работать только во время простоя процессора.
-                </li>
-            </ul>
-        </div>
+      <h3 class="h5">Сравнение по ссылке</h3>
+      <p>
+        Операторы равенства == и строгого равенства === для объектов работают
+        одинаково.
+      </p>
+      <p>
+        Два объекта равны только в том случае, если это один и тот же объект.
+      </p>
+
+      <h3 class="h5">Клонирование и объединение объектов, Object.assign</h3>
+      <pre><code>Object.assign(dest, [src1, src2, src3...])</code></pre>
+      <ul class="mb-0">
+        <li>Первый аргумент <code>dest</code> — целевой объект.</li>
+        <li>
+          Остальные аргументы <code>src1, ..., srcN</code> (может быть столько,
+          сколько нужно)) являются исходными объектами
+        </li>
+        <li>
+          Метод копирует свойства всех исходных объектов
+          <code>src1, ..., srcN</code> в целевой объект <code>dest</code>. То
+          есть, свойства всех перечисленных объектов, начиная со второго,
+          копируются в первый объект.
+        </li>
+        <li>Возвращает объект <code>dest</code>.</li>
+        <li>
+          Необходимо помнить, что Object.assign не делает глубокое клонирования
+          объекта. Если внутри копируемого объекта есть свойство значение,
+          которого не является примитивом, оно будет передано по ссылке. Для
+          создания «настоящей копии» (полного клона объекта) можно
+          воспользоваться методом из сторонней JavaScript-библиотеки
+          _.cloneDeep(obj).
+        </li>
+      </ul>
     </div>
+  </div>
 
-    <div class="card mb-3" id="object-methods">
-        <div class="card-header d-flex align-items-center">
-            <h2 class="h5 mb-0">4.4 Методы объекта, "this"</h2>
-            <div class="dropdown ml-auto">
-                <button
-                        class="btn btn-primary dropdown-toggle"
-                        type="button"
-                        id="dropdownMenuButton4"
-                        data-toggle="dropdown"
-                        aria-haspopup="true"
-                        aria-expanded="false">
-                    Homeworks
-                </button>
-                <div class="dropdown-menu" aria-labelledby="dropdownMenuButton4">
-                    <a
-                            class="dropdown-item"
-                            target="_blank"
-                            href="./homeworks/4/4-4-1.html"
-                    >1</a
-                    ><a
-                        class="dropdown-item"
-                        target="_blank"
-                        href="./homeworks/4/4-4-2.html"
-                >2</a>
-                </div>
-            </div>
-            <div class="ml-4">
-                <a href="https://learn.javascript.ru/object-methods" target="_blank"
-                >Link</a
-                >
-            </div>
+  <div class="card mb-3" id="garbage-collection">
+    <div class="card-header d-flex align-items-center">
+      <h2 class="h5 mb-0">4.3 Сборка мусора</h2>
+      <div class="ml-auto">
+        <a href="https://learn.javascript.ru/garbage-collection" target="_blank"
+          >Link</a
+        >
+      </div>
+    </div>
+    <div class="card-body">
+      <ul>
+        <li>
+          Сборка мусора выполняется автоматически. Мы не можем ускорить или
+          предотвратить её.
+        </li>
+        <li>Объекты сохраняются в памяти, пока они достижимы.</li>
+        <li>
+          Наличие ссылки не гарантирует, что объект достижим (от корня):
+          несколько взаимосвязанных объектов могут стать недостижимыми как
+          единое целое.
+        </li>
+      </ul>
+      <p>
+        Интерпретаторы JavaScript применяют множество оптимизаций, чтобы сборка
+        мусора работала быстрее и не влияла на производительность.
+      </p>
+      <p>Вот некоторые из оптимизаций:</p>
+      <ul class="mb-0">
+        <li>
+          <strong>Сборка по поколениям (Generational collection)</strong> –
+          объекты делятся на «новые» и «старые». Многие объекты появляются,
+          выполняют свою задачу и быстро умирают, их можно удалять более
+          агрессивно. Те, которые живут достаточно долго, становятся «старыми» и
+          проверяются реже.
+        </li>
+        <li>
+          <strong>Инкрементальная сборка (Incremental collection)</strong> –
+          если объектов много, то обход всех ссылок и пометка достижимых
+          объектов может занять значительное время и привести к видимым
+          задержкам выполнения скрипта. Поэтому интерпретатор пытается
+          организовать сборку мусора поэтапно. Этапы выполняются по отдельности
+          один за другим. Это требует дополнительного учёта для отслеживания
+          изменений между этапами, но зато теперь у нас есть много крошечных
+          задержек вместо одной большой.
+        </li>
+        <li>
+          <strong>Сборка в свободное время (Idle-time collection)</strong> –
+          чтобы уменьшить возможное влияние на производительность, сборщик
+          мусора старается работать только во время простоя процессора.
+        </li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="card mb-3" id="object-methods">
+    <div class="card-header d-flex align-items-center">
+      <h2 class="h5 mb-0">4.4 Методы объекта, "this"</h2>
+      <div class="dropdown ml-auto">
+        <button
+          class="btn btn-primary dropdown-toggle"
+          type="button"
+          id="dropdownMenuButton4"
+          data-toggle="dropdown"
+          aria-haspopup="true"
+          aria-expanded="false"
+        >
+          Homeworks
+        </button>
+        <div class="dropdown-menu" aria-labelledby="dropdownMenuButton4">
+          <a
+            class="dropdown-item"
+            target="_blank"
+            href="./homeworks/4/4-4-1.html"
+            >1</a
+          ><a
+            class="dropdown-item"
+            target="_blank"
+            href="./homeworks/4/4-4-2.html"
+            >2</a
+          >
         </div>
-        <div class="card-body">
-            <h3 class="h5">Методы объекта</h3>
-            <ul>
-                <li>Функции, которые находятся в объекте в качестве его свойств, называются «методами».</li>
-                <li>Методы позволяют объектам «действовать»: <code>object.doSomething()</code>.</li>
-                <li><p>Запись методов:</p>
-                    <pre><code>let user = {
+      </div>
+      <div class="ml-4">
+        <a href="https://learn.javascript.ru/object-methods" target="_blank"
+          >Link</a
+        >
+      </div>
+    </div>
+    <div class="card-body">
+      <h3 class="h5">Методы объекта</h3>
+      <ul>
+        <li>
+          Функции, которые находятся в объекте в качестве его свойств,
+          называются «методами».
+        </li>
+        <li>
+          Методы позволяют объектам «действовать»:
+          <code>object.doSomething()</code>.
+        </li>
+        <li>
+          <p>Запись методов:</p>
+          <pre><code>let user = {
   name: "Джон",
   age: 30
 };
@@ -218,7 +274,7 @@ user.sayHi = function() {
 };
 
 user.sayHi(); // Привет!</code></pre>
-                    <pre><code>let user = {
+          <pre><code>let user = {
   // ...
 };
 
@@ -231,22 +287,30 @@ function sayHi() {
 user.sayHi = sayHi;
 
 user.sayHi(); // Привет!</code></pre>
-                </li>
-                <li><p>Сокращённая запись метода</p>
-                    <pre><code>user = {
+        </li>
+        <li>
+          <p>Сокращённая запись метода</p>
+          <pre><code>user = {
   sayHi() { // то же самое, что и "sayHi: function()"
     alert("Привет");
   }
 };</code></pre>
-                </li>
-            </ul>
-            <h3 class="h5">"this"</h3>
-            <ul>
-                <li><p>«this» не является фиксированным. Значение this вычисляется во время выполнения кода и зависит
-                    от контекста.</p>
-                    <p><strong>Правило простое: при вызове obj.f() значение this внутри f равно obj. Так что, в
-                        приведённом примере это user или admin.</strong></p>
-                    <pre><code>let user = { name: "Джон" };
+        </li>
+      </ul>
+      <h3 class="h5">"this"</h3>
+      <ul>
+        <li>
+          <p>
+            «this» не является фиксированным. Значение this вычисляется во время
+            выполнения кода и зависит от контекста.
+          </p>
+          <p>
+            <strong
+              >Правило простое: при вызове obj.f() значение this внутри f равно
+              obj. Так что, в приведённом примере это user или admin.</strong
+            >
+          </p>
+          <pre><code>let user = { name: "Джон" };
 let admin = { name: "Админ" };
 
 function sayHi() {
@@ -263,17 +327,24 @@ user.f(); // Джон  (this == user)
 admin.f(); // Админ  (this == admin)
 
 admin['f'](); // Админ (неважен способ доступа к методу - через точку или квадратные скобки)</code></pre>
-                </li>
-                <li>При объявлении любой функции в ней можно использовать <code>this</code>, но этот <code>this</code>
-                    не имеет значения до тех пор, пока функция не будет вызвана.
-                </li>
-                <li>Эта функция может быть скопирована между объектами (из одного объекта в другой).</li>
-                <li>Когда функция вызывается синтаксисом «метода» – <code>object.method()</code>, значением
-                    <code>this</code> во время вызова является объект перед точкой.
-                </li>
-            </ul>
-            <h3 class="h5">Внутренняя реализация: Ссылочный тип</h3>
-            <pre><code>let user = {
+        </li>
+        <li>
+          При объявлении любой функции в ней можно использовать
+          <code>this</code>, но этот <code>this</code>
+          не имеет значения до тех пор, пока функция не будет вызвана.
+        </li>
+        <li>
+          Эта функция может быть скопирована между объектами (из одного объекта
+          в другой).
+        </li>
+        <li>
+          Когда функция вызывается синтаксисом «метода» –
+          <code>object.method()</code>, значением <code>this</code> во время
+          вызова является объект перед точкой.
+        </li>
+      </ul>
+      <h3 class="h5">Внутренняя реализация: Ссылочный тип</h3>
+      <pre><code>let user = {
   name: "Джон",
   hi() { alert(this.name); },
   bye() { alert("Пока"); }
@@ -284,46 +355,81 @@ user.hi(); // Джон (простой вызов метода работает 
 // теперь давайте попробуем вызывать user.hi или user.bye
 // в зависимости от имени пользователя user.name
 (user.name == "Джон" ? user.hi : user.bye)(); // Ошибка!</code></pre>
-            <p>Почему? Если мы хотим понять, почему так происходит, давайте разберёмся (заглянем под капот), как
-                работает вызов методов (<code>obj.method()</code>).</p>
-            <p>Присмотревшись поближе, в выражении <code>obj.method()</code> можно заметить две операции:</p>
-            <ol>
-                <li>Сначала оператор точка <code>'.'</code> возвращает свойство объекта – его метод
-                    (<code>obj.method</code>).
-                </li>
-                <li>Затем скобки <code>()</code> вызывают этот метод (исполняется код метода).</li>
-            </ol>
-            <p><strong>Для работы вызовов типа <code>user.hi()</code>, JavaScript использует трюк – точка
-                <code>'.'</code> возвращает не саму функцию, а специальное значение «ссылочного типа», называемого <a
-                        href="https://tc39.github.io/ecma262/#sec-reference-specification-type">Reference
-                    Type</a>.</strong></p>
-            <p>Значение ссылочного типа – это «триплет»: комбинация из трёх значений <code>(base, name, strict)</code>,
-                где:</p>
-            <ul>
-                <li><code>base</code> – это объект.</li>
-                <li><code>name</code> – это имя свойства объекта.</li>
-                <li><code>strict</code> – это режим исполнения. Является true, если действует строгий режим (<code>use
-                    strict</code>).
-                </li>
-            </ul>
-            <pre><code>// значение ссылочного типа (Reference Type)
+      <p>
+        Почему? Если мы хотим понять, почему так происходит, давайте разберёмся
+        (заглянем под капот), как работает вызов методов
+        (<code>obj.method()</code>).
+      </p>
+      <p>
+        Присмотревшись поближе, в выражении <code>obj.method()</code> можно
+        заметить две операции:
+      </p>
+      <ol>
+        <li>
+          Сначала оператор точка <code>'.'</code> возвращает свойство объекта –
+          его метод (<code>obj.method</code>).
+        </li>
+        <li>
+          Затем скобки <code>()</code> вызывают этот метод (исполняется код
+          метода).
+        </li>
+      </ol>
+      <p>
+        <strong
+          >Для работы вызовов типа <code>user.hi()</code>, JavaScript использует
+          трюк – точка <code>'.'</code> возвращает не саму функцию, а
+          специальное значение «ссылочного типа», называемого
+          <a
+            href="https://tc39.github.io/ecma262/#sec-reference-specification-type"
+            >Reference Type</a
+          >.</strong
+        >
+      </p>
+      <p>
+        Значение ссылочного типа – это «триплет»: комбинация из трёх значений
+        <code>(base, name, strict)</code>, где:
+      </p>
+      <ul>
+        <li><code>base</code> – это объект.</li>
+        <li><code>name</code> – это имя свойства объекта.</li>
+        <li>
+          <code>strict</code> – это режим исполнения. Является true, если
+          действует строгий режим (<code>use strict</code>).
+        </li>
+      </ul>
+      <pre><code>// значение ссылочного типа (Reference Type)
 (user, "hi", true)</code></pre>
-            <p>Когда скобки <code>()</code> применяются к значению ссылочного типа (происходит вызов), то они получают
-                полную информацию об объекте и его методе, и могут поставить правильный <code>this</code>
-                (<code>=user</code> в данном случае, по <code>base</code>).</p>
-            <p>При любой другой операции между '.' и '()' (кроме скобок '()'), например, присваивании <code>hi =
-                user.hi</code>, ссылочный
-                тип заменяется на собственно значение <code>user.hi</code> (функцию), и дальше работа уже идёт только с
-                ней. Поэтому дальнейший вызов происходит уже без <code>this</code>.</p>
-            <p>Таким образом, значение <code>this</code> передаётся правильно, только если функция вызывается напрямую с
-                использованием синтаксиса точки <code>obj.method()</code> или квадратных скобок
-                <code>obj['method']()</code> (они делают то же самое). Позднее в этом учебнике мы изучим различные
-                варианты решения проблемы потери значения <code>this</code>. Например, такие как <a
-                        href="/bind#solution-2-bind">func.bind()</a>.</p>
-            <h3 class="h5">У стрелочных функций нет «this»</h3>
-            <p>Стрелочные функции особенные: у них нет своего «собственного» this. Если мы используем this внутри
-                стрелочной функции, то его значение берётся из внешней «нормальной» функции.</p>
-            <pre class="mb-0"><code>let user = {
+      <p>
+        Когда скобки <code>()</code> применяются к значению ссылочного типа
+        (происходит вызов), то они получают полную информацию об объекте и его
+        методе, и могут поставить правильный <code>this</code> (<code
+          >=user</code
+        >
+        в данном случае, по <code>base</code>).
+      </p>
+      <p>
+        При любой другой операции между '.' и '()' (кроме скобок '()'),
+        например, присваивании <code>hi = user.hi</code>, ссылочный тип
+        заменяется на собственно значение <code>user.hi</code> (функцию), и
+        дальше работа уже идёт только с ней. Поэтому дальнейший вызов происходит
+        уже без <code>this</code>.
+      </p>
+      <p>
+        Таким образом, значение <code>this</code> передаётся правильно, только
+        если функция вызывается напрямую с использованием синтаксиса точки
+        <code>obj.method()</code> или квадратных скобок
+        <code>obj['method']()</code> (они делают то же самое). Позднее в этом
+        учебнике мы изучим различные варианты решения проблемы потери значения
+        <code>this</code>. Например, такие как
+        <a href="/bind#solution-2-bind">func.bind()</a>.
+      </p>
+      <h3 class="h5">У стрелочных функций нет «this»</h3>
+      <p>
+        Стрелочные функции особенные: у них нет своего «собственного» this. Если
+        мы используем this внутри стрелочной функции, то его значение берётся из
+        внешней «нормальной» функции.
+      </p>
+      <pre class="mb-0"><code>let user = {
   firstName: "Илья",
   sayHi() {
     let arrow = () => alert(this.firstName);
@@ -332,50 +438,58 @@ user.hi(); // Джон (простой вызов метода работает 
 };
 
 user.sayHi(); // Илья</code></pre>
-        </div>
     </div>
+  </div>
 
-    <div class="card mb-3" id="constructor-new">
-        <div class="card-header d-flex align-items-center">
-            <h2 class="h5 mb-0">4.5 Конструкторы, создание объектов через "new"</h2>
-            <div class="dropdown ml-auto">
-                <button
-                        class="btn btn-primary dropdown-toggle"
-                        type="button"
-                        id="dropdownMenuButton4"
-                        data-toggle="dropdown"
-                        aria-haspopup="true"
-                        aria-expanded="false">
-                    Homeworks
-                </button>
-                <div class="dropdown-menu" aria-labelledby="dropdownMenuButton4">
-                    <a
-                            class="dropdown-item"
-                            target="_blank"
-                            href="./homeworks/4/4-5-1.html"
-                    >1</a
-                    ><a
-                        class="dropdown-item"
-                        target="_blank"
-                        href="./homeworks/4/4-5-2.html"
-                >2</a>
-                </div>
-            </div>
-            <div class="ml-4">
-                <a href="https://learn.javascript.ru/object-methods" target="_blank"
-                >Link</a
-                >
-            </div>
+  <div class="card mb-3" id="constructor-new">
+    <div class="card-header d-flex align-items-center">
+      <h2 class="h5 mb-0">4.5 Конструкторы, создание объектов через "new"</h2>
+      <div class="dropdown ml-auto">
+        <button
+          class="btn btn-primary dropdown-toggle"
+          type="button"
+          id="dropdownMenuButton5"
+          data-toggle="dropdown"
+          aria-haspopup="true"
+          aria-expanded="false"
+        >
+          Homeworks
+        </button>
+        <div class="dropdown-menu" aria-labelledby="dropdownMenuButton5">
+          <a
+            class="dropdown-item"
+            target="_blank"
+            href="./homeworks/4/4-5-1.html"
+            >1</a
+          ><a
+            class="dropdown-item"
+            target="_blank"
+            href="./homeworks/4/4-5-2.html"
+            >2</a
+          >
         </div>
-        <div class="card-body">
-            <h3 class="h5">Функция-конструктор</h3>
-            <p>Функции-конструкторы являются обычными функциями. Но есть два соглашения:</p>
-            <ol>
-                <li>Имя функции-конструктора должно начинаться с большой буквы.</li>
-                <li>Функция-конструктор должна вызываться при помощи оператора <code>"new"</code>.</li>
-            </ol>
-            <p>Вызов <code>new User(...)</code> делает примерно вот что:</p>
-            <pre><code>function User(name) {
+      </div>
+      <div class="ml-4">
+        <a href="https://learn.javascript.ru/object-methods" target="_blank"
+          >Link</a
+        >
+      </div>
+    </div>
+    <div class="card-body">
+      <h3 class="h5">Функция-конструктор</h3>
+      <p>
+        Функции-конструкторы являются обычными функциями. Но есть два
+        соглашения:
+      </p>
+      <ol>
+        <li>Имя функции-конструктора должно начинаться с большой буквы.</li>
+        <li>
+          Функция-конструктор должна вызываться при помощи оператора
+          <code>"new"</code>.
+        </li>
+      </ol>
+      <p>Вызов <code>new User(...)</code> делает примерно вот что:</p>
+      <pre><code>function User(name) {
   // this = {};  (неявно)
 
   // добавляет свойства к this
@@ -384,8 +498,8 @@ user.sayHi(); // Илья</code></pre>
 
   // return this;  (неявно)
 }</code></pre>
-            <h3 class="h5">new function() { … }</h3>
-            <pre><code>let user = new function() {
+      <h3 class="h5">new function() { … }</h3>
+      <pre><code>let user = new function() {
   this.name = "Вася";
   this.isAdmin = false;
 
@@ -393,13 +507,18 @@ user.sayHi(); // Илья</code></pre>
   // возможна любая сложная логика и выражения
   // локальные переменные и т. д.
 };</code></pre>
-            <p>Такой конструктор не может быть вызван дважды, так как он нигде не сохраняется, просто создаётся и тут же
-                вызывается. Таким образом, такой метод создания позволяет инкапсулировать код, который создаёт отдельный
-                объект, но без возможности его повторного использования.</p>
-            <h3 class="h5">Проверка на вызов в режиме конструктора: new.target</h3>
-            <p>В случае, если функция вызвана при помощи new, то в new.target будет сама функция, в противном случае
-                undefined.</p>
-            <pre><code>function User() {
+      <p>
+        Такой конструктор не может быть вызван дважды, так как он нигде не
+        сохраняется, просто создаётся и тут же вызывается. Таким образом, такой
+        метод создания позволяет инкапсулировать код, который создаёт отдельный
+        объект, но без возможности его повторного использования.
+      </p>
+      <h3 class="h5">Проверка на вызов в режиме конструктора: new.target</h3>
+      <p>
+        В случае, если функция вызвана при помощи new, то в new.target будет
+        сама функция, в противном случае undefined.
+      </p>
+      <pre><code>function User() {
   alert(new.target);
 }
 
@@ -408,16 +527,27 @@ User(); // undefined
 
 // с "new":
 new User(); // function User { ... }</code></pre>
-            <h3 class="h5">Возврат значения из конструктора return</h3>
-            <p>Обычно конструкторы ничего не возвращают явно. Их задача – записать все необходимое в <code>this</code>,
-                который в итоге станет результатом.</p>
-            <p>Но если <code>return</code> всё же есть, то применяется простое правило:</p>
-            <ul>
-                <li>При вызове <code>return</code> с объектом, будет возвращён объект, а не <code>this</code>.</li>
-                <li>При вызове <code>return</code> с примитивным значением или пустым, примитивное значение будет отброшено.</li>
-            </ul>
-            <h3 class="h5">Создание методов в конструкторе</h3>
-            <pre class="mb-0"><code>function User(name) {
+      <h3 class="h5">Возврат значения из конструктора return</h3>
+      <p>
+        Обычно конструкторы ничего не возвращают явно. Их задача – записать все
+        необходимое в <code>this</code>, который в итоге станет результатом.
+      </p>
+      <p>
+        Но если <code>return</code> всё же есть, то применяется простое правило:
+      </p>
+      <ul>
+        <li>
+          При вызове <code>return</code> с объектом, будет возвращён объект, а
+          не <code>this</code>.
+        </li>
+        <li>
+          При вызове <code>return</code> с примитивным значением или пустым,
+          примитивное значение будет отброшено.
+        </li>
+      </ul>
+      <h3 class="h5">Создание методов в конструкторе</h3>
+
+      <pre class="mb-0"><code>function User(name) {
   this.name = name;
 
   this.sayHi = function() {
@@ -435,6 +565,290 @@ vasya = {
    sayHi: function() { ... }
 }
 */</code></pre>
-        </div>
     </div>
+  </div>
+
+  <div class="card mb-3" id="optional-chaining">
+    <div class="card-header d-flex align-items-center">
+      <h2 class="h5 mb-0">4.6 Опциональная цепочка '?.'</h2>
+      <div class="ml-auto">
+        <a href="https://learn.javascript.ru/optional-chaining" target="_blank"
+          >Link</a
+        >
+      </div>
+    </div>
+    <div class="card-body">
+      <p>Синтаксис опциональной цепочки <code>?.</code> имеет три формы:</p>
+      <ol>
+        <li>
+          <code>obj?.prop</code> – возвращает <code>obj.prop</code>, если
+          существует <code>obj</code>, и <code>undefined</code> в противном
+          случае.
+        </li>
+        <li>
+          <code>obj?.[prop]</code> – возвращает <code>obj[prop]</code>, если
+          существует <code>obj</code>, и <code>undefined</code> в противном
+          случае.
+        </li>
+        <li>
+          <code>obj.method?.()</code> – вызывает <code>obj.method()</code>, если
+          существует <code>obj.method</code>, в противном случае возвращает
+          <code>undefined</code>.
+        </li>
+      </ol>
+      <p>
+        Как мы видим, все они просты и понятны в использовании.
+        <code>?.</code> проверяет левую часть выражения на равенство
+        <code>null/undefined</code>, и продолжает дальнейшее вычисление, только
+        если это не так.
+      </p>
+      <p>
+        Цепочка <code>?.</code> позволяет без возникновения ошибок обратиться к
+        вложенным свойствам.
+      </p>
+      <p>
+        Тем не менее, нужно разумно использовать <code>?.</code> — только там,
+        где это уместно, если допустимо, что левая часть не существует. Чтобы
+        таким образом не скрывать возможные ошибки программирования.
+      </p>
+    </div>
+  </div>
+
+  <div class="card mb-3" id="symbol">
+    <div class="card-header d-flex align-items-center">
+      <h2 class="h5 mb-0">4.7 Тип данных Symbol</h2>
+      <div class="ml-auto">
+        <a href="https://learn.javascript.ru/symbol" target="_blank">Link</a>
+      </div>
+    </div>
+    <div class="card-body">
+      <p>
+        Символ (symbol) – примитивный тип данных, использующийся для создания
+        уникальных идентификаторов.
+      </p>
+      <p>
+        Символы создаются вызовом функции <code>Symbol()</code>, в которую можно
+        передать описание (имя) символа.
+      </p>
+      <p>
+        Даже если символы имеют одно и то же имя, это – разные символы.
+      </p>
+      <pre><code>let id1 = Symbol("id");
+let id2 = Symbol("id");
+
+alert(id1 == id2); // false</code></pre>
+      <p>Символы в литеральном объекте</p>
+      <pre><code>let id = Symbol("id");
+
+let user = {
+  name: "Вася",
+  [id]: 123 // просто "id: 123" не сработает
+};</code></pre>
+      <p>
+        Если мы хотим, чтобы одноимённые символы были равны, то следует
+        использовать глобальный реестр: вызов
+        <code>Symbol.for(key)</code> возвращает (или создаёт) глобальный символ
+        с <code>key</code> в качестве имени. Многократные вызовы команды
+        <code>Symbol.for</code> с одним и тем же аргументом возвращают один и
+        тот же символ.
+      </p>
+      <pre><code>// читаем символ из глобального реестра и записываем его в переменную
+let id = Symbol.for("id"); // если символа не существует, он будет создан
+
+// читаем его снова в другую переменную (возможно, из другого места кода)
+let idAgain = Symbol.for("id");
+
+// проверяем -- это один и тот же символ
+alert( id === idAgain ); // true</code></pre>
+      <p>
+        Для глобальных символов, кроме Symbol.for(key), который ищет символ по
+        имени, существует обратный метод: Symbol.keyFor(sym), который, наоборот,
+        принимает глобальный символ и возвращает его имя.
+      </p>
+      <pre><code>// получаем символ по имени
+let sym = Symbol.for("name");
+let sym2 = Symbol.for("id");
+
+// получаем имя по символу
+alert( Symbol.keyFor(sym) ); // name
+alert( Symbol.keyFor(sym2) ); // id</code></pre>
+      <p>Символы имеют два основных варианта использования:</p>
+      <ol>
+        <li>
+          <p>
+            «Скрытые» свойства объектов. Если мы хотим добавить свойство в
+            объект, который «принадлежит» другому скрипту или библиотеке, мы
+            можем создать символ и использовать его в качестве ключа. Символьное
+            свойство не появится в <code>for..in</code>, так что оно не будет
+            нечаянно обработано вместе с другими. Также оно не будет
+            модифицировано прямым обращением, так как другой скрипт не знает о
+            нашем символе. Таким образом, свойство будет защищено от случайной
+            перезаписи или использования.
+          </p>
+          <p>
+            Так что, используя символьные свойства, мы можем спрятать что-то
+            нужное нам, но что другие видеть не должны.
+          </p>
+        </li>
+        <li>
+          <p>
+            Существует множество системных символов, используемых внутри
+            JavaScript, доступных как <code>Symbol.*</code>. Мы можем
+            использовать их, чтобы изменять встроенное поведение ряда объектов.
+            Например, в дальнейших главах мы будем использовать
+            <code>Symbol.iterator</code> для <a href="/iterable">итераторов</a>,
+            <code>Symbol.toPrimitive</code> для настройки
+            <a href="/object-toprimitive"
+              >преобразования объектов в примитивы</a
+            >
+            и так далее.
+          </p>
+        </li>
+      </ol>
+      <p class="mb-0">
+        Технически символы скрыты не на 100%. Существует встроенный метод
+        <a
+          href="https://developer.mozilla.org/ru/docs/Web/JavaScript/Reference/Global_Objects/Object/getOwnPropertySymbols"
+          >Object.getOwnPropertySymbols(obj)</a
+        >
+        – с его помощью можно получить все свойства объекта с ключами-символами.
+        Также существует метод
+        <a
+          href="https://developer.mozilla.org/ru/docs/Web/JavaScript/Reference/Global_Objects/Reflect/ownKeys"
+          >Reflect.ownKeys(obj)</a
+        >, который возвращает <em>все</em> ключи объекта, включая символьные.
+        Так что они не совсем спрятаны. Но большинство библиотек, встроенных
+        методов и синтаксических конструкций не используют эти методы.
+      </p>
+    </div>
+  </div>
+
+  <div class="card mb-3" id="object-toprimitive">
+    <div class="card-header d-flex align-items-center">
+      <h2 class="h5 mb-0">4.8 Преобразование объектов в примитивы</h2>
+      <div class="ml-auto">
+        <a href="https://learn.javascript.ru/object-toprimitive" target="_blank"
+          >Link</a
+        >
+      </div>
+    </div>
+    <div class="card-body">
+      <p>
+        Преобразование объектов в примитивы вызывается автоматически многими
+        встроенными функциями и операторами, которые ожидают примитив в качестве
+        аргумента.
+      </p>
+      <p>Существует всего 3 типа преобразований (хинтов):</p>
+      <ul>
+        <li>
+          <code>"string"</code> (для <code>alert</code> и других операций,
+          которым нужна строка)
+        </li>
+        <li><code>"number"</code> (для математических операций)</li>
+        <li><code>"default"</code> (для некоторых операций)</li>
+      </ul>
+      <p>
+        В спецификации явно указано, какой хинт должен использовать каждый
+        оператор. И существует совсем немного операторов, которые не знают, что
+        ожидать, и используют хинт со значением <code>"default"</code>. Обычно
+        для встроенных объектов хинт <code>"default"</code> обрабатывается так
+        же, как <code>"number"</code>. Таким образом, последние два очень часто
+        объединяют вместе.
+      </p>
+      <p>Алгоритм преобразований к примитивам следующий:</p>
+      <ol>
+        <li>
+          Сначала вызывается метод <code>obj[Symbol.toPrimitive](hint)</code>,
+          если он существует.
+        </li>
+        <li>
+          Иначе, если хинт равен <code>"string"</code>
+          <ul>
+            <li>
+              происходит попытка вызвать <code>obj.toString()</code>, затем
+              <code>obj.valueOf()</code>, смотря что есть.
+            </li>
+          </ul>
+        </li>
+        <li>
+          Иначе, если хинт равен <code>"number"</code> или
+          <code>"default"</code>
+          <ul>
+            <li>
+              происходит попытка вызвать <code>obj.valueOf()</code>, затем
+              <code>obj.toString()</code>, смотря что есть.
+            </li>
+          </ul>
+        </li>
+      </ol>
+      <p>
+        На практике довольно часто достаточно реализовать только
+        <code>obj.toString()</code> как «универсальный» метод для всех типов
+        преобразований, возвращающий «читаемое» представление объекта,
+        достаточное для логирования или отладки.
+      </p>
+      <h3 class="h5">Symbol.toPrimitive</h3>
+      <pre><code>let user = {
+  name: "John",
+  money: 1000,
+
+  [Symbol.toPrimitive](hint) {
+    alert(`hint: ${hint}`);
+    return hint == "string" ? `{name: "${this.name}"}` : this.money;
+  }
+};
+
+// демонстрация результатов преобразований:
+alert(user); // hint: string -> {name: "John"}
+alert(+user); // hint: number -> 1000
+alert(user + 500); // hint: default -> 1500</code></pre>
+      <h3 class="h5">Методы toString/valueOf</h3>
+      <p>
+        Методы <code>toString</code> и <code>valueOf</code> берут своё начало с
+        древних времён. Они не символы, так как в то время символов ещё не
+        существовало, а просто обычные методы объектов со строковыми именами.
+        Они предоставляют «устаревший» способ реализации преобразований
+        объектов.
+      </p>
+      <p>
+        Если нет метода <code>Symbol.toPrimitive</code>, движок JavaScript
+        пытается найти эти методы и вызвать их следующим образом:
+      </p>
+      <ul>
+        <li>
+          <code>toString -&gt; valueOf</code> для хинта со значением «string».
+        </li>
+        <li><code>valueOf -&gt; toString</code> – в ином случае.</li>
+      </ul>
+      <pre><code>let user = {
+  name: "John",
+  money: 1000,
+
+  // для хинта равного "string"
+  toString() {
+    return `{name: "${this.name}"}`;
+  },
+
+  // для хинта равного "number" или "default"
+  valueOf() {
+    return this.money;
+  }
+
+};
+
+alert(user); // toString -> {name: "John"}
+alert(+user); // valueOf -> 1000
+alert(user + 500); // valueOf -> 1500</code></pre>
+      <h3 class="h5">Возвращаемые типы</h3>
+      <p class="mb-0">
+        Нет обязательного требования, чтобы toString() возвращал именно строку,
+        или чтобы метод Symbol.toPrimitive возвращал именно число для хинта
+        «number».
+        <strong
+          >Единственное обязательное требование: методы должны возвращать
+          примитив, а не объект.</strong
+        >
+      </p>
+    </div>
+  </div>
 </div>

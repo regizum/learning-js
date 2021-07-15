@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html>
+  <body>
+    <script>
+      function replaceMiddle(arr) {
+        let middle = Math.floor(arr.length / 2);
+        arr[middle] = "Классика";
+        return arr;
+      }
+
+      let styles = ["Джаз", "Блюз"];
+      styles.push("Рок-н-ролл");
+      styles = replaceMiddle(styles);
+      alert(styles.shift());
+      styles.unshift("Рэп", "Регги");
+      alert(styles);
+    </script>
+  </body>
+</html>

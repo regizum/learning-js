@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html>
+  <body>
+    <script>
+      let fibNumbers = [];
+      function fib(n) {
+        if (fibNumbers[n]) return fibNumbers[n];
+        if (n == 2) return 1;
+        if (n == 1) return 1;
+        fibNumbers[n] = fib(n - 1) + fib(n - 2);
+
+        return fibNumbers[n];
+      }
+
+      console.log(fib(3)); // 2
+      console.log(fib(7)); // 13
+      console.log(fib(77)); // 5527939700884757
+    </script>
+  </body>
+</html>

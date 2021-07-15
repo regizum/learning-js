@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html>
+  <body>
+    <script>
+      function checkSpam(str) {
+        const WORDS = ["viagra", "XXX"];
+
+        for (let i = 0; i < WORDS.length; i++) {
+          if (str.toLowerCase().includes(WORDS[i].toLowerCase())) return true;
+        }
+
+        return false;
+      }
+
+      alert(checkSpam("blalal XXX"));
+    </script>
+  </body>
+</html>

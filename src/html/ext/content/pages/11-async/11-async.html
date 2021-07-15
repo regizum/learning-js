@@ -1,0 +1,725 @@
+<div class="container mt-5">
+  <h1>Промисы, async/await</h1>
+  <div class="card mb-3" id="#callbacks">
+    <div class="card-header d-flex align-items-center">
+      <h2 class="h5 mb-0">11.1 Введение: колбэки</h2>
+      <div class="dropdown ml-auto">
+        <button
+          class="btn btn-primary dropdown-toggle"
+          type="button"
+          id="dropdownMenuButton1"
+          data-toggle="dropdown"
+          aria-haspopup="true"
+          aria-expanded="false"
+        >
+          Homeworks
+        </button>
+        <div class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
+          <a
+            class="dropdown-item"
+            target="_blank"
+            href="./homeworks/11/11-1-1.html"
+            >1</a
+          >
+        </div>
+      </div>
+      <div class="ml-4">
+        <a href="https://learn.javascript.ru/callbacks" target="_blank">Link</a>
+      </div>
+    </div>
+    <div class="card-body">
+      <p>Многие действия в JavaScript асинхронные.</p>
+      <pre><code>function loadScript(src) {
+  let script = document.createElement('script');
+  script.src = src;
+  document.head.append(script);
+}</code></pre>
+      <p>
+        Такие функции называют «асинхронными», потому что действие (загрузка
+        скрипта) будет завершено не сейчас, а потом.
+      </p>
+      <pre><code>// загрузит и выполнит скрипт
+loadScript('/my/script.js');</code></pre>
+      <p>
+        Давайте передадим функцию callback вторым аргументом в loadScript, чтобы
+        вызвать её, когда скрипт загрузится:
+      </p>
+      <pre><code>function loadScript(src, callback) {
+  let script = document.createElement('script');
+  script.src = src;
+
+  script.onload = () => callback(script);
+
+  document.head.append(script);
+}</code></pre>
+      <h3 class="h5">Перехват ошибок</h3>
+      <pre><code>function loadScript(src, callback) {
+  let script = document.createElement('script');
+  script.src = src;
+
+  script.onload = () => callback(null, script);
+  script.onerror = () => callback(new Error(`Не удалось загрузить скрипт ${src}`));
+
+  document.head.append(script);
+}
+
+loadScript('/my/script.js', function(error, script) {
+  if (error) {
+    // обрабатываем ошибку
+  } else {
+    // скрипт успешно загружен
+  }
+});</code></pre>
+    </div>
+  </div>
+
+  <div class="card mb-3" id="#promise-basics">
+    <div class="card-header d-flex align-items-center">
+      <h2 class="h5 mb-0">11.2 Промисы</h2>
+      <div class="dropdown ml-auto">
+        <button
+          class="btn btn-primary dropdown-toggle"
+          type="button"
+          id="dropdownMenuButton2"
+          data-toggle="dropdown"
+          aria-haspopup="true"
+          aria-expanded="false"
+        >
+          Homeworks
+        </button>
+        <div class="dropdown-menu" aria-labelledby="dropdownMenuButton2">
+          <a
+            class="dropdown-item"
+            target="_blank"
+            href="./homeworks/11/11-2-1.html"
+            >1</a
+          >
+          <a
+            class="dropdown-item"
+            target="_blank"
+            href="./homeworks/11/11-2-2.html"
+            >2</a
+          >
+        </div>
+      </div>
+      <div class="ml-4">
+        <a href="https://learn.javascript.ru/promise-basics" target="_blank"
+          >Link</a
+        >
+      </div>
+    </div>
+    <div class="card-body">
+      <p>
+        Представьте, что вы известный певец, которого фанаты постоянно донимают
+        расспросами о предстоящем сингле.
+      </p>
+      <p>
+        Чтобы получить передышку, вы обещаете разослать им сингл, когда он будет
+        выпущен. Вы даёте фанатам список, в который они могут записаться. Они
+        могут оставить там свой e-mail, чтобы получить песню, как только она
+        выйдет. И даже больше: если что-то пойдёт не так, например, в студии
+        будет пожар и песню выпустить не выйдет, они также получат уведомление
+        об этом.
+      </p>
+      <ol>
+        <li>
+          Есть «создающий» код, который делает что-то, что занимает время.
+          Например, загружает данные по сети. В нашей аналогии это – «певец».
+        </li>
+        <li>
+          Есть «потребляющий» код, который хочет получить результат «создающего»
+          кода, когда он будет готов. Он может быть необходим более чем одной
+          функции. Это – «фанаты».
+        </li>
+        <li>
+          <code>Promise</code> (по англ. <code>promise</code>, будем называть
+          такой объект «промис») – это специальный объект в JavaScript, который
+          связывает «создающий» и «потребляющий» коды вместе. В терминах нашей
+          аналогии – это «список для подписки». «Создающий» код может
+          выполняться сколько потребуется, чтобы получить результат, а
+          <em>промис</em> делает результат доступным для кода, который подписан
+          на него, когда результат готов.
+        </li>
+      </ol>
+      <pre><code>let promise = new Promise(function(resolve, reject) {
+  // функция-исполнитель (executor)
+  // "певец"
+});</code></pre>
+      <p>
+        Функция, переданная в конструкцию <code>new Promise</code>, называется
+        <em>исполнитель</em> (executor). Когда <code>Promise</code> создаётся,
+        она запускается автоматически. Она должна содержать «создающий» код,
+        который когда-нибудь создаст результат. В терминах нашей аналогии:
+        <em>исполнитель</em> – это «певец».
+      </p>
+      <p>
+        Её аргументы <code>resolve</code> и <code>reject</code> – это колбэки,
+        которые предоставляет сам JavaScript. Наш код – только внутри
+        исполнителя.
+      </p>
+      <p>
+        Когда он получает результат, сейчас или позже – не важно, он должен
+        вызвать один из этих колбэков:
+      </p>
+      <ul>
+        <li>
+          <code>resolve(value)</code> — если работа завершилась успешно, с
+          результатом <code>value</code>.
+        </li>
+        <li>
+          <code>reject(error)</code> — если произошла ошибка,
+          <code>error</code> – объект ошибки.
+        </li>
+      </ul>
+      <p>
+        У объекта <code>promise</code>, возвращаемого конструктором
+        <code>new Promise</code>, есть внутренние свойства:
+      </p>
+      <ul>
+        <li>
+          <code>state</code> («состояние») — вначале
+          <code>"pending"</code> («ожидание»), потом меняется на
+          <code>"fulfilled"</code> («выполнено успешно») при вызове
+          <code>resolve</code> или на <code>"rejected"</code> («выполнено с
+          ошибкой») при вызове <code>reject</code>.
+        </li>
+        <li>
+          <code>result</code> («результат») — вначале <code>undefined</code>,
+          далее изменяется на <code>value</code> при вызове
+          <code>resolve(value)</code> или на <code>error</code> при вызове
+          <code>reject(error)</code>.
+        </li>
+      </ul>
+      <pre><code>let promise = new Promise(function(resolve, reject) {
+  // эта функция выполнится автоматически, при вызове new Promise
+
+  // через 1 секунду сигнализировать, что задача выполнена с результатом "done"
+  setTimeout(() => resolve("done"), 1000);
+});</code></pre>
+      <p>
+        <strong>Может быть что-то одно: либо результат, либо ошибка</strong>
+      </p>
+      <p><strong>Свойства state и result – внутренние</strong></p>
+      <h3 class="h5">Потребители: then, catch, finally</h3>
+      <pre><code>promise.then(
+  function(result) { /* обработает успешное выполнение */ },
+  function(error) { /* обработает ошибку */ }
+);</code></pre>
+      <pre><code>let promise = new Promise(function(resolve, reject) {
+  setTimeout(() => resolve("done!"), 1000);
+});
+
+// resolve запустит первую функцию, переданную в .then
+promise.then(
+  result => alert(result), // выведет "done!" через одну секунду
+  error => alert(error) // не будет запущена
+);</code></pre>
+      <pre><code>let promise = new Promise(resolve => {
+  setTimeout(() => resolve("done!"), 1000);
+});
+
+promise.then(alert); // выведет "done!" спустя одну секунду</code></pre>
+      <pre><code>let promise = new Promise((resolve, reject) => {
+  setTimeout(() => reject(new Error("Ошибка!")), 1000);
+});
+
+// .catch(f) это тоже самое, что promise.then(null, f)
+promise.catch(alert); // выведет "Error: Ошибка!" спустя одну секунду</code></pre>
+      <pre><code>new Promise((resolve, reject) => {
+  /* сделать что-то, что займёт время, и после вызвать resolve/reject */
+})
+  // выполнится, когда промис завершится, независимо от того, успешно или нет
+  .finally(() => остановить индикатор загрузки)
+  .then(result => показать результат, err => показать ошибку)</code></pre>
+      <pre><code>new Promise((resolve, reject) => {
+  throw new Error("error");
+})
+  .finally(() => alert("Промис завершён"))
+  .catch(err => alert(err));  // <-- .catch обработает объект ошибки</code></pre>
+      <h3 class="h5">Пример: loadScript</h3>
+      <pre><code>function loadScript(src) {
+  return new Promise(function(resolve, reject) {
+    let script = document.createElement('script');
+    script.src = src;
+
+    script.onload = () => resolve(script);
+    script.onerror = () => reject(new Error(`Ошибка загрузки скрипта ${src}`));
+
+    document.head.append(script);
+  });
+}
+
+let promise = loadScript("https://cdnjs.cloudflare.com/ajax/libs/lodash.js/4.17.11/lodash.js");
+
+promise.then(
+  script => alert(`${script.src} загружен!`),
+  error => alert(`Ошибка: ${error.message}`)
+);
+
+promise.then(script => alert('Ещё один обработчик...'));</code></pre>
+      <table>
+        <thead>
+          <tr>
+            <th>Промисы</th>
+            <th>Колбэки</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>
+              Промисы позволяют делать вещи в естественном порядке. Сперва мы
+              запускаем <code>loadScript(script)</code>, и затем
+              (<code>.then</code>) мы пишем, что делать с результатом.
+            </td>
+            <td>
+              У нас должна быть функция<code>callback</code> на момент вызова
+              <code>loadScript(script, callback)</code>. Другими словами, нам
+              нужно знать что делать с результатом <em>до того</em>, как
+              вызовется <code>loadScript</code>.
+            </td>
+          </tr>
+          <tr>
+            <td>
+              Мы можем вызывать <code>.then</code> у
+              <code>Promise</code> столько раз, сколько захотим. Каждый раз мы
+              добавляем нового «фаната», новую функцию-подписчика в «список
+              подписок». Больше об этом в следующей главе:
+              <a href="/promise-chaining">Цепочка промисов</a>.
+            </td>
+            <td>Колбэк может быть только один.</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <div class="card mb-3" id="#promise-chaining">
+    <div class="card-header d-flex align-items-center">
+      <h2 class="h5 mb-0">11.3 Цепочка промисов</h2>
+
+      <div class="ml-auto">
+        <a href="https://learn.javascript.ru/promise-chaining" target="_blank"
+          >Link</a
+        >
+      </div>
+    </div>
+    <div class="card-body">
+      <p>
+        Если обработчик в <code>.then</code> (или в <code>catch/finally</code>,
+        без разницы) возвращает промис, последующие элементы цепочки ждут, пока
+        этот промис выполнится. Когда это происходит, результат его выполнения
+        (или ошибка) передаётся дальше.
+      </p>
+      <pre><code>function loadJson(url) {
+  return fetch(url)
+    .then(response => response.json());
+}
+
+function loadGithubUser(name) {
+  return fetch(`https://api.github.com/users/${name}`)
+    .then(response => response.json());
+}
+
+function showAvatar(githubUser) {
+  return new Promise(function(resolve, reject) {
+    let img = document.createElement('img');
+    img.src = githubUser.avatar_url;
+    img.className = "promise-avatar-example";
+    document.body.append(img);
+
+    setTimeout(() => {
+      img.remove();
+      resolve(githubUser);
+    }, 3000);
+  });
+}
+
+// Используем их:
+loadJson('/article/promise-chaining/user.json')
+  .then(user => loadGithubUser(user.name))
+  .then(showAvatar)
+  .then(githubUser => alert(`Показ аватара ${githubUser.name} завершён`));
+  // ...</code></pre>
+    </div>
+  </div>
+
+  <div class="card mb-3" id="#promise-error-handling">
+    <div class="card-header d-flex align-items-center">
+      <h2 class="h5 mb-0">11.4 Промисы: обработка ошибок</h2>
+      \
+      <div class="ml-auto">
+        <a
+          href="https://learn.javascript.ru/promise-error-handling"
+          target="_blank"
+          >Link</a
+        >
+      </div>
+    </div>
+    <div class="card-body">
+      <ul>
+        <li>
+          <code>.catch</code> перехватывает все виды ошибок в промисах: будь то
+          вызов <code>reject()</code> или ошибка, брошенная в обработчике при
+          помощи <code>throw</code>.
+        </li>
+        <li>
+          Необходимо размещать <code>.catch</code> там, где мы хотим обработать
+          ошибки и знаем, как это сделать. Обработчик может проанализировать
+          ошибку (могут быть полезны пользовательские классы ошибок) и
+          пробросить её, если ничего не знает о ней (возможно, это программная
+          ошибка).
+        </li>
+        <li>
+          Можно и совсем не использовать <code>.catch</code>, если нет
+          нормального способа восстановиться после ошибки.
+        </li>
+        <li>
+          В любом случае нам следует использовать обработчик события
+          <code>unhandledrejection</code> (для браузеров и аналог для других
+          окружений), чтобы отслеживать необработанные ошибки и информировать о
+          них пользователя (и, возможно, наш сервер), благодаря чему наше
+          приложение никогда не будет «просто умирать».
+          <pre><code>window.addEventListener('unhandledrejection', function(event) {
+  // объект события имеет два специальных свойства:
+  alert(event.promise); // [object Promise] - промис, который сгенерировал ошибку
+  alert(event.reason); // Error: Ошибка! - объект ошибки, которая не была обработана
+});
+
+new Promise(function() {
+  throw new Error("Ошибка!");
+}); // нет обработчика ошибок</code></pre>
+        </li>
+      </ul>
+      <pre><code>/ the execution: catch -> then
+new Promise((resolve, reject) => {
+
+  throw new Error("Ошибка!");
+
+}).catch(function(error) {
+
+  alert("Ошибка обработана, продолжить работу");
+
+}).then(() => alert("Управление перейдёт в следующий then"));</code></pre>
+    </div>
+  </div>
+
+  <div class="card mb-3" id="#promise-api">
+    <div class="card-header d-flex align-items-center">
+      <h2 class="h5 mb-0">11.5 Promise API</h2>
+      <div class="ml-auto">
+        <a href="https://learn.javascript.ru/promise-api" target="_blank"
+          >Link</a
+        >
+      </div>
+    </div>
+    <div class="card-body">
+      <ol>
+        <li>
+          <code>Promise.all(promises)</code> – ожидает выполнения всех промисов
+          и возвращает массив с результатами. Если любой из указанных промисов
+          вернёт ошибку, то результатом работы <code>Promise.all</code> будет
+          эта ошибка, результаты остальных промисов будут игнорироваться.
+        </li>
+        <li>
+          <code>Promise.allSettled(promises)</code> (добавлен недавно) – ждёт,
+          пока все промисы завершатся и возвращает их результаты в виде массива
+          с объектами, у каждого объекта два свойства:
+          <ul>
+            <li>
+              <code>state</code>: <code>"fulfilled"</code>, если выполнен
+              успешно или <code>"rejected"</code>, если ошибка,
+            </li>
+            <li>
+              <code>value</code> – результат, если успешно или
+              <code>reason</code> – ошибка, если нет.
+            </li>
+          </ul>
+        </li>
+        <li>
+          <code>Promise.race(promises)</code> – ожидает первый выполненный
+          промис, который становится его результатом, остальные игнорируются.
+        </li>
+        <li>
+          <code>Promise.resolve(value)</code> – возвращает успешно выполнившийся
+          промис с результатом <code>value</code>.
+        </li>
+        <li>
+          <code>Promise.reject(error)</code> – возвращает промис с ошибкой
+          <code>error</code>.
+        </li>
+      </ol>
+    </div>
+  </div>
+
+  <div class="card mb-3" id="#promisify">
+    <div class="card-header d-flex align-items-center">
+      <h2 class="h5 mb-0">11.6 Промисификация</h2>
+      <div class="ml-auto">
+        <a href="https://learn.javascript.ru/promisify" target="_blank">Link</a>
+      </div>
+    </div>
+    <div class="card-body">
+      <pre><code>function promisify(f) {
+  return function (...args) { // возвращает функцию-обёртку
+    return new Promise((resolve, reject) => {
+      function callback(err, result) { // наш специальный колбэк для f
+        if (err) {
+          return reject(err);
+        } else {
+          resolve(result);
+        }
+      }
+
+      args.push(callback); // добавляем колбэк в конец аргументов f
+
+      f.call(this, ...args); // вызываем оригинальную функцию
+    });
+  };
+};
+
+// использование:
+let loadScriptPromise = promisify(loadScript);
+loadScriptPromise(...).then(...);</code></pre>
+
+      <pre><code>// promisify(f, true), чтобы получить массив результатов
+function promisify(f, manyArgs = false) {
+  return function (...args) {
+    return new Promise((resolve, reject) => {
+      function callback(err, ...results) { // наш специальный колбэк для f
+        if (err) {
+          return reject(err);
+        } else {
+          // делаем resolve для всех results колбэка, если задано manyArgs
+          resolve(manyArgs ? results : results[0]);
+        }
+      }
+
+      args.push(callback);
+
+      f.call(this, ...args);
+    });
+  };
+};
+
+// использование:
+f = promisify(f, true);
+f(...).then(arrayOfResults => ..., err => ...)</code></pre>
+      <p>
+        Также существуют модули с более гибкой промисификацией, например,
+        <a href="https://github.com/digitaldesignlabs/es6-promisify"
+          >es6-promisify</a
+        >
+        или встроенная функция <code>util.promisify</code> в Node.js.
+      </p>
+    </div>
+  </div>
+
+  <div class="card mb-3" id="#microtask-queue">
+    <div class="card-header d-flex align-items-center">
+      <h2 class="h5 mb-0">11.7 Микрозадачи</h2>
+      <div class="ml-auto">
+        <a href="https://learn.javascript.ru/microtask-queue" target="_blank"
+          >Link</a
+        >
+      </div>
+    </div>
+    <div class="card-body">
+      <p>
+        Обработка промисов всегда асинхронная, т.к. все действия промисов
+        проходят через внутреннюю очередь «promise jobs», так называемую
+        «очередь микрозадач (microtask queue)» (термин v8).
+      </p>
+      <p>
+        Таким образом, обработчики <code>.then/catch/finally</code> вызываются
+        после выполнения текущего кода.
+      </p>
+      <p>
+        Если нам нужно гарантировать выполнение какого-то кода после
+        <code>.then/catch/finally</code>, то лучше всего добавить его вызов в
+        цепочку <code>.then</code>.
+      </p>
+      <p>
+        В большинстве движков JavaScript, включая браузеры и Node.js,
+        микрозадачи тесно связаны с так называемым «событийным циклом» и
+        «макрозадачами». Так как они не связаны напрямую с промисами, то
+        рассматриваются в другой части учебника, в главе
+        <a href="/event-loop">Событийный цикл: микрозадачи и макрозадачи</a>.
+      </p>
+      <pre><code>let promise = Promise.resolve();
+
+promise.then(() => alert("промис выполнен"));
+
+alert("код выполнен"); // этот alert показывается первым</code></pre>
+      <pre><code>let promise = Promise.reject(new Error("Ошибка в промисе!"));
+promise.catch(err => alert('поймана!'));
+
+// не запустится, ошибка обработана
+window.addEventListener('unhandledrejection', event => {
+  alert(event.reason);
+});</code></pre>
+      <pre><code>let promise = Promise.reject(new Error("Ошибка в промисе!"));
+
+// Ошибка в промисе!
+window.addEventListener('unhandledrejection', event => alert(event.reason));</code></pre>
+      <pre><code>let promise = Promise.reject(new Error("Ошибка в промисе!"));
+
+setTimeout(() => promise.catch(err => alert('поймана')), 1000);
+
+// Ошибка в промисе!
+window.addEventListener('unhandledrejection', event => alert(event.reason));</code></pre>
+    </div>
+  </div>
+
+  <div class="card mb-3" id="#async-await">
+    <div class="card-header d-flex align-items-center">
+      <h2 class="h5 mb-0">11.8 Async/await</h2>
+      <div class="dropdown ml-auto">
+        <button
+          class="btn btn-primary dropdown-toggle"
+          type="button"
+          id="dropdownMenuButton8"
+          data-toggle="dropdown"
+          aria-haspopup="true"
+          aria-expanded="false"
+        >
+          Homeworks
+        </button>
+        <div class="dropdown-menu" aria-labelledby="dropdownMenuButton8">
+          <a
+            class="dropdown-item"
+            target="_blank"
+            href="./homeworks/11/11-8-1.html"
+            >1</a
+          ><a
+            class="dropdown-item"
+            target="_blank"
+            href="./homeworks/11/11-8-2.html"
+            >2</a
+          ><a
+            class="dropdown-item"
+            target="_blank"
+            href="./homeworks/11/11-8-3.html"
+            >3</a
+          >
+        </div>
+      </div>
+      <div class="ml-4">
+        <a href="https://learn.javascript.ru/async-await" target="_blank"
+          >Link</a
+        >
+      </div>
+    </div>
+    <div class="card-body">
+      <p>Ключевое слово <code>async</code> перед объявлением функции:</p>
+      <ol>
+        <li>Обязывает её всегда возвращать промис.</li>
+        <li>Позволяет использовать <code>await</code> в теле этой функции.</li>
+      </ol>
+      <pre><code>
+        async function f() {
+  return 1;
+}
+
+f().then(alert); // 1
+      </code></pre>
+      <p>
+        Ключевое слово <code>await</code> перед промисом заставит JavaScript
+        дождаться его выполнения, после чего:
+      </p>
+      <ol>
+        <li>
+          Если промис завершается с ошибкой, будет сгенерировано исключение, как
+          если бы на этом месте находилось <code>throw</code>.
+        </li>
+        <li>Иначе вернётся результат промиса.</li>
+        <li>await нельзя использовать в обычных функциях</li>
+        <li>await нельзя использовать на верхнем уровне вложенности</li>
+        <li>await работает с «thenable»–объектами</li>
+        <li>
+          Асинхронные методы классов
+          <pre><code>class Waiter {
+  async wait() {
+    return await Promise.resolve(1);
+  }
+}
+
+new Waiter()
+  .wait()
+  .then(alert); // 1</code></pre>
+        </li>
+      </ol>
+      <pre><code>async function showAvatar() {
+
+  // запрашиваем JSON с данными пользователя
+  let response = await fetch('/article/promise-chaining/user.json');
+  let user = await response.json();
+
+  // запрашиваем информацию об этом пользователе из github
+  let githubResponse = await fetch(`https://api.github.com/users/${user.name}`);
+  let githubUser = await githubResponse.json();
+
+  // отображаем аватар пользователя
+  let img = document.createElement('img');
+  img.src = githubUser.avatar_url;
+  img.className = "promise-avatar-example";
+  document.body.append(img);
+
+  // ждём 3 секунды и затем скрываем аватар
+  await new Promise((resolve, reject) => setTimeout(resolve, 3000));
+
+  img.remove();
+
+  return githubUser;
+}
+
+showAvatar();</code></pre>
+      <p>
+        Вместе они предоставляют отличный каркас для написания асинхронного
+        кода. Такой код легко и писать, и читать.
+      </p>
+      <p>
+        Хотя при работе с <code>async/await</code> можно обходиться без
+        <code>promise.then/catch</code>, иногда всё-таки приходится использовать
+        эти методы (на верхнем уровне вложенности, например). Также
+        <code>await</code> отлично работает в сочетании с
+        <code>Promise.all</code>, если необходимо выполнить несколько задач
+        параллельно.
+      </p>
+      <pre><code>async function f() {
+  let response = await fetch('http://no-such-url');
+}
+
+// f() вернёт промис в состоянии rejected
+f().catch(alert); // TypeError: failed to fetch // (*)</code></pre>
+      <h3 class="h5">Обработка ошибок</h3>
+      <pre><code>async function f() {
+  await Promise.reject(new Error("Упс!"));
+}</code></pre>
+      <p>Делает то же самое, что и такой:</p>
+      <pre><code>async function f() {
+  throw new Error("Упс!");
+}</code></pre>
+      <p>
+        Такие ошибки можно ловить, используя <code>try..catch</code>, как с
+        обычным <code>throw</code>:
+      </p>
+      <pre><code>async function f() {
+
+  try {
+    let response = await fetch('http://no-such-url');
+  } catch(err) {
+    alert(err); // TypeError: failed to fetch
+  }
+}
+
+f();</code></pre>
+      <p>async/await отлично работает с Promise.all</p>
+      <pre><code>// await будет ждать массив с результатами выполнения всех промисов
+let results = await Promise.all([
+  fetch(url1),
+  fetch(url2),
+  ...
+]);</code></pre>
+    </div>
+  </div>
+</div>

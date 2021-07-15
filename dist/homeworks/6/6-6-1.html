@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html>
+  <body>
+    <script>
+      function makeCounter() {
+        let count = 0;
+        let counter = function() {
+          return ++count;
+        };
+        counter.set = value => {
+          count = value;
+        };
+        counter.decrease = () => {
+          return --count;
+        };
+
+        return counter;
+      }
+
+      let counter1 = makeCounter();
+      let counter2 = makeCounter();
+
+      counter1();
+      counter1.set(35);
+      console.log(counter1());
+
+      console.log(counter2());
+    </script>
+  </body>
+</html>
